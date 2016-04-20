@@ -448,7 +448,7 @@
                                         <s:iterator value="allRank" status="counter" >
                                         <tr>
                                          <td class="count"> <s:property value="#counter.index + 1" /> </td>
-                                            <td><s:property value="coursename" />[ID: <s:property value="id" /> ]</td>                                          
+                                            <td><s:property value="coursename" /> &nbsp;[ &nbsp;ID: &nbsp; <s:property value="id" /> &nbsp; ]</td>                                          
                                         </tr>
 										</s:iterator>
 										
