@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.javatree.www.DAO.courseDAO">
+	
+	 <resultMap type="Course" id="sCourseMap">
+       <result property="id" column="id"/>
+      <result property="courseno" column="courseno"/>
+      <result property="coursename" column="coursename"/>
+      <result property="teacherid" column="teacherid"/>
+      <collection property="courseTypeList" javaType="java.util.ArrayList" column="courseno" ofType="int" select="selectTypeno"/>
+   </resultMap>
+	
+	<!-- <select parameterType="String" resultType="Course" id="getAllCourseListForStudy">
+		select * from course where courseno = ((select courseno from studycourse where id = #{id}) courseno)
+	</select> -->
+	
+
+	<!-- 전체 강좌 리스트 - CourseDefualtMain (로그인 X,O 분기처리) INTRODUCTION 스펠링 틀림!!! INTRODUTION -->
+     <select resultType="Course" id="selectAllCourseList" parameterType="map">
+     select courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/mm/dd') as regdate from course
+   <if test="id != null">
+     where courseno in (select courseno from coursetype where typeno IN (select typeno from interest where id = #{id} and value = 3))
+   </if>
+    order by regdate desc
+   </select>
+	
+	<!-- 전체 강좌 리스트 분야 별 리스트 - CourseDefualtMain -->
+	
+	<!-- 전체 강좌 리스트 정렬 방법 별 리스트 - CourseDefualtMain -->
+	
+	<!-- 전체 강좌 중 베스트 (사이드 바) <전체기간>- CourseDefualtMain -->
+	<select id="selectAllRank" resultType="Course">
+		select sum(lec.studentcount), lec.courseno, cou.coursename, cou.id, cou.startdate 
+		from teachlecture lec, teachcourse cou 
+		where lec.courseno = cou.courseno 
+		group by lec.courseno, cou.coursename, cou.id, cou.startdate 
+		order by sum(lec.studentcount) desc
+	</select>
+	
+	<!-- 전체 강좌 중 베스트 (사이드 바) <최근>- CourseDefualtMain -->
+	<select id="selectRecentRank" resultType="Course">
+		select sum(lec.studentcount), lec.courseno, cou.coursename, cou.id, cou.startdate 
+		from teachlecture lec, teachcourse cou 
+		where lec.courseno = cou.courseno 
+		group by lec.courseno, cou.coursename, cou.id, cou.startdate 
+		having cou.startdate > sysdate - 90
+		order by sum(lec.studentcount) desc
+		</select>
+	
+	<!-- 전체 강좌 중 강좌 검색 (사이드 바)  - CourseDefualtMain -->
+	
+	
+	<!-- 분야별 검색  - ajax 미완성 부분, 매퍼 수정 필요  -->	
+		<select resultType="Course" id="selectListbyField" parameterType="map">
+	select courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/mm/dd') as regdate from course
+	 where courseno in (select courseno from coursetype where typeno IN 
+		(
+		<if test="interest0 != null">
+			#{interest0}
+		</if>
+		<if test="interest1 != null">
+			, #{interest1}
+		</if>
+		<if test="interest2 != null">
+			, #{interest2}
+		</if>
+		<if test="interest3 != null">
+			, #{interest3}
+		</if>
+		<if test="interest4 != null">
+			, #{interest4}
+		</if>
+		
+		))
+		order by regdate desc
+	</select>		
+	<!-- 강좌타입검색 -->
+	<select id="selectTypeno" parameterType="String" resultType="String">
+		select typeno, courseno from coursetype where courseno = #{courseno}
+	</select>
+	
+	
+	<!-- 내가 배우는 강좌 리스트 - studyMain -->
+    <select resultMap="sCourseMap" id="studyMainView" parameterType="map">
+     	select id, courseno, coursename, teacherid
+     	from studycourse
+     	where id = #{id}
+     	group by courseno, id, coursename, teacherid
+     	order by courseno desc
+     </select> 
+		
+	<!-- 내가 가르치는 강좌 리스트 - teachMain -->
+	<select id="selectAllCourseListForTeach" parameterType="String" resultType="Course">
+		<!-- select * from teachcourse where id=#{id} -->
+		select * from course where courseno in 
+		(select courseno from teachcourse where id = #{id})
+	</select>
+	
+	
+	<!-- 해당 강좌 안에 있는 강의 리스트 - CourseDetailForTeach -->
+	
+	<!-- 강좌 등록 (사이드 바)  - insertCousre -->
+	<!-- Course -->
+	<insert id="insertCourse" parameterType="Course">
+       	insert into course(courseno, coursename, id, username, introdution, regdate) values (course_seq.nextVal ,#{coursename}, #{id}, #{username}, #{introdution}, sysdate)
+  	</insert>   
+  	
+ 	<!-- CourseType -->
+ 	<insert id="insertCourseType" parameterType="map">
+      <!-- <foreach collection="list" item="vo" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+       --> 
+       <selectKey keyProperty="courseno" resultType="int" order="BEFORE">
+    		select max(courseno) from course 
+  		</selectKey>
+      	insert into coursetype (courseno , typeno)
+     <!--   VALUES (#{vo.courseno} , #{vo.typeno}) -->
+     	values (#{courseno}, #{typeno})
+  	</insert>
+  	<!-- TeachCourse -->
+  	<insert id="insertTeachCourse" parameterType="map">
+  	 	<selectKey keyProperty="courseno" resultType="int" order="BEFORE">
+    		select max(courseno) from course 
+  		</selectKey>
+      		insert into teachcourse (id, courseno, coursename, startdate)
+     		values (#{id}, #{courseno}, #{coursename},sysdate )
+  	</insert>
+	
+	<!-- 강의 등록 - insertLecture -->
+
+	<insert id="insertLectureType" parameterType="map">
+	
+		<!-- <selectKey keyProperty="courseno" resultType="int" order="BEFORE">
+    		select max(courseno) from course 
+  		</selectKey> -->
+
+		insert into lecture (courseno, lectureno, lecturename, regdate 
+		<if test="originalfile != null"> , originalfilename, uploadedfilename </if>
+	
+		) values (courseno, lecture_seq.nextVal, #{lecturename}, sysdate 
+		<if test="originalfile != null"> , #{originalfilename} , #{uploadedfilename} </if>
+		) 
+		
+	</insert>
+	
+	<!-- lecturecoding -->
+ 	<insert id="insertlecturecoding" parameterType="map">
+       <selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
+    		select max(lectureno) from lecture 
+  		</selectKey>
+      	insert into coursetype (lectureno , codingno)
+     	values (#{lectureno}, #{codingno})
+  	</insert>
+  	
+  	
+  	<!-- Coding -->
+  	<insert id="insertCoding" parameterType="map">
+  	 	<selectKey keyProperty="courseno" resultType="int" order="BEFORE">
+    		select max(courseno) from course 
+  		</selectKey>
+      		insert into coding (codingno, courseno, coursename, startdate)
+     		values (#{id}, #{courseno}, #{coursename},sysdate )
+  	</insert>
+	
+	
+	<!-- teachcourse 리스트 의 갯수 -->
+	<select id="getTotal" resultType="int" parameterType="String">
+		select count(*) from teachcourse where id=#{id}
+	</select>
+	
+	<!-- 문제보관- 문제출력-->
+	<!-- 문제보관함 문제넣기 -->
+	
+
+</mapper>
+
+
