@@ -288,7 +288,7 @@
 							<s:if test="%{#session.loginId != null}">
 								<h1>${session.loginId}님 환영합니다.</h1>
 							</s:if>
-								<h2>WELCOME TO JAVATREE</h2>
+								<h2>WELCOME TO JAVATREEzzzz</h2>
 								<p>
 									JAVATree will help your Study!<br> Join us PlZ!!!!<br>
 									press Join button
