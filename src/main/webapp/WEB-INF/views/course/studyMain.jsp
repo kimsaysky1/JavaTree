@@ -328,7 +328,7 @@
 		<s:iterator value="courseList">		
 				<div class = "form-study-course">
 				         <div class="study-course-bg mc-item3">
-                        <div class="meta-categories"><s:iterator value="courseTypeList" ><s:property/>&nbsp;</s:iterator></div>
+                        <div class="meta-categories"><s:iterator value="courseTypeList" ><s:property/>&nbsp;&nbsp;&nbsp;&nbsp;</s:iterator></div>
                         <div class="content-item">
                             <h3><a href="/javatree/course/CourseDetailStudyView.action"><s:property value="coursename" /></a></h3>
                             <div class="name-author">
