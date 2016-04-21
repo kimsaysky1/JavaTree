@@ -29,8 +29,6 @@
    </insert>   
 	
 	
-	
-	
 	<!-- <insert id="insert" parametertype="Member_jt">
         insert into member_jt(id, password, username, email)
         values

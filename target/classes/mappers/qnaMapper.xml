@@ -66,17 +66,18 @@
 	
 	<insert id = "insertRereply" parameterType="Rereply">
 		insert into rereply
-		(replyno, id, content, username, recommand
+		(replyno, id, content, regdate, username
 		) 
 		values
 		(
 		#{replyno}
 		, #{id}
 		, #{content}
+		, sysdate
 		, #{username}
-		, 0
 		)
 	</insert>
+	
 	<select id="getTotal" resultType="int">
 		select count(*) from question
 	</select>
@@ -131,11 +132,11 @@
 	</select>
 	
 	<select id="selectAllReply" parameterType="int" resultMap="ReplyMap">
-		select * from reply where questionno = #{questionno}
+		select * from reply where questionno = #{questionno} order by recommend desc
 	</select>
 	
 	<select id="selectAllRereply" parameterType="int" resultType="Rereply">
-		select * from rereply where replyno = #{replyno}
+		select * from rereply where replyno = #{replyno} order by regdate desc
 	</select>
 	
 	<select id="selectTitle" parameterType="int" resultType="String">

@@ -142,7 +142,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		courseDAO dao = sqlSession.getMapper(courseDAO.class);
 		
 		//login시 활동들(임시)
-		session.put("loginId", "1"); // 임시로 session에 아이디를 집어넣음, test완료 후 삭제 요망
+		/*session.put("loginId", "1");*/ // 임시로 session에 아이디를 집어넣음, test완료 후 삭제 요망
 		
 		if(session.get("loginId") != null){
 			String storedid = (String) session.get("loginId");
