@@ -1,26 +1,33 @@
-/* ¹Ù²Ù±â */
+  		select c.coursename
+     	from course c, studylecture sl
+     	where c.courseno = sl.courseno and sl.id = 2 and sl.startdate < sysdate and rownum < 4 
+     	order by sl.startdate desc
 
---Áß°£¿¡ ¼öÁ¤ÇÑ °Íµé
+ CREATE sequence subnote_seq start with 1 increment by 1;--20160421ì¶”ê°€    	
+     	
+     	/* ï¿½Ù²Ù±ï¿½ */
+alter table studylecture add (courseno number(6,0) NOT NULL)
+--ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Íµï¿½
 ALTER TABLE teachcourse ADD (startdate date DEFAULT sysdate NOT NULL);
 alter table course drop column typeno;
 alter table course add (regdate date default sysdate not null);
 alter table coding add (codinganswer clob not null);
-alter table coding drop column lectureno;--20160419Ãß°¡
+alter table coding drop column lectureno;--20160419ï¿½ß°ï¿½
 
-CREATE TABLE lecturecoding--20160419Ãß°¡
+CREATE TABLE lecturecoding--20160419ï¿½ß°ï¿½
 (
 	lectureno number(6,0) NOT NULL,
 	codingno number(6,0) NOT NULL
 );
 
-ALTER TABLE lecturecoding--20160419Ãß°¡
+ALTER TABLE lecturecoding--20160419ï¿½ß°ï¿½
 	ADD FOREIGN KEY (lectureno)
 	REFERENCES lecture (lectureno)
 	ADD FOREIGN KEY (codingno)
 	REFERENCES coding (codingno)
 ;
 
-alter table coding drop column typeno;--20160419Ãß°¡
+alter table coding drop column typeno;--20160419ï¿½ß°ï¿½
 
 
 /* Drop Tables */
@@ -47,7 +54,7 @@ DROP TABLE push CASCADE CONSTRAINTS;
 DROP TABLE member_jt CASCADE CONSTRAINTS;
 DROP TABLE typename CASCADE CONSTRAINTS;
 
---typename Å×ÀÌºí¿¡ °ª ³Ö±â
+--typename ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ ï¿½Ö±ï¿½
 insert into typename values('purejava', 1);
 insert into typename values('web', 2);
 insert into typename values('mobile', 3);
@@ -67,7 +74,7 @@ select courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/m
 
 /* Create Tables */
 
--- »õ Å×ÀÌºí : (1)È¸¿ø Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (1)È¸ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE member_jt
 (
 	point number(10,0) DEFAULT 0 NOT NULL,
@@ -81,7 +88,7 @@ CREATE TABLE member_jt
 	PRIMARY KEY (id)
 );
 
--- »õ Å×ÀÌºí : (2)°ü½ÉºĞ¾ß Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (2)ï¿½ï¿½ï¿½ÉºĞ¾ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE interest
 (
 	id varchar2(20) NOT NULL,
@@ -89,7 +96,7 @@ CREATE TABLE interest
 	value number(1,0) NOT NULL
 );
 
--- »õ Å×ÀÌºí : (3)ÀÚ°¡Áø´Ü Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (3)ï¿½Ú°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE ability
 (
 	id varchar2(20) NOT NULL,
@@ -97,7 +104,7 @@ CREATE TABLE ability
 	value number(1,0) NOT NULL
 );
 
--- »õ Å×ÀÌºí : (4)ÇĞ»ı¹®Á¦º¸°üÇÔ
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (4)ï¿½Ğ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 CREATE TABLE studycodingbox
 (
 	id varchar2(20) NOT NULL,
@@ -105,7 +112,7 @@ CREATE TABLE studycodingbox
 	coding clob
 );
 
--- »õ Å×ÀÌºí : (5)ÀüÃ¼ °­ÁÂ Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (5)ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE course
 (
 	courseno number(6,0) NOT NULL,
@@ -118,7 +125,7 @@ CREATE TABLE course
 );
 CREATE sequence course_seq start with 1 increment by 1;
 
--- »õ Å×ÀÌºí : (6)°­ÁÂ º° ºĞ¾ß Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (6)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ğ¾ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE coursetype
 (
 	courseno number(6,0) NOT NULL,
@@ -126,7 +133,7 @@ CREATE TABLE coursetype
 );
 
 
--- »õ Å×ÀÌºí : (7)ÀüÃ¼ °­ÀÇ Å×ÀÌºí  - °­ÁÂ¸¶´Ù ´Ù¸¥ [°­ÀÇ Å×ÀÌºí]»ı¼º
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (7)ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½  - ï¿½ï¿½ï¿½Â¸ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ [ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½]ï¿½ï¿½ï¿½ï¿½
 CREATE TABLE lecture
 (
 	courseno number(6,0) NOT NULL,
@@ -140,7 +147,7 @@ CREATE TABLE lecture
 CREATE sequence lecture_seq start with 1 increment by 1;
 
 
--- »õ Å×ÀÌºí : (8)ÄÚµù ¿¬½À ¹®Á¦ Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (8)ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE coding
 (
 	codingno number(6,0) NOT NULL,
@@ -152,7 +159,7 @@ CREATE TABLE coding
 );
 
 
--- »õ Å×ÀÌºí : (9)((Æ¯Á¤ È¸¿ø ±âÁØ) ÀÚ½ÅÀÌ °¡¸£Ä¡´Â °­ÁÂ Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (9)((Æ¯ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE teachcourse
 (
 	id varchar2(20) NOT NULL,
@@ -161,7 +168,7 @@ CREATE TABLE teachcourse
 );
 
 
--- »õ Å×ÀÌºí : (10)(Æ¯Á¤ È¸¿ø ±âÁØ) ÀÚ½ÅÀÌ °¡¸£Ä¡´Â °­ÀÇ Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (10)(Æ¯ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE teachlecture
 (
 	id varchar2(20) NOT NULL,
@@ -171,7 +178,7 @@ CREATE TABLE teachlecture
 	studentcount number(6,0) NOT NULL
 );
 
--- »õ Å×ÀÌºí : (12)°­ÀÇ Ã»Ãë ¿©ºÎ Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (12)ï¿½ï¿½ï¿½ï¿½ Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE checklecture
 (
 	id varchar2(20) NOT NULL,
@@ -180,7 +187,7 @@ CREATE TABLE checklecture
 	watchedcheck varchar2(3) NOT NULL
 );
 
--- »õ Å×ÀÌºí : (12)(Æ¯Á¤ È¸¿ø ±âÁØ) ÀÚ½ÅÀÌ ¹è¿ì´Â °­ÀÇ Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (12)(Æ¯ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE studylecture
 (
 	id varchar2(20) NOT NULL,
@@ -189,7 +196,7 @@ CREATE TABLE studylecture
 	enddate date NOT NULL
 );
 
--- »õ Å×ÀÌºí : (15) Áú¹® Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (15) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE question
 (
 	questionno number(6,0) NOT NULL,
@@ -206,7 +213,7 @@ CREATE TABLE question
 );
 
 
--- »õ Å×ÀÌºí : (16) ´äº¯ Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (16) ï¿½äº¯ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE reply
 (
 	questionno number(6,0) NOT NULL,
@@ -220,7 +227,7 @@ CREATE TABLE reply
 );
 
 
--- »õ Å×ÀÌºí : (17) (´äº¯ÀÇ) ´ä±Û Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (17) (ï¿½äº¯ï¿½ï¿½) ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE rereply
 (
 	replyno number(10,0) NOT NULL,
@@ -230,7 +237,7 @@ CREATE TABLE rereply
 	username varchar2(20) NOT NULL
 );
 
--- »õ Å×ÀÌºí : (18)¿¡·¯ Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (18)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE error
 (
 	errorname varchar2(50) NOT NULL,
@@ -239,7 +246,7 @@ CREATE TABLE error
 );
 
 
--- »õ Å×ÀÌºí : (19)ºĞ¾ß Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (19)ï¿½Ğ¾ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE typename
 (
 	type varchar2(50) NOT NULL,
@@ -250,10 +257,10 @@ CREATE TABLE typename
 
 
 
---ÁøÇàÁß ¼öÁ¤Å×ÀÌºê
+--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìºï¿½
 
 
--- »õ Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE push
 (
 	senderid varchar2(20) NOT NULL,
@@ -263,7 +270,7 @@ CREATE TABLE push
 );
 
 
--- »õ Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE studycourse
 (
 	id varchar2(20) NOT NULL,
@@ -276,7 +283,7 @@ CREATE TABLE studycourse
 
 
 
--- »õ Å×ÀÌºí
+-- ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 CREATE TABLE subnote
 (
 	id varchar2(20) NOT NULL,
@@ -510,60 +517,60 @@ ALTER TABLE question
 
 /* Comments */
 
-COMMENT ON TABLE ability IS '»õ Å×ÀÌºí : (3)ÀÚ°¡Áø´Ü Å×ÀÌºí';
+COMMENT ON TABLE ability IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (3)ï¿½Ú°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN ability.id IS 'id';
 COMMENT ON COLUMN ability.typeno IS 'typeno';
 COMMENT ON COLUMN ability.value IS 'value';
-COMMENT ON TABLE checklecture IS '»õ Å×ÀÌºí : (12)°­ÀÇ Ã»Ãë ¿©ºÎ Å×ÀÌºí';
+COMMENT ON TABLE checklecture IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (12)ï¿½ï¿½ï¿½ï¿½ Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN checklecture.id IS 'id';
 COMMENT ON COLUMN checklecture.courseno IS 'courseno';
 COMMENT ON COLUMN checklecture.lectureno IS 'lectureno';
 COMMENT ON COLUMN checklecture.watchedcheck IS 'watchedcheck';
-COMMENT ON TABLE coding IS '»õ Å×ÀÌºí : (8)ÄÚµù ¿¬½À ¹®Á¦ Å×ÀÌºí';
+COMMENT ON TABLE coding IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (8)ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN coding.codingno IS 'codingno';
 COMMENT ON COLUMN coding.typeno IS 'typeno';
 COMMENT ON COLUMN coding.codingquestion IS 'codingquestion';
 COMMENT ON COLUMN coding.codingtemplet IS 'codingtemplet';
 COMMENT ON COLUMN coding.lectureno IS 'lectureno';
-COMMENT ON TABLE course IS '»õ Å×ÀÌºí : (5)ÀüÃ¼ °­ÁÂ Å×ÀÌºí';
+COMMENT ON TABLE course IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (5)ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN course.courseno IS 'courseno';
-COMMENT ON COLUMN course.typeno IS 'typeno : ºĞ¾ß';
+COMMENT ON COLUMN course.typeno IS 'typeno : ï¿½Ğ¾ï¿½';
 COMMENT ON COLUMN course.coursename IS 'coursename';
 COMMENT ON COLUMN course.id IS 'id';
 COMMENT ON COLUMN course.username IS 'username';
 COMMENT ON COLUMN course.introdution IS 'introdution';
-COMMENT ON TABLE coursetype IS '»õ Å×ÀÌºí : (6)°­ÁÂ º° ºĞ¾ß Å×ÀÌºí';
+COMMENT ON TABLE coursetype IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (6)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ğ¾ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN coursetype.courseno IS 'courseno';
 COMMENT ON COLUMN coursetype.typeno IS 'typeno';
-COMMENT ON TABLE error IS '»õ Å×ÀÌºí : (18)¿¡·¯ Å×ÀÌºí';
+COMMENT ON TABLE error IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (18)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN error.errorname IS 'errorname';
 COMMENT ON COLUMN error.response IS 'response';
-COMMENT ON TABLE interest IS '»õ Å×ÀÌºí : (2)°ü½ÉºĞ¾ß Å×ÀÌºí';
+COMMENT ON TABLE interest IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (2)ï¿½ï¿½ï¿½ÉºĞ¾ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN interest.id IS 'id';
 COMMENT ON COLUMN interest.typeno IS 'typeno';
 COMMENT ON COLUMN interest.value IS 'value';
-COMMENT ON TABLE lecture IS '»õ Å×ÀÌºí : (7)ÀüÃ¼ °­ÀÇ Å×ÀÌºí  - °­ÁÂ¸¶´Ù ´Ù¸¥ [°­ÀÇ Å×ÀÌºí]»ı¼º';
+COMMENT ON TABLE lecture IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (7)ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½  - ï¿½ï¿½ï¿½Â¸ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ [ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½]ï¿½ï¿½ï¿½ï¿½';
 COMMENT ON COLUMN lecture.courseno IS 'courseno';
 COMMENT ON COLUMN lecture.lectureno IS 'lectureno';
 COMMENT ON COLUMN lecture.lecturename IS 'lecturename';
 COMMENT ON COLUMN lecture.regdate IS 'regdate';
 COMMENT ON COLUMN lecture.originalfilename IS 'originalfilename';
 COMMENT ON COLUMN lecture.uploadedfilename IS 'uploadedfilename';
-COMMENT ON TABLE member_jt IS '»õ Å×ÀÌºí : (1)È¸¿ø Å×ÀÌºí';
+COMMENT ON TABLE member_jt IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (1)È¸ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN member_jt.point IS 'point';
 COMMENT ON COLUMN member_jt.id IS 'id';
 COMMENT ON COLUMN member_jt.password IS 'password';
 COMMENT ON COLUMN member_jt.username IS 'username';
 COMMENT ON COLUMN member_jt.email IS 'email';
-COMMENT ON COLUMN member_jt.countquestion IS 'countquestion : Áú¹® È½¼ö';
-COMMENT ON COLUMN member_jt.countresponse IS 'countresponse : ´äº¯ È½¼ö ';
-COMMENT ON COLUMN member_jt.countrecommend IS 'countrecommend : ´äº¯ ÃßÃµ È½¼ö ';
-COMMENT ON TABLE push IS '»õ Å×ÀÌºí';
+COMMENT ON COLUMN member_jt.countquestion IS 'countquestion : ï¿½ï¿½ï¿½ï¿½ È½ï¿½ï¿½';
+COMMENT ON COLUMN member_jt.countresponse IS 'countresponse : ï¿½äº¯ È½ï¿½ï¿½ ';
+COMMENT ON COLUMN member_jt.countrecommend IS 'countrecommend : ï¿½äº¯ ï¿½ï¿½Ãµ È½ï¿½ï¿½ ';
+COMMENT ON TABLE push IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN push.senderid IS 'senderid';
 COMMENT ON COLUMN push.receiverid IS 'receiverid';
 COMMENT ON COLUMN push.message IS 'message';
 COMMENT ON COLUMN push.regdate IS 'regdate';
-COMMENT ON TABLE question IS '»õ Å×ÀÌºí : (15) Áú¹® Å×ÀÌºí';
+COMMENT ON TABLE question IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (15) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN question.questionno IS 'questionno';
 COMMENT ON COLUMN question.typeno IS 'typeno';
 COMMENT ON COLUMN question.codingno IS 'codingno';
@@ -574,52 +581,52 @@ COMMENT ON COLUMN question.content IS 'content';
 COMMENT ON COLUMN question.regdate IS 'regdate';
 COMMENT ON COLUMN question.hitcount IS 'hitcount';
 COMMENT ON COLUMN question.curious IS 'curious';
-COMMENT ON TABLE reply IS '»õ Å×ÀÌºí : (16) ´äº¯ Å×ÀÌºí';
+COMMENT ON TABLE reply IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (16) ï¿½äº¯ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN reply.questionno IS 'questionno';
 COMMENT ON COLUMN reply.replyno IS 'replyno';
 COMMENT ON COLUMN reply.id IS 'id';
 COMMENT ON COLUMN reply.username IS 'username';
 COMMENT ON COLUMN reply.content IS 'content';
 COMMENT ON COLUMN reply.regdate IS 'regdate';
-COMMENT ON COLUMN reply.recommend IS 'recommend : ÃßÃµµµ - º£½ºÆ® ´äº¯ ¼±Á¤ À§ÇÔ';
-COMMENT ON TABLE rereply IS '»õ Å×ÀÌºí : (17) (´äº¯ÀÇ) ´ä±Û Å×ÀÌºí';
+COMMENT ON COLUMN reply.recommend IS 'recommend : ï¿½ï¿½Ãµï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½Æ® ï¿½äº¯ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON TABLE rereply IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (17) (ï¿½äº¯ï¿½ï¿½) ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN rereply.replyno IS 'replyno';
 COMMENT ON COLUMN rereply.id IS 'id';
 COMMENT ON COLUMN rereply.content IS 'content';
 COMMENT ON COLUMN rereply.regdate IS 'regdate';
 COMMENT ON COLUMN rereply.username IS 'username';
-COMMENT ON TABLE studycodingbox IS '»õ Å×ÀÌºí : (4)ÇĞ»ı¹®Á¦º¸°üÇÔ';
+COMMENT ON TABLE studycodingbox IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (4)ï¿½Ğ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 COMMENT ON COLUMN studycodingbox.id IS 'id';
 COMMENT ON COLUMN studycodingbox.codingno IS 'codingno';
 COMMENT ON COLUMN studycodingbox.coding IS 'coding';
-COMMENT ON TABLE studycourse IS '»õ Å×ÀÌºí';
+COMMENT ON TABLE studycourse IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN studycourse.id IS 'id';
-COMMENT ON COLUMN studycourse.courseno IS 'courseno : °­ÁÂ¸ñ·Ï';
+COMMENT ON COLUMN studycourse.courseno IS 'courseno : ï¿½ï¿½ï¿½Â¸ï¿½ï¿½';
 COMMENT ON COLUMN studycourse.coursename IS 'coursename';
 COMMENT ON COLUMN studycourse.startdate IS 'startdate';
 COMMENT ON COLUMN studycourse.enddate IS 'enddate';
-COMMENT ON TABLE studylecture IS '»õ Å×ÀÌºí : (12)(Æ¯Á¤ È¸¿ø ±âÁØ) ÀÚ½ÅÀÌ ¹è¿ì´Â °­ÀÇ Å×ÀÌºí';
+COMMENT ON TABLE studylecture IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (12)(Æ¯ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN studylecture.id IS 'id';
 COMMENT ON COLUMN studylecture.lectureno IS 'lectureno';
 COMMENT ON COLUMN studylecture.startdate IS 'startdate';
 COMMENT ON COLUMN studylecture.enddate IS 'enddate';
-COMMENT ON TABLE subnote IS '»õ Å×ÀÌºí';
+COMMENT ON TABLE subnote IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN subnote.id IS 'id';
 COMMENT ON COLUMN subnote.subnoteno IS 'subnoteno';
 COMMENT ON COLUMN subnote.originalfilename IS 'originalfilename';
 COMMENT ON COLUMN subnote.uploadedfilename IS 'uploadedfilename';
 COMMENT ON COLUMN subnote.lectureno IS 'lectureno';
-COMMENT ON TABLE teachcourse IS '»õ Å×ÀÌºí : (9)((Æ¯Á¤ È¸¿ø ±âÁØ) ÀÚ½ÅÀÌ °¡¸£Ä¡´Â °­ÁÂ Å×ÀÌºí';
+COMMENT ON TABLE teachcourse IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (9)((Æ¯ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN teachcourse.id IS 'id';
-COMMENT ON COLUMN teachcourse.courseno IS 'courseno : ÀüÃ¼°­ÁÂ¸ñ·Ï';
+COMMENT ON COLUMN teachcourse.courseno IS 'courseno : ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½Â¸ï¿½ï¿½';
 COMMENT ON COLUMN teachcourse.coursename IS 'coursename';
-COMMENT ON TABLE teachlecture IS '»õ Å×ÀÌºí : (10)(Æ¯Á¤ È¸¿ø ±âÁØ) ÀÚ½ÅÀÌ °¡¸£Ä¡´Â °­ÀÇ Å×ÀÌºí';
+COMMENT ON TABLE teachlecture IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (10)(Æ¯ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN teachlecture.id IS 'id';
 COMMENT ON COLUMN teachlecture.courseno IS 'courseno';
 COMMENT ON COLUMN teachlecture.lectureno IS 'lectureno';
 COMMENT ON COLUMN teachlecture.point IS 'point';
 COMMENT ON COLUMN teachlecture.studentcount IS 'studentcount';
-COMMENT ON TABLE typename IS '»õ Å×ÀÌºí : (19)ºĞ¾ß Å×ÀÌºí';
+COMMENT ON TABLE typename IS 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ : (19)ï¿½Ğ¾ï¿½ ï¿½ï¿½ï¿½Ìºï¿½';
 COMMENT ON COLUMN typename.type IS 'type';
 COMMENT ON COLUMN typename.typeno IS 'typeno';
 
