@@ -23,5 +23,9 @@ public interface courseDAO {
 	public void insertTeachCourse(Map<String, Object> map);
 	public void insertLecture(Lecture lecture);
 	public ArrayList<Course> studyMainView(Map<String, Object> kong);
+	public ArrayList<String> selectLatelyPurchasedLectureList1(Map<String, Object> kong);
+	public ArrayList<String> selectLatelyPurchasedLectureList2(Map<String, Object> kong);
+	public ArrayList<String> recentlyCompletedLectureList1(Map<String, Object> kong);
+	public ArrayList<String> recentlyCompletedLectureList2(Map<String, Object> kong);
 	
 }
