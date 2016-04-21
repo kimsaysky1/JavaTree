@@ -1,7 +1,6 @@
-  		select c.coursename
-     	from course c, studylecture sl
-     	where c.courseno = sl.courseno and sl.id = 2 and sl.startdate < sysdate and rownum < 4 
-     	order by sl.startdate desc
+SELECT id, courseno, coursename, teacherid 
+from (select rownum as rnum, T1.* from (select * from studycourse where id = 2 group by courseno, id, coursename, teacherid order by courseno desc) T1)
+where rnum >= 1 and rnum <= 2
 
  CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
      	

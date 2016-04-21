@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.struts2.interceptor.SessionAware;
+import org.javatree.www.DAO.QnaDAO;
 import org.javatree.www.DAO.courseDAO;
 import org.javatree.www.Util.FileService;
 import org.javatree.www.Util.PageNavigator;
@@ -94,6 +95,9 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	
 	courseDAO dao;
 	
+	int start;
+	int end;
+	
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		session=arg0;
@@ -154,13 +158,39 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			kong.put("id", storedid);
 			kong.put("searchText", null);
 			
-			courseList= dao.selectAllCourseList(kong);
-		
+			/*courseList= dao.selectAllCourseList(kong);*/
+			Map gong = new HashMap();
+			gong.put("start", 1);
+			gong.put("end", 2);
+			
+			courseList = dao.pagingCourse(gong);
 		}
 		
 		System.out.println("selectAllCourseList>> "+courseList);
 		return SUCCESS;
 	}
+	
+	public String plusCourseDefaultMain() throws Exception {
+		courseDAO dao = sqlSession.getMapper(courseDAO.class);
+		Map gong = new HashMap();
+		/*System.out.println("stringForTokenizer.length(): " + stringForTokenizer.length());*/
+		/*if (stringForTokenizer.length() >= 2) {
+			StringTokenizer st = new StringTokenizer(stringForTokenizer, ",");
+			typenoList = new ArrayList<>();
+			while (st.hasMoreTokens()) {
+				String temp = st.nextToken();
+				typenoList.add(Integer.parseInt(temp));
+			}
+			map.put("typenoList", typenoList);
+		}*/
+		gong.put("start", start);
+		gong.put("end", end);
+		/*System.out.println("typenoList plus: " + typenoList);*/
+		courseList = dao.pagingCourse(gong);
+		System.out.println(courseList);
+		return SUCCESS;
+	}
+	
 	
 	public String studyMainView(){
 		
@@ -168,8 +198,16 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		
 		courseDAO dao = sqlSession.getMapper(courseDAO.class);
 		
+		start = 1;
+		end = 2;
+		
+		System.out.println("start>> " + start);
+		System.out.println("end>> " + end);
+		
 		Map<String, Object> kong = new HashMap<>();
 		kong.put("id", id);
+		kong.put("start", start);
+		kong.put("end", end);
 		
 		ArrayList<String> tempList1 = new ArrayList<>();
 		tempList1 =  dao.selectLatelyPurchasedLectureList1(kong);
@@ -203,7 +241,8 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		
 		System.out.println(recentlyCompletedLectureList);
 		
-		courseList = dao.studyMainView(kong);
+		//courseList = dao.studyMainView(kong);
+		courseList = dao.pagingStudyCourse(kong);
 		
 		System.out.println(courseList.toString());
 		
@@ -255,11 +294,120 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			
 		}
 		
-		System.out.println(courseList);
+		System.out.println("studymainview-list>>" + courseList);
+		//searchText = null;
+		int totalCount = dao.selectTotal(kong);
+		int countPerPage = Integer.parseInt(getText("2"));		//페이지당 글목록 수
+		int pagePerGroup = Integer.parseInt(getText("2"));		//그룹당 페이지 수
+		if(currentPage == 0){
+			currentPage = 1;
+		}
+		navi=new PageNavigator(countPerPage, pagePerGroup, currentPage, totalCount);
+		
+		session.put("currentPage", currentPage);
+		//session.put("searchText", searchText);
+		session.put("getStartRecord", navi.getStartRecord());
+		session.put("getCountPerPage", navi.getCountPerPage());
 		
 		return SUCCESS;
 		
 	}
+	
+	public String plusStudyMain() {
+		Map gong = new HashMap();
+		gong.put("id", "2");
+		courseDAO dao = sqlSession.getMapper(courseDAO.class);
+		
+		if(session.get("searchText") == null) searchText = null;
+		int totalCount=dao.selectTotal(gong);
+		int countPerPage = Integer.parseInt(getText("2"));		//페이지당 글목록 수
+		int pagePerGroup = Integer.parseInt(getText("2"));		//그룹당 페이지 수
+		int nowPage = 0;
+		if(session.get("currentPage") != null){
+			nowPage = Integer.parseInt( session.get("currentPage").toString());
+		}else {
+			session.put("currentPage", 1);
+			nowPage = 1;
+		}		
+
+		navi=new PageNavigator(countPerPage, pagePerGroup, nowPage, totalCount);
+		start = Integer.parseInt( session.get("getStartRecord").toString());
+		end = Integer.parseInt(session.get("getCountPerPage").toString());
+		
+		/*System.out.println("stringForTokenizer.length(): " + stringForTokenizer.length());*/
+		/*if (stringForTokenizer.length() >= 2) {
+			StringTokenizer st = new StringTokenizer(stringForTokenizer, ",");
+			typenoList = new ArrayList<>();
+			while (st.hasMoreTokens()) {
+				String temp = st.nextToken();
+				typenoList.add(Integer.parseInt(temp));
+			}
+			map.put("typenoList", typenoList);
+		}*/
+		
+		//session에서 loginId 받아와야 합니다.
+		
+		
+		gong.put("start", start);
+		gong.put("end", end);
+		/*System.out.println("typenoList plus: " + typenoList);*/
+		courseList = dao.pagingStudyCourse(gong);
+		
+for (int i = 0; i < courseList.size(); i++) {
+			
+			for (int j = 0; j < courseList.get(i).getCourseTypeList().size(); j++) {
+				
+				String key = courseList.get(i).getCourseTypeList().get(j);
+				
+				switch (key) {
+				case "1":
+					courseList.get(i).getCourseTypeList().set(j, "Purejava");
+					break;
+				case "2":
+					courseList.get(i).getCourseTypeList().set(j, "Web");
+					break;
+				case "3":
+					courseList.get(i).getCourseTypeList().set(j, "Mobile");
+					break;
+				case "4":
+					courseList.get(i).getCourseTypeList().set(j, "IOT");
+					break;
+				case "5":
+					courseList.get(i).getCourseTypeList().set(j, "Swing");
+					break;
+				case "6":
+					courseList.get(i).getCourseTypeList().set(j, "JDBC");
+					break;
+				case "7":
+					courseList.get(i).getCourseTypeList().set(j, "API");
+					break;
+				case "8":
+					courseList.get(i).getCourseTypeList().set(j, "Spring");
+					break;
+				case "9":
+					courseList.get(i).getCourseTypeList().set(j, "Struts");
+					break;
+				case "10":
+					courseList.get(i).getCourseTypeList().set(j, "etcFramework");
+					break;
+				case "11":
+					courseList.get(i).getCourseTypeList().set(j, "etc");
+					break;
+				default:
+					break;
+				}
+				
+			}
+			
+		}
+		
+
+		System.out.println(courseList);
+		
+		return SUCCESS;
+	}
+	
+	
 	
 		/**
 		 * 강사 -강좌리스트
@@ -532,20 +680,12 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.content = content;
 		}
 	
-		public boolean isCheck() {
+		public boolean getCheck() {
 			return check;
 		}
 	
 		public void setCheck(boolean check) {
 			this.check = check;
-		}
-	
-		public SqlSession getSqlSession() {
-			return sqlSession;
-		}
-	
-		public void setSqlSession(SqlSession sqlSession) {
-			this.sqlSession = sqlSession;
 		}
 	
 		public Map<String, Object> getSession() {
@@ -817,6 +957,22 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.latelyPurchasedLectureList = latelyPurchasedLectureList;
 		}
 
+		public int getStart() {
+			return start;
+		}
 
+		public void setStart(int start) {
+			this.start = start;
+		}
+
+		public int getEnd() {
+			return end;
+		}
+
+		public void setEnd(int end) {
+			this.end = end;
+		}
+
+		
 	
 }

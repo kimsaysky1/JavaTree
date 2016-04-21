@@ -36,6 +36,16 @@
     order by regdate desc
    </select>
 	
+	<!-- courseDefaultMain 초기(전체) 페이징  -->
+	<select id="pagingCourse" resultType="Course" parameterType="map">
+		SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, teacherid 
+		from (select rownum as rnum, T1.* from (select * from course order by courseno desc) T1)
+		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
+		
+	</select>
+	
+	
+	
 	<!-- 전체 강좌 리스트 분야 별 리스트 - CourseDefualtMain -->
 	
 	<!-- 전체 강좌 리스트 정렬 방법 별 리스트 - CourseDefualtMain -->
@@ -101,6 +111,20 @@
      	order by courseno desc
      </select> 
      
+    <!-- studyMain 초기(전체) 페이징  -->
+	<select id="pagingStudyCourse" resultMap="sCourseMap" parameterType="map">
+		SELECT id, courseno, coursename, teacherid 
+		from (select rownum as rnum, T1.* from (select * from studycourse where id = #{id} group by courseno, id, coursename, teacherid order by courseno desc) T1)
+		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
+		
+	</select>
+     
+     <!-- 전체 갯수 -->
+    <select id="selectTotal" resultType="int" parameterType="map">
+		SELECT count(*) 
+		from (select rownum as rnum, T1.* from (select * from studycourse where id = #{id} group by courseno, id, coursename, teacherid order by courseno desc) T1)
+		
+	</select> 
      <!-- 완료된 강의 lecturename -->
      <select resultType="String" id="recentlyCompletedLectureList1" parameterType="map">
      	select l.lecturename
@@ -140,7 +164,6 @@
 		select * from course where courseno in 
 		(select courseno from teachcourse where id = #{id})
 	</select>
-	
 	
 	<!-- 해당 강좌 안에 있는 강의 리스트 - CourseDetailForTeach -->
 	
