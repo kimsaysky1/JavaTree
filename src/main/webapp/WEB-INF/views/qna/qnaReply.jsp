@@ -34,7 +34,6 @@
 <section id="quizz-intro-section"
 			class="quizz-intro-section learn-section">
 			<div class="container">
-
 				<div class="title-ct">
 					<h3>
 						<strong></strong>

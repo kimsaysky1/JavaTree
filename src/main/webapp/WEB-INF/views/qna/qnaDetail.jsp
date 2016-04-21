@@ -82,7 +82,7 @@
                                   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
                                    <div class="profile-address">
                                    <form action=""></form>
-                                   <input type="button" value="답변달기" id="insertReplyReday" class="mc-btn-8">
+                                   <input type="button" value="답변달기" data-toggle="modal" data-target="#writeReply" id="insertReplyReday" class="mc-btn-8">
                                 </div>
                             </div>
                         </div>
@@ -97,12 +97,9 @@
     <hr class="hr2">
     <section class="profil2">
                                 <ul class="list-discussion">
-    
                                     <!-- LIST ITEM -->
                                     <li>
                                         <div class="list-body">
-
-                                        
                                             <div class="answer_bg">
                     							<div class="avatar-acount">
                                                 <cite class="xsm black bold">IDIDIDID</cite>
@@ -110,10 +107,10 @@
                                                 <div class="comment-meta">
                                                    <a href="#">YYYY/MM/DD</a>
                                                    <a href="#"><i class="icon md-arrow-up"></i>추천&nbsp;0</a>                                             
-                                                   <a href=""><i class="icon md-back"></i>REPLY</a>
+                                                   <a href="#"><i class="icon md-back"></i>REPLY</a>
                                                 </div>
                                            		 </div>
-                                           		 </div>
+                                           	</div>
                                         </div>
                                     </li>
                                     <!-- END / LIST ITEM -->                             
@@ -125,7 +122,65 @@
                   </div>
                   </div>
                   </section>
-    
+    			  <form action="writeReply" name="writeReply" method="get">
+                    			<div class="container">
+									<div class="modal fade" id="writeReply" role="dialog">
+								    	<div class="modal-dialog modal-lg">
+									      <div class="modal-content">
+									        <div class="modal-header">
+									          <button type="button" class="close" data-dismiss="modal">&times;</button>
+									          <h4 class="modal-title">Reply</h4>
+									        </div>
+									        <div class="modal-body">
+									            <table style='width: 800px;'>
+													<tr>
+														<td style='width: 100px; text-align:center;'><b>FIELD</b></td>
+														<td>${question.typeno}</td>
+													</tr>
+													<tr>
+														<td style='height: 20px;'></td>
+														<td></td>
+													</tr>
+													<tr>
+														<td style='width: 100px; text-align:center;'><b>QUESTION TITLE</b></td>
+														<td><textarea style="height: 60px;" readonly="readonly">${question.title}</textarea></td>
+													</tr>
+													<tr>
+														<td style='height: 20px;'></td>
+														<td></td>
+													</tr>
+													<tr>
+														<td style='width: 100px; text-align:center;'><b>QUESTION CONTENT</b></td>
+														<td><textarea style="height: 180px; backgroun" readonly="readonly">${question.content}</textarea></td>
+													</tr>
+														<tr>
+														<td style='height: 20px;'></td>
+														<td></td>
+													</tr>
+													<tr>
+														<td style='width: 100px; text-align:center;'><b>ANSWER CONTENT</b></td>
+														<td><textarea name="reply.content" style="height: 280px;"></textarea></td>
+													</tr>
+														<tr>
+														<td style='height: 20px;'></td>
+														<td></td>
+													</tr>
+														<tr>
+														<td ></td>
+															<input type ="hidden" value="${question.questionno}" name="reply.questionno" />
+														</tr>
+												</table>
+									        </div>
+									        <div class="modal-footer">
+									        	<input type="submit" value="등록" class="mc-btn-5">&nbsp;&nbsp;&nbsp;
+												<input type="reset" value="취소" class="mc-btn-5">
+									          <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+									        </div>
+									      </div>
+								  	   </div>
+								  </div>
+                    		</div>
+                    		</form>
 
 	<!-- FOOTER -->
 	<footer id="footer" class="footer">
