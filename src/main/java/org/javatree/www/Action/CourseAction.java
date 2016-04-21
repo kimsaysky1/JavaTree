@@ -62,8 +62,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	int page;
 	int total;
 	
-	
-
 	ArrayList<Course> recentRank;
 	ArrayList<Course> allRank;
 	String interestString;
@@ -86,6 +84,8 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	File upload;
 	String uploadedfilename, originalfilename;
 	
+	ArrayList<Lecture> recentlyCompletedLectureList;
+	ArrayList<Lecture> latelyPurchasedLectureList;
 	
 	Map<String, Object> session;
 	
@@ -167,16 +167,41 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		id = "2";
 		
 		courseDAO dao = sqlSession.getMapper(courseDAO.class);
-		//베스트 강좌 (역대, 최신)
-		allRank = dao.selectAllRank();
-		recentRank = dao.selectRecentRank();
-		System.out.println("all>>" + allRank);
-		System.out.println("recent>> " + recentRank);
 		
 		Map<String, Object> kong = new HashMap<>();
 		kong.put("id", id);
 		
-		/*ArrayList<Course> tempList = new ArrayList<>(); */
+		ArrayList<String> tempList1 = new ArrayList<>();
+		tempList1 =  dao.selectLatelyPurchasedLectureList1(kong);
+		System.out.println("1>>" + tempList1);
+		ArrayList<String> tempList2 = new ArrayList<>();
+		tempList2 =  dao.selectLatelyPurchasedLectureList2(kong);
+		System.out.println("2>>"+tempList2);
+		
+		latelyPurchasedLectureList = new ArrayList<>();
+		
+		for (int i = 0; i < tempList1.size(); i++) {
+			Lecture l = new Lecture(tempList1.get(i), tempList2.get(i));
+			latelyPurchasedLectureList.add(l);
+		}
+		
+		
+		System.out.println(latelyPurchasedLectureList);
+		ArrayList<String> tempList3 = new ArrayList<>();
+		tempList3 =  dao.recentlyCompletedLectureList1(kong);
+		System.out.println("3>>" + tempList3);
+		ArrayList<String> tempList4 = new ArrayList<>();
+		tempList4 =  dao.recentlyCompletedLectureList2(kong);
+		System.out.println("4>>"+tempList4);
+		
+		recentlyCompletedLectureList = new ArrayList<>();
+		
+		for (int i = 0; i < tempList3.size(); i++) {
+			Lecture l = new Lecture(tempList3.get(i), tempList4.get(i));
+			recentlyCompletedLectureList.add(l);
+		}
+		
+		System.out.println(recentlyCompletedLectureList);
 		
 		courseList = dao.studyMainView(kong);
 		
@@ -235,102 +260,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 		
 	}
-	
-/*	public String selectAllCourseList(){
-		
-		dao = sqlSession.getMapper(courseDAO.class);
-		
-		//login시 활동들(임시)
-		session.put("loginId", "1"); // 임시로 session에 아이디를 집어넣음, test완료 후 삭제 요망
-		
-		if(session.get("loginId") != null){
-			String storedid = (String) session.get("loginId");
-			System.out.println("로그인한 아이디>> " + storedid);
-			
-			//베스트 강좌 (역대, 최신)
-			allRank = dao.selectAllRank();
-			recentRank = dao.selectRecentRank();
-			System.out.println("all>>" + allRank);
-			System.out.println("recent>> " + recentRank);
-			//paging 시작
-			if(session.get("searchText") == null){
-				searchText = null;
-			}else{
-				searchText = '%'+searchText+'%';
-			}
-			
-			System.out.println(searchText);
-			int totalCount=dao.selectTotal(searchText);
-			int countPerPage = Integer.parseInt(getText("2"));		//페이지당 글목록 수
-			int pagePerGroup = Integer.parseInt(getText("5"));		//그룹당 페이지 수
-			
-			int nowPage = 0;
-			
-			if(session.get("currentPage") != null){
-				 nowPage = Integer.parseInt( session.get("currentPage").toString());
-			}else {
-				session.put("currentPage", 1);
-				nowPage = 1;
-			}
-			
-			pagenavi=new PageNavigator(countPerPage, pagePerGroup, nowPage, totalCount);
-			
-			int start = pagenavi.getStartRecord();
-			int end = pagenavi.getCountPerPage();
-			RowBounds rowBound = new RowBounds(start, end);
-			//paging 마침
-			
-			Map<String, Object> kong = new HashMap<>();
-			kong.put("id", id);
-			kong.put("searchText", searchText);
-			
-			System.out.println(id + " / " + searchText +" / "+rowBound.getOffset());
-			
-			session.put("currentPage", currentPage);
-			session.put("searchField", searchField);
-			session.put("searchText", searchText);
-			session.put("getStartRecord", pagenavi.getStartRecord());
-			session.put("getCountPerPage", pagenavi.getCountPerPage());
-			courseList= dao.selectAllCourseList(kong);
-			//courseList= dao.getAllCourseList(kong, rowBound);
-			//courseList= dao.getAllCourseList(storedid);
-		}else{
-			//courseList= dao.getAllCourseList();
-		}
-		
-		System.out.println("selectAllCourseList>> "+courseList);
-		return SUCCESS;
-	}*/
-
-	 //분야별 검색
-	/*public String selectListbyField(){
-		System.out.println("comeon>>"+str);
-		dao = sqlSession.getMapper(courseDAO.class);
-		
-		ArrayList<String> interestList = new ArrayList<>();
-		
-		StringTokenizer st = new StringTokenizer(str, ",");
-		while (st.hasMoreTokens()) {
-			interestList.add(st.nextToken());
-		}
-		System.out.println(interestList.get(0));
-		
-		Map<String, Object> kong = new HashMap<>();
-		for (int i = 0; i < interestList.size(); i++) {
-			kong.put("interest"+i, interestList.get(i));
-		}
-		
-		System.out.println(kong);
-		
-		courseList= dao.selectListbyField(kong);
-		
-		System.out.println("selectListbyField>> "+courseList);
-		
-		message = "빠카~";
-		
-		return SUCCESS;
-	}*/
-	
 	
 		/**
 		 * 강사 -강좌리스트
@@ -839,18 +768,55 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setRegdate(String regdate) {
 			this.regdate = regdate;
 		}
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	
-	
-	
+
+		public String getTeacherid() {
+			return teacherid;
+		}
+
+		public void setTeacherid(String teacherid) {
+			this.teacherid = teacherid;
+		}
+
+		public File getUpload() {
+			return upload;
+		}
+
+		public void setUpload(File upload) {
+			this.upload = upload;
+		}
+
+		public String getUploadedfilename() {
+			return uploadedfilename;
+		}
+
+		public void setUploadedfilename(String uploadedfilename) {
+			this.uploadedfilename = uploadedfilename;
+		}
+
+		public String getOriginalfilename() {
+			return originalfilename;
+		}
+
+		public void setOriginalfilename(String originalfilename) {
+			this.originalfilename = originalfilename;
+		}
+
+		public ArrayList<Lecture> getRecentlyCompletedLectureList() {
+			return recentlyCompletedLectureList;
+		}
+
+		public void setRecentlyCompletedLectureList(ArrayList<Lecture> recentlyCompletedLectureList) {
+			this.recentlyCompletedLectureList = recentlyCompletedLectureList;
+		}
+
+		public ArrayList<Lecture> getLatelyPurchasedLectureList() {
+			return latelyPurchasedLectureList;
+		}
+
+		public void setLatelyPurchasedLectureList(ArrayList<Lecture> latelyPurchasedLectureList) {
+			this.latelyPurchasedLectureList = latelyPurchasedLectureList;
+		}
+
+
 	
 }

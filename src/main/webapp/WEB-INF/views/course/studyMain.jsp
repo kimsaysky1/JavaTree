@@ -387,19 +387,14 @@
                             <div class="tab-pane fade in active" id="design-question">                               
                                 <table class="table-quest">
                                     <tbody>
+                                      
+                                      <s:iterator value="recentlyCompletedLectureList" status="counter" >
                                         <tr>
-                                         <td class="count">1</td>
-                                            <td>완료 강의 1</td>                                          
+                                         <td class="count"> <s:property value="#counter.index + 1" /> </td>
+                                            <td><s:property value="lecturename" /> &nbsp;[ &nbsp;강좌명: &nbsp; <s:property value="coursename" /> &nbsp; ]</td>                                          
                                         </tr>
-
-                                        <tr>
-                                         <td class="count">2</td>
-                                            <td>완료 강의 2</td>                                         
-                                        </tr>
-
-                                        <tr>    
-                                         <td class="count">3</td>                                       
-                                            <td>완료 강의 3</td>                                            
+										</s:iterator>
+                                           
                                         </tr>
                                     </tbody>
                                 </table>
@@ -412,22 +407,13 @@
                                 
                                 <table class="table-assignment">
                                     <tbody>
+                                     <s:iterator value="latelyPurchasedLectureList" status="counter" >
                                         <tr>
-                                            <td class="count">1</td>
-                                            <td>최근 구입강의1</td>
-                                           
+                                         <td class="count"> <s:property value="#counter.index + 1" /> </td>
+                                            <td><s:property value="lecturename" /> &nbsp;[ &nbsp;강좌명: &nbsp; <s:property value="coursename" /> &nbsp; ]</td>                                          
                                         </tr>
-
-                                        <tr>
-                                            <td class="count">2</td>
-                                            <td>최근 구입강의2</td>
-                                            
-                                        </tr>
-
-                                        <tr>
-                                            <td class="count">3</td>
-                                            <td>최근 구입강의3</td>                                        
-                                        </tr>
+										</s:iterator>
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -469,18 +455,18 @@
 	
 	<!-- Load jQuery -->
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/bootstrap.min.js"></script>
+		src="../resources/javatree_view/html/js/library/bootstrap.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
+		src="../resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/scripts.js"></script>
+		src="../resources/javatree_view/html/js/scripts.js"></script>
 </body>
 </html>
