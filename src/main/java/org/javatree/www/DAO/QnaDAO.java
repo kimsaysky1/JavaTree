@@ -20,5 +20,6 @@ public interface QnaDAO {
 	public List<Question> gunggumRecentQuestionList();
 	public List<Reply> bestAllQuestionList();
 	public List<Reply> bestRecentQuestionList();
+	public void insertRereply(Rereply rereply);
 	
 }

@@ -31,6 +31,7 @@ public class QnaAction extends ActionSupport {
 	private List<Reply> bestAllQuestionList;
 	private List<Question> gunggumAllQuestionList;
 	private List<Question> gunggumRecentQuestionList;
+	private List<Rereply> rereplyList;
 	private List<Integer> typenoList;
 	private String stringForTokenizer;
 	private List<Reply> replyList;
@@ -66,6 +67,7 @@ public class QnaAction extends ActionSupport {
 		dao.insertReply(reply);
 		question = dao.selectOneQuestion(reply.getQuestionno());
 		replyList = dao.selectAllReply(reply.getQuestionno());
+		System.out.println("replyList: " + replyList);
 		return SUCCESS;
 	}
 
@@ -83,22 +85,7 @@ public class QnaAction extends ActionSupport {
 	}
 
 	public String qnaDefaultMain() throws Exception {
-
 		makeQnaDefaultMain();
-		/*
-		 * int totalCount = dao.getTotal(); System.out.println("totalCount: "
-		 * +totalCount); int countPerPage = 4; int pagePerGroup = 3;
-		 * System.out.println("currentPage: "+currentPage); pagenavi=new
-		 * PageNavigator(countPerPage, pagePerGroup, currentPage, totalCount);
-		 * RowBounds rowbound = new RowBounds(pagenavi.getStartRecord(),
-		 * pagenavi.getCountPerPage()); questionList = sqlsession.selectList(
-		 * "org.javatree.www.DAO.QnaDAO.selectAllQuestion", rowbound);
-		 * questionList = dao.selectAllQuestion(pagenavi.getStartRecord(),
-		 * pagenavi.getCountPerPage()); System.out.println("questionList: "
-		 * +questionList); System.out.println("start: "
-		 * +pagenavi.getStartPageGroup()); System.out.println("end: "
-		 * +pagenavi.getEndPageGroup());
-		 */
 		return SUCCESS;
 	}
 
@@ -144,8 +131,14 @@ public class QnaAction extends ActionSupport {
 	}
 
 	public String insertRereply() throws Exception {
+		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
+		rereply.setId("1");
+		rereply.setUsername("1");
+		rereply.setRegdate("2016-04-19");
 		System.out.println("rereply: " + rereply);
-
+		dao.insertRereply(rereply);
+		rereplyList = dao.selectAllRereply(replyno);
+		System.out.println("rereplyList: "+rereplyList);
 		return SUCCESS;
 	}
 
@@ -307,6 +300,14 @@ public class QnaAction extends ActionSupport {
 
 	public void setBestAllQuestionList(List<Reply> bestAllQuestionList) {
 		this.bestAllQuestionList = bestAllQuestionList;
+	}
+
+	public List<Rereply> getRereplyList() {
+		return rereplyList;
+	}
+
+	public void setRereplyList(List<Rereply> rereplyList) {
+		this.rereplyList = rereplyList;
 	}
 
 }
