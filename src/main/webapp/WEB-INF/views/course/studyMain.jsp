@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -323,83 +324,23 @@
 				<br>
 				<div class = "form-study">
 				
+				
+		<s:iterator value="courseList">		
 				<div class = "form-study-course">
 				         <div class="study-course-bg mc-item3">
-                        <div class="meta-categories"><a href="#">Field</a></div>
+                        <div class="meta-categories"><s:iterator value="courseTypeList" ><s:property/>&nbsp;&nbsp;&nbsp;&nbsp;</s:iterator></div>
                         <div class="content-item">
-                            <h3><a href="/javatree/course/CourseDetailStudyView.action">CourseTitle</a></h3>
+                            <h3><a href="/javatree/course/CourseDetailStudyView.action"><s:property value="coursename" /></a></h3>
                             <div class="name-author">
-                                By <a href="#">TeacherName</a>
+                                By &nbsp;<s:property value="teacherid" />
                             </div>
                             
                         </div>
                     </div>
                 </div>
+               </s:iterator>
                 
-                <div class = "form-study-course">
-				         <div class="study-course-bg mc-item3">
-                        <div class="meta-categories"><a href="#">Field</a></div>
-                        <div class="content-item">
-                            <h3><a href="course-intro.html">CourseTitle</a></h3>
-                            <div class="name-author">
-                                By <a href="#">TeacherName</a>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                
-                <div class = "form-study-course">
-				         <div class="study-course-bg mc-item3">
-                        <div class="meta-categories"><a href="#">Field</a></div>
-                        <div class="content-item">
-                            <h3><a href="course-intro.html">CourseTitle</a></h3>
-                            <div class="name-author">
-                                By <a href="#">TeacherName</a>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                
-                <div class = "form-study-course">
-				         <div class="study-course-bg mc-item3">
-                        <div class="meta-categories"><a href="#">Field</a></div>
-                        <div class="content-item">
-                            <h3><a href="course-intro.html">CourseTitle</a></h3>
-                            <div class="name-author">
-                                By <a href="#">TeacherName</a>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                
-                     <div class = "form-study-course">
-				         <div class="study-course-bg mc-item3">
-                        <div class="meta-categories"><a href="#">Field</a></div>
-                        <div class="content-item">
-                            <h3><a href="course-intro.html">CourseTitle</a></h3>
-                            <div class="name-author">
-                                By <a href="#">TeacherName</a>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                
-                     <div class = "form-study-course">
-				         <div class="study-course-bg mc-item3">
-                        <div class="meta-categories"><a href="#">Field</a></div>
-                        <div class="content-item">
-                            <h3><a href="course-intro.html">CourseTitle</a></h3>
-                            <div class="name-author">
-                                By <a href="#">TeacherName</a>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
+            
                 
                 <div class = "paging" align="center">
                		   <ul class="pager">
