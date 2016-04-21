@@ -13,6 +13,7 @@
 		<result property="regdate" column="regdate"/>
 		<result property="hitcount" column="hitcount"/>
 		<result property="curious" column="curious"/>
+		<collection property="replyList" javaType="java.util.ArrayList" column="questionno" ofType="Reply" select="selectAllReply"/>
 	</resultMap>
 	
 	<resultMap type="Reply" id="ReplyMap">
@@ -22,7 +23,8 @@
 		<result property="username" column="username"/>
 		<result property="content"  column="content"  jdbcType="CLOB" javaType="java.lang.String" typeHandler="org.apache.ibatis.type.ClobTypeHandler"/>
 		<result property="regdate" column="regdate"/>
-		<result property="recommand" column="recommand"/>
+		<result property="recommend" column="recommend"/>
+		<association property="title" javaType="String" column="questionno" select="selectTitle" />
 		<collection property="rereplyList" javaType="java.util.ArrayList" column="replyno" ofType="Rereply" select="selectAllRereply"/>
 	</resultMap>
 	
@@ -110,16 +112,16 @@
  		where rnum <![CDATA[>]]>= 1 and rnum <![CDATA[<]]>= 3
 	</select>
 	
-	<select id="bestAllQuestionList" resultMap="QuestionMap">
-		select * from question where questionno in (SELECT questionno from
-		 (select rownum as rnum, T1.* from (select * from question order by curious desc) T1)
+	<select id="bestAllQuestionList" resultMap="ReplyMap">
+		select * from reply where questionno in (SELECT questionno from
+		 (select rownum as rnum, T1.* from (select * from reply order by recommend desc) T1)
  		where rnum <![CDATA[>]]>= 1 and rnum <![CDATA[<]]>= 3)
 	</select>
 	
-	<select id="bestRecentQuestionList" resultMap="QuestionMap">
-		select * from question where questionno in (SELECT questionno from
-		 (select rownum as rnum, T1.* from (select * from question where add_months(sysdate, -3) 
-		 <![CDATA[<]]>= regdate order by curious desc) T1)
+	<select id="bestRecentQuestionList" resultMap="ReplyMap">
+		select * from reply where questionno in (SELECT questionno from
+		 (select rownum as rnum, T1.* from (select * from reply where add_months(sysdate, -3) 
+		 <![CDATA[<]]>= regdate order by recommend desc) T1)
  		where rnum <![CDATA[>]]>= 1 and rnum <![CDATA[<]]>= 3)
 	</select>
 	
@@ -136,6 +138,9 @@
 		select * from rereply where replyno = #{replyno}
 	</select>
 	
+	<select id="selectTitle" parameterType="int" resultType="String">
+		select title from question where questionno = #{questionno}
+	</select>
 	<!-- <insert id="insert"> 
 	
 	</insert> -->

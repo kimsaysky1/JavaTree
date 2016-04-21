@@ -414,7 +414,7 @@
                                     	<s:iterator value="bestAllQuestionList">
 	                                        <tr>
 	                                         <td class="count">1</td>
-	                                            <td><s:property value="title"/></td>                                          
+	                                            <td><a href="qnaDetail?questionno=<s:property value="questionno"/>">답변자: <s:property value="id"/> - <s:property value="title"/></a></td>                                          
 	                                        </tr>
                                     	</s:iterator>
                                     </tbody>
@@ -430,7 +430,7 @@
                                         <s:iterator value="bestRecentQuestionList">
 	                                        <tr>
 	                                         <td class="count">1</td>
-	                                            <td><s:property value="title"/></td>                                          
+	                                            <td><a href="qnaDetail?questionno=<s:property value="questionno"/>">질문자: <s:property value="id"/> - <s:property value="title"/></a></td>                                          
 	                                        </tr>
                                     	</s:iterator>
                                     </tbody>
@@ -466,7 +466,7 @@
  										<s:iterator value="gunggumAllQuestionList">
 	                                        <tr>
 	                                         <td class="count">1</td>
-	                                            <td><s:property value="title"/></td>                                          
+	                                            <td><a href="qnaDetail?questionno=<s:property value="questionno"/>"><s:property value="title"/></a></td>                                          
 	                                        </tr>
                                     	</s:iterator>
                                     </tbody>
@@ -482,7 +482,7 @@
                                         <s:iterator value="gunggumRecentQuestionList">
 	                                        <tr>
 	                                         <td class="count">1</td>
-	                                            <td><s:property value="title"/></td>                                          
+	                                            <td><a href="qnaDetail?questionno=<s:property value="questionno"/>"><s:property value="title"/></a></td>                                          
 	                                        </tr>
                                     	</s:iterator>
                                     </tbody>

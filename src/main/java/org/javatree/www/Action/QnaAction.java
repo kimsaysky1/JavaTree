@@ -27,8 +27,8 @@ public class QnaAction extends ActionSupport {
 	private int replyno;
 	private Rereply rereply;
 	private List<Question> questionList;
-	private List<Question> bestRecentQuestionList;
-	private List<Question> bestAllQuestionList;
+	private List<Reply> bestRecentQuestionList;
+	private List<Reply> bestAllQuestionList;
 	private List<Question> gunggumAllQuestionList;
 	private List<Question> gunggumRecentQuestionList;
 	private List<Integer> typenoList;
@@ -64,14 +64,14 @@ public class QnaAction extends ActionSupport {
 		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
 		reply.setId("1");
 		reply.setUsername("1");
-		System.out.println("reply: "+reply);
+		System.out.println("reply: " + reply);
 		dao.insertReply(reply);
 		question = dao.selectOneQuestion(reply.getQuestionno());
 		replyList = dao.selectAllReply(reply.getQuestionno());
 		return SUCCESS;
 	}
 
-	public void makeQnaDefaultMain(){
+	public void makeQnaDefaultMain() {
 		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
 		Map map = new HashMap();
 		map.put("start", 1);
@@ -81,10 +81,12 @@ public class QnaAction extends ActionSupport {
 		gunggumAllQuestionList = dao.gunggumAllQuestionList();
 		gunggumRecentQuestionList = dao.gunggumRecentQuestionList();
 		bestAllQuestionList = dao.bestAllQuestionList();
+		System.out.println("bestAllQuestionList:"+bestAllQuestionList);
 		bestRecentQuestionList = dao.bestRecentQuestionList();
 	}
+
 	public String qnaDefaultMain() throws Exception {
-		
+
 		makeQnaDefaultMain();
 		/*
 		 * int totalCount = dao.getTotal(); System.out.println("totalCount: "
@@ -256,22 +258,6 @@ public class QnaAction extends ActionSupport {
 		this.end = end;
 	}
 
-	public List<Question> getBestRecentQuestionList() {
-		return bestRecentQuestionList;
-	}
-
-	public void setBestRecentQuestionList(List<Question> bestRecentQuestionList) {
-		this.bestRecentQuestionList = bestRecentQuestionList;
-	}
-
-	public List<Question> getBestAllQuestionList() {
-		return bestAllQuestionList;
-	}
-
-	public void setBestAllQuestionList(List<Question> bestAllQuestionList) {
-		this.bestAllQuestionList = bestAllQuestionList;
-	}
-
 	public List<Question> getGunggumAllQuestionList() {
 		return gunggumAllQuestionList;
 	}
@@ -310,6 +296,22 @@ public class QnaAction extends ActionSupport {
 
 	public void setTypeno(String typeno) {
 		this.typeno = typeno;
+	}
+
+	public List<Reply> getBestRecentQuestionList() {
+		return bestRecentQuestionList;
+	}
+
+	public void setBestRecentQuestionList(List<Reply> bestRecentQuestionList) {
+		this.bestRecentQuestionList = bestRecentQuestionList;
+	}
+
+	public List<Reply> getBestAllQuestionList() {
+		return bestAllQuestionList;
+	}
+
+	public void setBestAllQuestionList(List<Reply> bestAllQuestionList) {
+		this.bestAllQuestionList = bestAllQuestionList;
 	}
 
 }

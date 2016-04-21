@@ -18,7 +18,7 @@ public interface QnaDAO {
 	public List<Question> selectAllQuestion(Map map);
 	public List<Question> gunggumAllQuestionList();
 	public List<Question> gunggumRecentQuestionList();
-	public List<Question> bestAllQuestionList();
-	public List<Question> bestRecentQuestionList();
+	public List<Reply> bestAllQuestionList();
+	public List<Reply> bestRecentQuestionList();
 	
 }
