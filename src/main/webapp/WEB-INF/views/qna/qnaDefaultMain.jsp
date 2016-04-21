@@ -76,18 +76,6 @@
                         <!-- END / POST -->
 					</s:iterator>
                         <ul class="pager">
-							<%-- <s:iterator var="counter" begin="pagenavi.startPageGroup" end="pagenavi.endPageGroup" > 
-								<li><a href="qnaDefaultMain.action?currentPage=<s:property value="#counter"/>&type=${type}&keyword=${keyword}" >
-								<s:property value="#counter"/></a></li>
-							</s:iterator>
-                        	<li><a href="qnaDefaultMain.action?currentPage=${pagenavi.currentPage - 1}&type=${type}&keyword=${keyword}">이전</a></li>
-							<li><a href="qnaDefaultMain.action?currentPage=${pagenavi.currentPage + 1}&type=${type}&keyword=${keyword}">다음</a></li> --%>
-                            <!-- <li class="pager-current">1</li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">next ›</a></li>
-                            <li><a href="#">last »</a></li> -->
                             
                             <li><a href="#" id= "watchMore">더보기</a></li>
                         </ul>
@@ -101,7 +89,7 @@
                     	<!-- 질문 버튼 -->
                     	
                     	<div class="form-submit-1">
-                    		<form action="insertQuestionReady" name="insertQuestion" method="get">
+                    		<form action="insertQuestion" name="insertQuestion" method="get">
 								<input type="button" value="WRITE QUESTION" class="mc-btn btn-style-1" data-toggle="modal" data-target="#writeQuestion"/>
                     			<div class="container">
 									<div class="modal fade" id="writeQuestion" role="dialog">

@@ -68,9 +68,149 @@
 						</div>
 					</div>
 					<!-- END / SEARCH BOX -->
+										<!-- LIST ACCOUNT INFO -->
+					<ul class="list-account-info">
+					
+					<!-- account 사진 및 로그아웃 -->
+					<li class="list-item account">
+							<div class="account-info item-click">
+								<img src="../resources/javatree_view/html/images/team-13.jpg"
+									alt="">
+							</div>
+							<div class="toggle-account toggle-list">
+								<ul class="list-account">
+									<li><a href="login.html"><i
+											class="icon md-arrow-right"></i>Log Out</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<!-- NOTIFICATION -->
+						<li class="list-item notification">
+							<div class="notification-info item-click">
+								<i class="icon md-bell"></i> <span class="itemnew"></span>
+							</div>
+							<div class="toggle-notification toggle-list">
+								<div class="list-profile-title">
+									<h4>Notification</h4>
+									<span class="count-value">2</span>
+								</div>
+
+								<ul class="list-notification">
+
+									<!-- LIST ITEM -->
+									<li class="ac-new"><a href="#">
+											<div class="list-body">
+												<div class="author">
+													<span>Megacourse</span>
+													<div class="div-x"></div>
+												</div>
+												<p>attend Salary for newbie course</p>
+											
+												<div class="time">
+													<span>5 minutes ago</span>
+												</div>
+											</div>
+									</a></li>
+									<!-- END / LIST ITEM -->
+
+									<!-- LIST ITEM -->
+									<li class="ac-new"><a href="#">
+											<div class="list-body">
+												<div class="author">
+													<span>Megacourse</span>
+													<div class="div-x"></div>
+												</div>
+												<p>attend Salary for newbie course</p>
+												
+												<div class="time">
+													<span>5 minutes ago</span>
+												</div>
+											</div>
+									</a></li>
+									<!-- END / LIST ITEM -->
+
+									<!-- LIST ITEM -->
+									<li><a href="#">
+											<div class="list-body">
+												<div class="author">
+													<span>Megacourse</span>
+													<div class="div-x"></div>
+												</div>
+												<p>attend Salary for newbie course</p>
+												
+												<div class="time">
+													<span>5 minutes ago</span>
+												</div>
+											</div>
+									</a></li>
+									<!-- END / LIST ITEM -->
+
+									<!-- LIST ITEM -->
+									<li><a href="#">
+											<div class="list-body">
+												<div class="author">
+													<span>Megacourse</span>
+													<div class="div-x"></div>
+												</div>
+												<p>attend Salary for newbie course</p>
+												
+												<div class="time">
+													<span>5 minutes ago</span>
+												</div>
+											</div>
+									</a></li>
+									<!-- END / LIST ITEM -->
+
+									<!-- LIST ITEM -->
+									<li><a href="#">
+											<div class="list-body">
+												<div class="author">
+													<span>Megacourse</span>
+													<div class="div-x"></div>
+												</div>
+												<p>attend Salary for newbie course</p>
+												
+												<div class="time">
+													<span>5 minutes ago</span>
+												</div>
+											</div>
+									</a></li>
+									<!-- END / LIST ITEM -->
+
+									<!-- LIST ITEM -->
+									<li><a href="#">
+											<div class="list-body">
+												<div class="author">
+													<span>Megacourse</span>
+													<div class="div-x"></div>
+												</div>
+												<p>attend Salary for newbie course</p>
+											
+												<div class="time">
+													<span>5 minutes ago</span>
+												</div>
+											</div>
+									</a></li>
+									<!-- END / LIST ITEM -->
+								</ul>
+							</div>
+						</li>
+						<!-- END / NOTIFICATION -->
+					</ul>
+					<!-- END / LIST ACCOUNT INFO -->
+					<ul class="menu">
+						<li class="menu-item-has-children"><a href="/javatree/course/selectAllCourseList.action" id="jt">MY PAGE</a>
+							<s:if test="%{#session.loginId != null}">
+								<ul class="sub-menu">
+									<li><a href="/javatree/course/selectAllCourseListForTeach.action">Teach MYPAGE</a></li>
+									<li><a href="/javatree/course/selectAllCourseListForStudy.action">Study MYPAGE</a></li>
+								</ul>
+							</s:if>
+						</li>
+					</ul>
 				</nav>
 				<!-- END / NAVIGATION -->
-
 			</div>
 		</header>
 		<!-- END / HEADER -->
