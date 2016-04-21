@@ -9,22 +9,11 @@ public class Reply {
 	private String username;
 	private String content;
 	private String regdate;
-	private int recommand;
+	private int recommend;
+	private String title;
 	private ArrayList<Rereply> rereplyList;
 
 	public Reply() {
-	}
-
-	public Reply(int questionno, int replyno, String id, String username, String content, String regdate, int recommand,
-			ArrayList<Rereply> rereplyList) {
-		this.questionno = questionno;
-		this.replyno = replyno;
-		this.id = id;
-		this.username = username;
-		this.content = content;
-		this.regdate = regdate;
-		this.recommand = recommand;
-		this.rereplyList = rereplyList;
 	}
 
 	public int getQuestionno() {
@@ -75,12 +64,12 @@ public class Reply {
 		this.regdate = regdate;
 	}
 
-	public int getRecommand() {
-		return recommand;
+	public int getrecommend() {
+		return recommend;
 	}
 
-	public void setRecommand(int recommand) {
-		this.recommand = recommand;
+	public void setrecommend(int recommend) {
+		this.recommend = recommend;
 	}
 
 	public ArrayList<Rereply> getRereplyList() {
@@ -91,11 +80,32 @@ public class Reply {
 		this.rereplyList = rereplyList;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	@Override
 	public String toString() {
 		return "Reply [questionno=" + questionno + ", replyno=" + replyno + ", id=" + id + ", username=" + username
-				+ ", content=" + content + ", regdate=" + regdate + ", recommand=" + recommand + ", rereplyList="
-				+ rereplyList + "]";
+				+ ", content=" + content + ", regdate=" + regdate + ", recommend=" + recommend + ", title=" + title
+				+ ", rereplyList=" + rereplyList + "]";
 	}
 
+	public Reply(int questionno, int replyno, String id, String username, String content, String regdate, int recommend,
+			String title, ArrayList<Rereply> rereplyList) {
+		this.questionno = questionno;
+		this.replyno = replyno;
+		this.id = id;
+		this.username = username;
+		this.content = content;
+		this.regdate = regdate;
+		this.recommend = recommend;
+		this.title = title;
+		this.rereplyList = rereplyList;
+	}
+	
 }

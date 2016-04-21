@@ -13,23 +13,19 @@
       values (#{id} , #{password} , #{username} , #{email})
    </insert>
    
-   <insert id="insertInterest" parameterType="list">
-   INSERT ALL
-    <foreach collection="list" item="item" separator="">
-       insert into interest (id , typeno , value)
-       values (#{item.id} , #{item.typeno} , #{item.value})
+    <insert id="insertInterest" parameterType="list">
+    <foreach collection="list" item="vo" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+       INTO interest (id , typeno , value)
+       VALUES (#{vo.id} , #{vo.typeno} , #{vo.value})
      </foreach>
-    SELECT * FROM DUAL 
+   
    </insert>   
- 
    
-   <insert id="insertAbility">
-   
-  	 insert into ability (id , typeno , value)
-      values 
-      <foreach collection="list" item="item" separator=",">
-	      (#{item.id} , #{item.typeno} , #{item.value})
-      </foreach>
+   <insert id="insertAbility" parameterType="list">
+      <foreach collection="list" item="vo" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+       INTO ability (id , typeno , value)
+       VALUES (#{vo.id} , #{vo.typeno} , #{vo.value})
+     </foreach>
    </insert>   
 	
 	
