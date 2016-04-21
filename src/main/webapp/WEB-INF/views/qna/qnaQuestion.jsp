@@ -48,7 +48,7 @@
 						<form action="insertQuestion" method="post">
 							<table style='width: 600px;'>
 								<tr>
-									<td style='width: 100px; text-align:center;'><b>FIELD</b></td>
+									<td style="width: 100px; text-align:center;"><b>FIELD</b></td>
 									<td><select id="typeno" name="typeno" style="width: 100px;">
 									 <option value="1">PUREJAVA</option>
 									 <option value="2">WEB</option>

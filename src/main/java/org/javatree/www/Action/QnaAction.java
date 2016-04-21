@@ -48,7 +48,6 @@ public class QnaAction extends ActionSupport {
 		question.setUsername("1");
 		question.setTypeno(Integer.parseInt(typeno));
 		question.setCodingno(1);
-		System.out.println("question: " + question);
 		dao.insertQuestion(question);
 		makeQnaDefaultMain();
 		return SUCCESS;
@@ -64,7 +63,6 @@ public class QnaAction extends ActionSupport {
 		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
 		reply.setId("1");
 		reply.setUsername("1");
-		System.out.println("reply: " + reply);
 		dao.insertReply(reply);
 		question = dao.selectOneQuestion(reply.getQuestionno());
 		replyList = dao.selectAllReply(reply.getQuestionno());
@@ -81,7 +79,6 @@ public class QnaAction extends ActionSupport {
 		gunggumAllQuestionList = dao.gunggumAllQuestionList();
 		gunggumRecentQuestionList = dao.gunggumRecentQuestionList();
 		bestAllQuestionList = dao.bestAllQuestionList();
-		System.out.println("bestAllQuestionList:"+bestAllQuestionList);
 		bestRecentQuestionList = dao.bestRecentQuestionList();
 	}
 
@@ -124,7 +121,6 @@ public class QnaAction extends ActionSupport {
 	public String plusQnaDefaultMain() throws Exception {
 		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
 		Map map = new HashMap();
-		System.out.println("stringForTokenizer.length(): " + stringForTokenizer.length());
 		if (stringForTokenizer.length() >= 2) {
 			StringTokenizer st = new StringTokenizer(stringForTokenizer, ",");
 			typenoList = new ArrayList<>();
@@ -136,7 +132,6 @@ public class QnaAction extends ActionSupport {
 		}
 		map.put("start", start);
 		map.put("end", end);
-		System.out.println("typenoList plus: " + typenoList);
 		questionList = dao.selectAllQuestion(map);
 		return SUCCESS;
 	}
