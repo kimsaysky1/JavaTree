@@ -4,30 +4,29 @@
      	order by sl.startdate desc
 
  CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
-     	
-     	/* �ٲٱ� */
+  
 alter table studylecture add (courseno number(6,0) NOT NULL)
---�߰��� ������ �͵�
+
 ALTER TABLE teachcourse ADD (startdate date DEFAULT sysdate NOT NULL);
 alter table course drop column typeno;
 alter table course add (regdate date default sysdate not null);
 alter table coding add (codinganswer clob not null);
-alter table coding drop column lectureno;--20160419�߰�
+alter table coding drop column lectureno;
 
-CREATE TABLE lecturecoding--20160419�߰�
+CREATE TABLE lecturecoding
 (
 	lectureno number(6,0) NOT NULL,
 	codingno number(6,0) NOT NULL
 );
 
-ALTER TABLE lecturecoding--20160419�߰�
+ALTER TABLE lecturecoding
 	ADD FOREIGN KEY (lectureno)
 	REFERENCES lecture (lectureno)
 	ADD FOREIGN KEY (codingno)
 	REFERENCES coding (codingno)
 ;
 
-alter table coding drop column typeno;--20160419�߰�
+alter table coding drop column typeno;
 
 
 /* Drop Tables */
@@ -54,7 +53,6 @@ DROP TABLE push CASCADE CONSTRAINTS;
 DROP TABLE member_jt CASCADE CONSTRAINTS;
 DROP TABLE typename CASCADE CONSTRAINTS;
 
---typename ���̺� �� �ֱ�
 insert into typename values('purejava', 1);
 insert into typename values('web', 2);
 insert into typename values('mobile', 3);
@@ -74,7 +72,6 @@ select courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/m
 
 /* Create Tables */
 
--- �� ���̺� : (1)ȸ�� ���̺�
 CREATE TABLE member_jt
 (
 	point number(10,0) DEFAULT 0 NOT NULL,
@@ -88,7 +85,7 @@ CREATE TABLE member_jt
 	PRIMARY KEY (id)
 );
 
--- �� ���̺� : (2)���ɺо� ���̺�
+
 CREATE TABLE interest
 (
 	id varchar2(20) NOT NULL,
@@ -96,7 +93,6 @@ CREATE TABLE interest
 	value number(1,0) NOT NULL
 );
 
--- �� ���̺� : (3)�ڰ����� ���̺�
 CREATE TABLE ability
 (
 	id varchar2(20) NOT NULL,
@@ -104,7 +100,6 @@ CREATE TABLE ability
 	value number(1,0) NOT NULL
 );
 
--- �� ���̺� : (4)�л�����������
 CREATE TABLE studycodingbox
 (
 	id varchar2(20) NOT NULL,
@@ -112,7 +107,7 @@ CREATE TABLE studycodingbox
 	coding clob
 );
 
--- �� ���̺� : (5)��ü ���� ���̺�
+
 CREATE TABLE course
 (
 	courseno number(6,0) NOT NULL,
@@ -124,8 +119,8 @@ CREATE TABLE course
 	PRIMARY KEY (courseno)
 );
 CREATE sequence course_seq start with 1 increment by 1;
+drop sequence course_seq;
 
--- �� ���̺� : (6)���� �� �о� ���̺�
 CREATE TABLE coursetype
 (
 	courseno number(6,0) NOT NULL,
@@ -133,7 +128,6 @@ CREATE TABLE coursetype
 );
 
 
--- �� ���̺� : (7)��ü ���� ���̺�  - ���¸��� �ٸ� [���� ���̺�]����
 CREATE TABLE lecture
 (
 	courseno number(6,0) NOT NULL,
@@ -145,9 +139,8 @@ CREATE TABLE lecture
 	PRIMARY KEY (lectureno)
 );
 CREATE sequence lecture_seq start with 1 increment by 1;
+drop sequence lecture_seq;
 
-
--- �� ���̺� : (8)�ڵ� ���� ���� ���̺�
 CREATE TABLE coding
 (
 	codingno number(6,0) NOT NULL,
@@ -159,7 +152,6 @@ CREATE TABLE coding
 );
 
 
--- �� ���̺� : (9)((Ư�� ȸ�� ����) �ڽ��� ����ġ�� ���� ���̺�
 CREATE TABLE teachcourse
 (
 	id varchar2(20) NOT NULL,
@@ -168,7 +160,7 @@ CREATE TABLE teachcourse
 );
 
 
--- �� ���̺� : (10)(Ư�� ȸ�� ����) �ڽ��� ����ġ�� ���� ���̺�
+
 CREATE TABLE teachlecture
 (
 	id varchar2(20) NOT NULL,
@@ -178,7 +170,7 @@ CREATE TABLE teachlecture
 	studentcount number(6,0) NOT NULL
 );
 
--- �� ���̺� : (12)���� û�� ���� ���̺�
+
 CREATE TABLE checklecture
 (
 	id varchar2(20) NOT NULL,
@@ -187,7 +179,7 @@ CREATE TABLE checklecture
 	watchedcheck varchar2(3) NOT NULL
 );
 
--- �� ���̺� : (12)(Ư�� ȸ�� ����) �ڽ��� ���� ���� ���̺�
+
 CREATE TABLE studylecture
 (
 	id varchar2(20) NOT NULL,
@@ -196,7 +188,6 @@ CREATE TABLE studylecture
 	enddate date NOT NULL
 );
 
--- �� ���̺� : (15) ���� ���̺�
 CREATE TABLE question
 (
 	questionno number(6,0) NOT NULL,
@@ -213,7 +204,7 @@ CREATE TABLE question
 );
 
 
--- �� ���̺� : (16) �亯 ���̺�
+
 CREATE TABLE reply
 (
 	questionno number(6,0) NOT NULL,
@@ -227,7 +218,7 @@ CREATE TABLE reply
 );
 
 
--- �� ���̺� : (17) (�亯��) ��� ���̺�
+
 CREATE TABLE rereply
 (
 	replyno number(10,0) NOT NULL,
@@ -237,7 +228,6 @@ CREATE TABLE rereply
 	username varchar2(20) NOT NULL
 );
 
--- �� ���̺� : (18)���� ���̺�
 CREATE TABLE error
 (
 	errorname varchar2(50) NOT NULL,
@@ -246,7 +236,7 @@ CREATE TABLE error
 );
 
 
--- �� ���̺� : (19)�о� ���̺�
+
 CREATE TABLE typename
 (
 	type varchar2(50) NOT NULL,
@@ -257,10 +247,6 @@ CREATE TABLE typename
 
 
 
---������ �������̺�
-
-
--- �� ���̺�
 CREATE TABLE push
 (
 	senderid varchar2(20) NOT NULL,
@@ -270,7 +256,7 @@ CREATE TABLE push
 );
 
 
--- �� ���̺�
+
 CREATE TABLE studycourse
 (
 	id varchar2(20) NOT NULL,
@@ -283,7 +269,7 @@ CREATE TABLE studycourse
 
 
 
--- �� ���̺�
+
 CREATE TABLE subnote
 (
 	id varchar2(20) NOT NULL,
