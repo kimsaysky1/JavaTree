@@ -77,7 +77,7 @@ public class MemberAction extends ActionSupport implements SessionAware {
 	}
 	
 	
-	public void insertMember() {
+	public String insertMember() {
 		
 		System.out.println("액션 insertMember 시작");
 		
@@ -142,6 +142,7 @@ public class MemberAction extends ActionSupport implements SessionAware {
 		
 		dao.insertAbility(abilityList);
 	
+		return SUCCESS;
 	}
 	
 	

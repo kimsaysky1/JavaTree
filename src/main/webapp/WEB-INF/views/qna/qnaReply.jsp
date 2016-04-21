@@ -91,7 +91,7 @@
 				</div>
 			</div>
 		</section>
-
+	
 	<!-- Load jQuery -->
 	<script type="text/javascript"
 		src="../resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
