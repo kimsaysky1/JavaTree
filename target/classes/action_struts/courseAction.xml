@@ -21,8 +21,8 @@
         	<result type="json"></result>
         </action>
         
-        <action name="plusStudyMain" class="org.javatree.www.Action.CourseAction" method="plusStudyMain">
-        	<result type="json"></result>
+     	<action name="plusStudyMain" class="org.javatree.www.Action.CourseAction" method="plusStudyMain">
+        	<result>/WEB-INF/views/course/studyMain.jsp</result>
         </action>
        
         <action name="teachMainView">

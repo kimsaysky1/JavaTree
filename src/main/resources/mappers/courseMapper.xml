@@ -132,9 +132,9 @@
     <!-- studyMain 초기(전체) 페이징  -->
 	<select id="pagingStudyCourse" resultMap="sCourseMap" parameterType="map">
 		SELECT id, courseno, coursename, teacherid 
-		from (select rownum as rnum, T1.* from (select * from studycourse where id = #{id} group by courseno, id, coursename, teacherid order by courseno desc) T1)
+		from (select rownum as rnum, T1.* from (select * from studycourse where id = #{id} 
+		group by courseno, id, coursename, teacherid order by courseno desc) T1)
 		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
-		
 	</select>
      
      <!-- 전체 갯수 -->
