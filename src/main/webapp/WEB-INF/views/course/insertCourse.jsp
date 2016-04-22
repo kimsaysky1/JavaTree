@@ -96,7 +96,7 @@
 			checkRow = '';    //checkRow초기화.
 		}
 		alert(rowid);    //'value1', 'value2', 'value3' 의 형태로 출력된다.  */
-	
+	/* location.href="/SEBank/admin/answerlist.action?currentPage="+currentPage+"&searchField="+field.value+"&searchText="+text.value; */
 	form.submit();
 }
  
@@ -426,7 +426,7 @@
 		    <h2>insert COURSE</h2>
 		    
 <form action="insertCourse" method="post" id="insertCourseForm"> 
-		    
+    
                     <div class="create-course-content">
 
                         <!-- PROMO VIDEO -->

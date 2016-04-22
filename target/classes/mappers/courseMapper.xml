@@ -4,6 +4,24 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.javatree.www.DAO.courseDAO">
 	
+<!-- 	<resultMap type="lecture" id="LectureMap">
+		<result property="courseno" column="courseno"/>
+		<result property="lectureno" column="lectureno"/>
+		<result property="lecturename" column="lecturename"/>
+		<result property="regdate" column="regdate"/>
+		<result property="originalfilename" column="originalfilename"/>
+		<result property="uploadedfilename" column="uploadedfilename"/>
+	</resultMap> -->
+	
+	<!-- <resultMap type="Coding" id="CodingMap">
+		<result property="codingno" column="codingno"/>
+		<result property="codingquestion" column="codingquestion"/>
+		<result property="codingtemplet"  column="codingtemplet"  jdbcType="CLOB" javaType="java.lang.String" typeHandler="org.apache.ibatis.type.ClobTypeHandler"/>
+		<result property="codinganswer"  column="codinganswer"  jdbcType="CLOB" javaType="java.lang.String" typeHandler="org.apache.ibatis.type.ClobTypeHandler"/>
+		<result property="regdate"  column="regdate"/>
+	</resultMap> -->
+	
+	
 	 <resultMap type="Course" id="sCourseMap">
        <result property="id" column="id"/>
       <result property="courseno" column="courseno"/>
@@ -124,44 +142,46 @@
     		select max(courseno) from course 
   		</selectKey>
       		insert into teachcourse (id, courseno, coursename, startdate)
-     		values (#{id}, #{courseno}, #{coursename},sysdate )
+     		values (#{id}, #{courseno}, #{coursename},sysdate)
   	</insert>
+	
 	
 	<!-- 강의 등록 - insertLecture -->
 
-	<insert id="insertLectureType" parameterType="map">
+	<insert id="insertLecture" parameterType="Lecture">
+		insert into lecture (courseno, lectureno, lecturename, regdate , originalfilename, uploadedfilename)
+		values (#{courseno}, lecture_seq.nextVal, #{lecturename}, sysdate, #{originalfilename} , #{uploadedfilename}) 
+	</insert>
 	
-		<!-- <selectKey keyProperty="courseno" resultType="int" order="BEFORE">
-    		select max(courseno) from course 
-  		</selectKey> -->
-
-		insert into lecture (courseno, lectureno, lecturename, regdate 
-		<if test="originalfile != null"> , originalfilename, uploadedfilename </if>
+	<!-- insert subnote -->
+	 <insert id="insertSubnote" parameterType="Subnote">
+		<selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
+    		select max(lectureno) from lecture 
+  		</selectKey>
 	
-		) values (courseno, lecture_seq.nextVal, #{lecturename}, sysdate 
-		<if test="originalfile != null"> , #{originalfilename} , #{uploadedfilename} </if>
-		) 
-		
+		insert into subnote (id, subnoteno
+		<if test="originalfilename != null"> , originalfilename, uploadedfilename </if>
+		, lectureno) values (#{id}, subnote_seq.nextVal  
+		<if test="originalfilename != null"> , #{originalfilename} , #{uploadedfilename} </if>
+		,#{lectureno}) 
 	</insert>
 	
 	<!-- lecturecoding -->
- 	<insert id="insertlecturecoding" parameterType="map">
-       <selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
+	<!-- <insert id="insertlecturecoding">
+        <selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
     		select max(lectureno) from lecture 
   		</selectKey>
       	insert into coursetype (lectureno , codingno)
      	values (#{lectureno}, #{codingno})
-  	</insert>
+  	</insert> -->
   	
   	
   	<!-- Coding -->
-  	<insert id="insertCoding" parameterType="map">
-  	 	<selectKey keyProperty="courseno" resultType="int" order="BEFORE">
-    		select max(courseno) from course 
-  		</selectKey>
-      		insert into coding (codingno, courseno, coursename, startdate)
-     		values (#{id}, #{courseno}, #{coursename},sysdate )
-  	</insert>
+<!--   	<insert id="insertCoding" parameterMap="CodingMap">
+  	 	
+      		insert into coding (codingno, codingquestion, codingtemplet, codinganswer, regdate)
+     		values (lecture_seq.nextVal, #{codingquestion}, #{codingtemplet:VARCHAR}, #{codinganswer:VARCHAR}, regdate)
+  	</insert> -->
 	
 	
 	<!-- teachcourse 리스트 의 갯수 -->

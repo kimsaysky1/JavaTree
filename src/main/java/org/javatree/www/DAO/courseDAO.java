@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
+import org.javatree.www.VO.Coding;
 import org.javatree.www.VO.Course;
 import org.javatree.www.VO.Lecture;
+import org.javatree.www.VO.Subnote;
 
 public interface courseDAO {
 
@@ -22,6 +24,11 @@ public interface courseDAO {
 	public void insertCourseType(Map<String, Object> map);
 	public void insertTeachCourse(Map<String, Object> map);
 	public void insertLecture(Lecture lecture);
+	public void insertLectureCoding();
+	public void insertCoding(Coding coding);
+	public void insertSubnote(Subnote subnote);
+	
 	public ArrayList<Course> studyMainView(Map<String, Object> kong);
+	
 	
 }

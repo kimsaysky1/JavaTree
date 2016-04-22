@@ -7,6 +7,7 @@ alter table course add (regdate date default sysdate not null);
 alter table coding add (codinganswer clob not null);
 alter table coding drop column lectureno;--20160419추가
 
+
 CREATE TABLE lecturecoding--20160419추가
 (
 	lectureno number(6,0) NOT NULL,
@@ -21,6 +22,17 @@ ALTER TABLE lecturecoding--20160419추가
 ;
 
 alter table coding drop column typeno;--20160419추가
+
+alter table subnote modify originalfilename null--20160421추가
+alter table subnote modify uploadedfilename null--20160421추가
+
+--notnull제거
+--ALTER TABLE 테이블명 MODIFY 컬러명 NULL;
+--ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건명
+
+alter table lecture modity (uploadedfilename varchar2(900));
+alter table lecture modify (originalfilename varchar2(500));--20160422 수지
+
 
 
 /* Drop Tables */
@@ -287,6 +299,7 @@ CREATE TABLE subnote
 	PRIMARY KEY (subnoteno)
 );
 
+CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가
 
 
 
