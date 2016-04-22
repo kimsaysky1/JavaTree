@@ -67,6 +67,9 @@
    		</if>
 		) T1)
 		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
+		<if test="searchText != null">
+		and coursename = #{searchText}
+		</if>
 	</select>
 	
 	<select id="selectDefaultTotal" resultType="int" parameterType="map">
@@ -79,6 +82,9 @@
    		order by courseno desc
    		</if>
 		) T1)
+		<if test="searchText != null">
+		where coursename = #{searchText}
+		</if>
 		
 	</select>
 	

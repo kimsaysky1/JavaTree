@@ -162,8 +162,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		//login시 활동들(임시)
 		 // 임시로 session에 아이디를 집어넣음, test완료 후 삭제 요망
 		session.put("loginId", "1");
-		
-
+			
 			String storedid = (String) session.get("loginId");
 			System.out.println("로그인한 아이디>> " + storedid);
 			
@@ -173,9 +172,9 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			System.out.println("all>>" + allRank);
 			System.out.println("recent>> " + recentRank);
 			
+			
 			Map<String, Object> kong = new HashMap<>();
 			kong.put("id", storedid);
-			//kong.put("searchText", null);
 			
 			start = 1;
 			end = 7;
@@ -200,7 +199,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			}
 					
 			session.put("currentPage", currentPage);
-			//session.put("searchText", searchText);
+			session.put("searchText", searchText);
 			session.put("CountPerPage", countPerPage);
 			session.put("endPageGroup", endPageGroup);
 			
@@ -241,7 +240,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		end = countPerPage*currentPage;
 		gong.put("start", start);
 		gong.put("end", end);
-		
+		/*gong.put("searchText", "%"+searchText+"%");*/
 		System.out.println("start>> " + start);
 		System.out.println("end>> " + end);
 		

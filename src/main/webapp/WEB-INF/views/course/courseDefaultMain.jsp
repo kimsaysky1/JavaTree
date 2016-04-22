@@ -119,10 +119,10 @@
 
 					<!-- SEARCH BOX -->
 					<div class="search-box">
-						<i class="icon md-search"></i>
+						<i class="icon md-search" ></i>
 						<div class="search-inner">
 							<form>
-								<input type="text" placeholder="key words">
+								<input type="text" placeholder="key words" >
 							</form>
 						</div>
 					</div>
@@ -432,10 +432,10 @@
                             <h4 class="sm">Search Course</h4>
                             <form>
                                 <div class="form-item">
-                                    <input type="text">
+                                    <input type="text" id="searchText">
                                 </div>
                                 <div class="form-actions">
-                                    <input type="submit">
+                                    <input type="submit" id="searchIcon">
                                 </div>
                             </form>
                         </div>
@@ -577,8 +577,16 @@ $(function(){
 		 str = '';
 	 });
 
+	 $("#searchIcon").on("click", function(){
+	 	
+		 	var text = '';
+		 	text = $("#searchText").val();
+	 	 	alert(text);
+	 });
 });	
 	
+	
+
 </script>
 		
 </body>
