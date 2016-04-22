@@ -1,12 +1,17 @@
 package org.javatree.www.VO;
 
 public class Subnote {
-	private int id;
+	private String id;
 	private int subnoteno;
 	private String originalfilename;
 	private String uploadedfilename;
 	private int lectureno;
-	public Subnote(int id, int subnoteno, String originalfilename, String uploadedfilename, int lectureno) {
+	
+	
+	public Subnote() {
+		super();
+	}
+	public Subnote(String id, int subnoteno, String originalfilename, String uploadedfilename, int lectureno) {
 		super();
 		this.id = id;
 		this.subnoteno = subnoteno;
@@ -14,13 +19,10 @@ public class Subnote {
 		this.uploadedfilename = uploadedfilename;
 		this.lectureno = lectureno;
 	}
-	public Subnote() {
-		super();
-	}
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public int getSubnoteno() {
@@ -52,5 +54,6 @@ public class Subnote {
 		return "Subnote [id=" + id + ", subnoteno=" + subnoteno + ", originalfilename=" + originalfilename
 				+ ", uploadedfilename=" + uploadedfilename + ", lectureno=" + lectureno + "]";
 	}
+	
 	
 }

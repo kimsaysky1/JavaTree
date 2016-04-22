@@ -321,13 +321,13 @@
 <!-- 강좌 리스트 뿌리기 시작 -->			
 <div class="blog-list-content">
      
-     <s:iterator value="courseList">
+     <s:iterator value="courseList" status="incr">
      	
 		<!-- start post -->
-     				<div class="post">
+     				<div class="post" id = "<s:property value="%{#incr.index+1}"/>"> 
                             <div class="post-body">
                                 <div class="post-title">
-                                    <h3 class="md"><a href="blog-single.jsp?courseno=<s:property value="courseno" />">
+                                    <h3 class="md"><a href="selectCourseDefaultDetail.action?courseno=<s:property value="courseno" />">
                                     <s:property value="coursename" /></a></h3>
                                 </div>
                                 	<div class="post-meta">
@@ -336,7 +336,7 @@
                                    <div class="post-link">
                                     <a href="blog-single.jsp?courseno=<s:property value="courseno" />">
                                         <i class="fa fa-play-circle-o"></i>
-                                        Read More
+                                        Lecture List
                                     </a>
                                 	</div>                           
                             </div>
@@ -394,13 +394,14 @@
 				<a href = "getAllCourseList.action?currentPage=${pagenavi.currentPage + 1}&&searchText=${searchText}">&gt 
 				</a> --%>
                             
-                          <li class="pager-current">1</li>
+                          <!-- <li class="pager-current">1</li>
                             <li><a href="#">2</a></li>
                             <li><a href="#">3</a></li>
                             <li><a href="#">4</a></li>
                             <li><a href="#">next ›</a></li>
-                            <li><a href="#">last »</a></li> 
-                            
+                            <li><a href="#">last »</a></li>  -->
+                            <li><a href="#" id= "watchMore">더보기</a></li>
+                            </ul>
                     </div>
                 </div>
                 
@@ -529,7 +530,7 @@
 		
 <script>
 	
-$(document).ready(function() {
+$(function(){
 	 
 	 $("#searchByField").click(function(){
 		 var str = '';
@@ -557,7 +558,46 @@ $(document).ready(function() {
 		 });
 		 str = '';
 	 });
+
+	
+$("body").on('click', '#watchMore', function(){
+	
+	
+	
+	var start = $(".blog-list-content > div:last").attr('id');
+	start = parseInt(start) + 1;
+	var end = start + 1;
+	var stringForTokenizer = '';
+	//var test = $("[name=interest]");
+/* 	for(var i = 0; i < test.length; i++){
+		if(test[i].checked){
+			stringForTokenizer += test[i].value + ',';
+		}
+	} */
+	
+	alert(start);
+	alert(end);
+	$.ajax({
+		type: 'GET'
+		, url: 'plusCourseDefaultMain'
+		, data : 'start='+start+'&end='+end
+		, dataType : 'json'
+		, success : function(response){
+			var indexNum = start;
+			var list = response.courseList;
+			list.forEach(function(course){
+				var divTag = $('<div class="post" id='+(indexNum++)+'><div class="post-body"></div></div>');
+				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
+				+course.coursename+'</a></h3></div><div class="post-meta">by'
+				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
+				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').insertAfter(".blog-list-content > div:last");
+			
+			});
+		}
+	});
+	//event.preventDefault(); 
 });
+});	
 	
 </script>
 		

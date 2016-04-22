@@ -1,7 +1,6 @@
-  		select c.coursename
-     	from course c, studylecture sl
-     	where c.courseno = sl.courseno and sl.id = 2 and sl.startdate < sysdate and rownum < 4 
-     	order by sl.startdate desc
+SELECT id, courseno, coursename, teacherid 
+from (select rownum as rnum, T1.* from (select * from studycourse where id = 2 group by courseno, id, coursename, teacherid order by courseno desc) T1)
+where rnum >= 1 and rnum <= 2
 
  CREATE sequence subnote_seq start with 1 increment by 1;--20160421ì¶”ê°€    	
   
@@ -13,7 +12,12 @@ alter table course add (regdate date default sysdate not null);
 alter table coding add (codinganswer clob not null);
 alter table coding drop column lectureno;
 
+<<<<<<< HEAD
+
+CREATE TABLE lecturecoding--20160419Ãß°¡
+=======
 CREATE TABLE lecturecoding
+>>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
 (
 	lectureno number(6,0) NOT NULL,
 	codingno number(6,0) NOT NULL
@@ -27,6 +31,17 @@ ALTER TABLE lecturecoding
 ;
 
 alter table coding drop column typeno;
+
+alter table subnote modify originalfilename null--20160421Ãß°¡
+alter table subnote modify uploadedfilename null--20160421Ãß°¡
+
+--notnullÁ¦°Å
+--ALTER TABLE Å×ÀÌºí¸í MODIFY ÄÃ·¯¸í NULL;
+--ALTER TABLE Å×ÀÌºí¸í DROP CONSTRAINT Á¦¾àÁ¶°Ç¸í
+
+alter table lecture modity (uploadedfilename varchar2(900));
+alter table lecture modify (originalfilename varchar2(500));--20160422 ¼öÁö
+
 
 
 /* Drop Tables */
@@ -280,6 +295,7 @@ CREATE TABLE subnote
 	PRIMARY KEY (subnoteno)
 );
 
+CREATE sequence subnote_seq start with 1 increment by 1;--20160421Ãß°¡
 
 
 

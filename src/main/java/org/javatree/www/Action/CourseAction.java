@@ -4,14 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.struts2.interceptor.SessionAware;
+import org.javatree.www.DAO.QnaDAO;
 import org.javatree.www.DAO.courseDAO;
-import org.javatree.www.Util.FileService;
 import org.javatree.www.Util.PageNavigator;
 import org.javatree.www.VO.Coding;
 import org.javatree.www.VO.Error;
@@ -20,6 +22,7 @@ import org.javatree.www.VO.Course;
 import org.javatree.www.VO.Lecture;
 import org.javatree.www.VO.Member_jt;
 import org.javatree.www.VO.Question;
+import org.javatree.www.VO.Subnote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +37,71 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		setter getter 주고받는것들. 꼭만들어줘야한다.
 	 * 
 	 * **/
-	String str;
-	String message;
-	Coding coding;
-	Course course;
-	Lecture lecture;
-	ArrayList<Coding> codingList;
-	ArrayList<Course> teachCourseList;
+	private String str;
+	private String message;
+	private Coding coding;
+	private Course course;
+	private Lecture lecture;
+	private ArrayList<Coding> codingList;
+	private ArrayList<Course> teachCourseList;
 	private ArrayList<Course> courseList;
+<<<<<<< HEAD
+	private ArrayList<Lecture> lectureList;
+	private Member_jt member_jt;
+	private Question question;
+	private Error error;
+	private String id;
+	private String username;
+	private int courseno;
+	private int lectureno;
+	private int codingno;
+	private String content;
+	
+	private String coursename;
+	private String teacherid;
+	private boolean check;
+	
+	private PageNavigator navi;
+	private int currentPage;
+	private int page;
+	private int total;
+	
+	
+
+	private ArrayList<Course> recentRank;
+	private ArrayList<Course> allRank;
+	private String interestString;
+	
+	private String purejava;
+	private String web;
+	private String mobile;
+	private String iot;
+	private String swing;
+	private String jdbc;
+	private String api;
+	private String spring;
+	private String struts;
+	private String etcframework;
+	private String ect;
+	private ArrayList<String> courseTypeList;
+	private String lecturename;
+	private String regdate;
+	private String uploadedfilename, originalfilename;
+	private Subnote subnote;
+	
+	private static final String UploadPath="C:/coding/";
+	
+	/*private List<File> upload = new ArrayList<File>();
+	private List<String> uploadContentType= new ArrayList<String>();
+	private List<String> uploadFileName=new ArrayList<String>();
+	*/
+	private File saveFile;
+	
+	private List<File> upload = new ArrayList<File>();
+	private List<String> uploadFileName = new ArrayList<String>();
+	private List<String> uploadContentType = new ArrayList<String>();
+	
+=======
 	ArrayList<Lecture> lectureList;
 	Member_jt member_jt;
 	Question question;
@@ -83,6 +143,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	String regdate;
 	File upload;
 	String uploadedfilename, originalfilename;
+>>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
 	
 	ArrayList<Lecture> recentlyCompletedLectureList;
 	ArrayList<Lecture> latelyPurchasedLectureList;
@@ -92,8 +153,14 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	@Autowired
 	SqlSession sqlSession;
 	
+<<<<<<< HEAD
+=======
 	courseDAO dao;
 	
+	int start;
+	int end;
+	
+>>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		session=arg0;
@@ -147,20 +214,46 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			//베스트 강좌 (역대, 최신)
 			allRank = dao.selectAllRank();
 			recentRank = dao.selectRecentRank();
-			System.out.println("all>>" + allRank);
-			System.out.println("recent>> " + recentRank);
+//			System.out.println("all>>" + allRank);
+//			System.out.println("recent>> " + recentRank);
 			
 			Map<String, Object> kong = new HashMap<>();
 			kong.put("id", storedid);
 			kong.put("searchText", null);
 			
-			courseList= dao.selectAllCourseList(kong);
-		
+			/*courseList= dao.selectAllCourseList(kong);*/
+			Map gong = new HashMap();
+			gong.put("start", 1);
+			gong.put("end", 2);
+			
+			courseList = dao.pagingCourse(gong);
 		}
 		
 		System.out.println("selectAllCourseList>> "+courseList);
 		return SUCCESS;
 	}
+	
+	public String plusCourseDefaultMain() throws Exception {
+		courseDAO dao = sqlSession.getMapper(courseDAO.class);
+		Map gong = new HashMap();
+		/*System.out.println("stringForTokenizer.length(): " + stringForTokenizer.length());*/
+		/*if (stringForTokenizer.length() >= 2) {
+			StringTokenizer st = new StringTokenizer(stringForTokenizer, ",");
+			typenoList = new ArrayList<>();
+			while (st.hasMoreTokens()) {
+				String temp = st.nextToken();
+				typenoList.add(Integer.parseInt(temp));
+			}
+			map.put("typenoList", typenoList);
+		}*/
+		gong.put("start", start);
+		gong.put("end", end);
+		/*System.out.println("typenoList plus: " + typenoList);*/
+		courseList = dao.pagingCourse(gong);
+		System.out.println(courseList);
+		return SUCCESS;
+	}
+	
 	
 	public String studyMainView(){
 		
@@ -168,8 +261,16 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		
 		courseDAO dao = sqlSession.getMapper(courseDAO.class);
 		
+		start = 1;
+		end = 2;
+		
+		System.out.println("start>> " + start);
+		System.out.println("end>> " + end);
+		
 		Map<String, Object> kong = new HashMap<>();
 		kong.put("id", id);
+		kong.put("start", start);
+		kong.put("end", end);
 		
 		ArrayList<String> tempList1 = new ArrayList<>();
 		tempList1 =  dao.selectLatelyPurchasedLectureList1(kong);
@@ -203,7 +304,8 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		
 		System.out.println(recentlyCompletedLectureList);
 		
-		courseList = dao.studyMainView(kong);
+		//courseList = dao.studyMainView(kong);
+		courseList = dao.pagingStudyCourse(kong);
 		
 		System.out.println(courseList.toString());
 		
@@ -255,11 +357,120 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			
 		}
 		
-		System.out.println(courseList);
+		System.out.println("studymainview-list>>" + courseList);
+		//searchText = null;
+		int totalCount = dao.selectTotal(kong);
+		int countPerPage = Integer.parseInt(getText("2"));		//페이지당 글목록 수
+		int pagePerGroup = Integer.parseInt(getText("2"));		//그룹당 페이지 수
+		if(currentPage == 0){
+			currentPage = 1;
+		}
+		navi=new PageNavigator(countPerPage, pagePerGroup, currentPage, totalCount);
+		
+		session.put("currentPage", currentPage);
+		//session.put("searchText", searchText);
+		session.put("getStartRecord", navi.getStartRecord());
+		session.put("getCountPerPage", navi.getCountPerPage());
 		
 		return SUCCESS;
 		
 	}
+	
+	public String plusStudyMain() {
+		Map gong = new HashMap();
+		gong.put("id", "2");
+		courseDAO dao = sqlSession.getMapper(courseDAO.class);
+		
+		if(session.get("searchText") == null) searchText = null;
+		int totalCount=dao.selectTotal(gong);
+		int countPerPage = Integer.parseInt(getText("2"));		//페이지당 글목록 수
+		int pagePerGroup = Integer.parseInt(getText("2"));		//그룹당 페이지 수
+		int nowPage = 0;
+		if(session.get("currentPage") != null){
+			nowPage = Integer.parseInt( session.get("currentPage").toString());
+		}else {
+			session.put("currentPage", 1);
+			nowPage = 1;
+		}		
+
+		navi=new PageNavigator(countPerPage, pagePerGroup, nowPage, totalCount);
+		start = Integer.parseInt( session.get("getStartRecord").toString());
+		end = Integer.parseInt(session.get("getCountPerPage").toString());
+		
+		/*System.out.println("stringForTokenizer.length(): " + stringForTokenizer.length());*/
+		/*if (stringForTokenizer.length() >= 2) {
+			StringTokenizer st = new StringTokenizer(stringForTokenizer, ",");
+			typenoList = new ArrayList<>();
+			while (st.hasMoreTokens()) {
+				String temp = st.nextToken();
+				typenoList.add(Integer.parseInt(temp));
+			}
+			map.put("typenoList", typenoList);
+		}*/
+		
+		//session에서 loginId 받아와야 합니다.
+		
+		
+		gong.put("start", start);
+		gong.put("end", end);
+		/*System.out.println("typenoList plus: " + typenoList);*/
+		courseList = dao.pagingStudyCourse(gong);
+		
+for (int i = 0; i < courseList.size(); i++) {
+			
+			for (int j = 0; j < courseList.get(i).getCourseTypeList().size(); j++) {
+				
+				String key = courseList.get(i).getCourseTypeList().get(j);
+				
+				switch (key) {
+				case "1":
+					courseList.get(i).getCourseTypeList().set(j, "Purejava");
+					break;
+				case "2":
+					courseList.get(i).getCourseTypeList().set(j, "Web");
+					break;
+				case "3":
+					courseList.get(i).getCourseTypeList().set(j, "Mobile");
+					break;
+				case "4":
+					courseList.get(i).getCourseTypeList().set(j, "IOT");
+					break;
+				case "5":
+					courseList.get(i).getCourseTypeList().set(j, "Swing");
+					break;
+				case "6":
+					courseList.get(i).getCourseTypeList().set(j, "JDBC");
+					break;
+				case "7":
+					courseList.get(i).getCourseTypeList().set(j, "API");
+					break;
+				case "8":
+					courseList.get(i).getCourseTypeList().set(j, "Spring");
+					break;
+				case "9":
+					courseList.get(i).getCourseTypeList().set(j, "Struts");
+					break;
+				case "10":
+					courseList.get(i).getCourseTypeList().set(j, "etcFramework");
+					break;
+				case "11":
+					courseList.get(i).getCourseTypeList().set(j, "etc");
+					break;
+				default:
+					break;
+				}
+				
+			}
+			
+		}
+		
+
+		System.out.println(courseList);
+		
+		return SUCCESS;
+	}
+	
+	
 	
 		/**
 		 * 강사 -강좌리스트
@@ -330,6 +541,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			courseDAO dao = sqlSession.getMapper(courseDAO.class);
 			return SUCCESS;
 			
+			
 		}
 		
 		/**
@@ -357,39 +569,118 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			return courseList;
 		} 
 		
-		
+		public String insertLectureForm(){
+			return SUCCESS;
+		}
 		
 		
 		/**
-		 * 강의등록-insertLecture
+		 * 강의등록-insertLecture20160421수정
 		 * @return
+		 * @throws IOException 
 		 */
-		public String insertLecture(){
+		public String insertLecture() throws IOException{
 			
-			System.out.println("insertLecture>>Action");
 			courseDAO dao = sqlSession.getMapper(courseDAO.class);
 			
 			/*insert Lecture*/
-			lecture.setLecturename(lecturename);
-			lecture.setRegdate(regdate);
+			lecture.setCourseno(courseno);
+			lecture.setLecturename(lecture.getLecturename());
+			lecture.setRegdate(lecture.getRegdate());
 			
-			System.out.println(lecture+"insertLecture->lecture 객체");
+			System.out.println(uploadContentType+"컨텐트타입");
+			System.out.println(uploadFileName+"파일네임");
+			System.out.println(getUpload()+"실제파일");
 			
-			/*file upload*/
-			if(upload != null && (upload.exists())) {
+			/*강의video*/
+			File video=new File(UploadPath+uploadFileName.get(0)); /*파일네임*/
+			FileUtils.copyFile(upload.get(0), video); /*실제파일*/
+			System.out.println(video+"video");
+			/*서브노트파일*/
+			File note=new File(UploadPath+uploadFileName.get(1));
+			FileUtils.copyFile(upload.get(1), note);
+			System.out.println(note+"subnote");
+			originalfilename="lecture,"+UploadPath+video+","+System.currentTimeMillis();/*실제파일이름*/
+			uploadedfilename=uploadFileName.get(0); /*실제파일경로*/
+			System.out.println("경로1: "+uploadedfilename);
+			lecture.setUploadedfilename(UploadPath+uploadedfilename);
+			lecture.setOriginalfilename(originalfilename);
+			dao.insertLecture(lecture);
+			
+			originalfilename="subnote,"+note+","+System.currentTimeMillis();
+			uploadedfilename=uploadFileName.get(1);
+			System.out.println("경로2: "+uploadedfilename);
+			subnote = new Subnote();
+			id=(String) session.get("loginId");
+			subnote.setId(id);
+			System.out.println("subnote2: "+subnote);
+			subnote.setOriginalfilename(originalfilename);
+			subnote.setUploadedfilename(UploadPath+uploadedfilename);
+			System.out.println("subnote3: "+subnote);
+			System.out.println(subnote+"서브노트객체");
+			dao.insertSubnote(subnote);
+
+			
+			/*파일명 + System.currentTimeMillis()
+			
+			"subnote"+파일명+System.currentTimeMillis()*/
+			
+			/*file upload
+			/*if(upload != null && (upload.exists())) {
 				lecture.setOriginalfilename(originalfilename);
 				FileService fs = new FileService();
 				
-				String savePath = getText("board.uploadpath");
+				String savePath = "C://coding";
 				try {
 					String savedfile = fs.saveFile(upload, savePath, uploadedfilename);
 					lecture.setUploadedfilename(savedfile);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}
+			}*/
+			/*lecture.setOriginalfilename(originalfilename);
+			lecture.setUploadedfilename(uploadedfilename);*/
 			
-			dao.insertLecture(lecture);
+			/*dao.insertLecture(lecture);*/
+			/*/////////////////////////////////////////////////////////////*/
+			/*insert Subnote*/
+			/*id=(String) session.get("loginId");
+			subnote.setId(id);*/
+			/*subnote.setUploadedfilename(uploadedfilename);*/
+			
+			/*file upload*/
+			/*if(upload != null && (upload.exists())) {
+				//lecture.setOriginalfilename(originalfilename);
+				FileService fs = new FileService();
+				
+				String savePath = "C://coding";
+				try {
+					String savedfile = fs.saveFile(upload, savePath, uploadedfilename);
+					lecture.setUploadedfilename(savedfile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}*/
+			
+/*			System.out.println(subnote+"insertLecture->subnote 객체");
+			dao.insertSubnote(subnote);*/
+			
+			
+			/*insert lectureCoding*/
+				
+			/*Map<String, Object> map = new HashMap<>();*/
+			/*dao.insertLectureCoding(codingno);*/
+				
+				
+
+			/*insert Coding-나중에 하겠다.*/
+			
+			/*coding.setCodingquestion(codingquestion);
+			coding.setCodingtemplet(codingtemplet);
+			coding.setCodinganswer(codinganswer);
+			coding.setRegdate(regdate);
+			dao.insertCoding(coding);*/
+			
 			return SUCCESS;
 		}
 
@@ -404,6 +695,28 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			return SUCCESS;
 		}
 		 */
+		
+		
+		/*파일명 + System.currentTimeMillis()
+		"subnote"+파일명+System.currentTimeMillis()
+		나중에 필요하면 서브스트링*/
+		
+		/*public String multiFileUpload() throws IOException {
+			
+			File video=new File(UploadPath+uploadFileName.get(1));
+			FileUtils.copyFile(getUpload().get(1), video);
+			System.out.println(video+"video");
+			
+			File subnote=new File(UploadPath+uploadFileName.get(2));
+			FileUtils.copyFile(getUpload().get(2), subnote);
+			System.out.println(subnote+"subnote");
+			
+			return SUCCESS;
+		}*/
+		
+		
+		
+		
 		
 		
 		
@@ -532,20 +845,12 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.content = content;
 		}
 	
-		public boolean isCheck() {
+		public boolean getCheck() {
 			return check;
 		}
 	
 		public void setCheck(boolean check) {
 			this.check = check;
-		}
-	
-		public SqlSession getSqlSession() {
-			return sqlSession;
-		}
-	
-		public void setSqlSession(SqlSession sqlSession) {
-			this.sqlSession = sqlSession;
 		}
 	
 		public Map<String, Object> getSession() {
@@ -745,14 +1050,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.courseTypeList = courseTypeList;
 		}
 	
-		public courseDAO getDao() {
-			return dao;
-		}
-	
-		public void setDao(courseDAO dao) {
-			this.dao = dao;
-		}
-
 		public String getLecturename() {
 			return lecturename;
 		}
@@ -777,6 +1074,9 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.teacherid = teacherid;
 		}
 
+<<<<<<< HEAD
+	
+=======
 		public File getUpload() {
 			return upload;
 		}
@@ -784,6 +1084,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setUpload(File upload) {
 			this.upload = upload;
 		}
+>>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
 
 		public String getUploadedfilename() {
 			return uploadedfilename;
@@ -801,6 +1102,60 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.originalfilename = originalfilename;
 		}
 
+<<<<<<< HEAD
+		public Subnote getSubnote() {
+			return subnote;
+		}
+
+		public void setSubnote(Subnote subnote) {
+			this.subnote = subnote;
+		}
+
+		public File getSaveFile() {
+			return saveFile;
+		}
+
+		public void setSaveFile(File saveFile) {
+			this.saveFile = saveFile;
+		}
+
+		public static String getUploadpath() {
+			return UploadPath;
+		}
+
+		public List<File> getUpload() {
+			return upload;
+		}
+
+		public void setUpload(List<File> upload) {
+			this.upload = upload;
+		}
+
+		public List<String> getUploadFileName() {
+			return uploadFileName;
+		}
+
+		public void setUploadFileName(List<String> uploadFileName) {
+			this.uploadFileName = uploadFileName;
+		}
+
+		public List<String> getUploadContentType() {
+			return uploadContentType;
+		}
+
+		public void setUploadContentType(List<String> uploadContentType) {
+			this.uploadContentType = uploadContentType;
+		}
+
+		
+		
+		
+		
+		
+		
+		
+		
+=======
 		public ArrayList<Lecture> getRecentlyCompletedLectureList() {
 			return recentlyCompletedLectureList;
 		}
@@ -817,6 +1172,23 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.latelyPurchasedLectureList = latelyPurchasedLectureList;
 		}
 
+		public int getStart() {
+			return start;
+		}
 
+		public void setStart(int start) {
+			this.start = start;
+		}
+
+		public int getEnd() {
+			return end;
+		}
+
+		public void setEnd(int end) {
+			this.end = end;
+		}
+
+>>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
+		
 	
 }
