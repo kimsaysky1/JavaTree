@@ -56,9 +56,29 @@
 	
 	<!-- courseDefaultMain 초기(전체) 페이징  -->
 	<select id="pagingCourse" resultType="Course" parameterType="map">
-		SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, teacherid 
-		from (select rownum as rnum, T1.* from (select * from course order by courseno desc) T1)
+		SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from (select rownum as rnum, T1.* from (
+		select * from course 
+		<if test="id != null">
+     	where courseno in (select courseno from coursetype where typeno IN (select typeno from interest where id = #{id} and value = 3))
+   		</if>
+   		<if test="id == null">
+   		order by courseno desc
+   		</if>
+		) T1)
 		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
+	</select>
+	
+	<select id="selectDefaultTotal" resultType="int" parameterType="map">
+		SELECT count(*)
+		from (select rownum as rnum, T1.* from (select * from course
+		<if test="id != null">
+     	where courseno in (select courseno from coursetype where typeno IN (select typeno from interest where id = #{id} and value = 3))
+   		</if>
+   		<if test="id == null">
+   		order by courseno desc
+   		</if>
+		) T1)
 		
 	</select>
 	
@@ -70,23 +90,30 @@
 	
 	<!-- 전체 강좌 중 베스트 (사이드 바) <전체기간>- CourseDefualtMain -->
 	<select id="selectAllRank" resultType="Course">
+		select * from
+		(
 		select sum(lec.studentcount), lec.courseno, cou.coursename, cou.id, cou.startdate 
 		from teachlecture lec, teachcourse cou 
-		where lec.courseno = cou.courseno 
+		where lec.courseno = cou.courseno
 		group by lec.courseno, cou.coursename, cou.id, cou.startdate 
 		order by sum(lec.studentcount) desc
+		)
+		where rownum &lt; 4 
 	</select>
 	
 	<!-- 전체 강좌 중 베스트 (사이드 바) <최근>- CourseDefualtMain -->
 	<select id="selectRecentRank" resultType="Course">
+		select * from
+		(
 		select sum(lec.studentcount), lec.courseno, cou.coursename, cou.id, cou.startdate 
 		from teachlecture lec, teachcourse cou 
-		where lec.courseno = cou.courseno 
+		where lec.courseno = cou.courseno and rownum &lt; 4 
 		group by lec.courseno, cou.coursename, cou.id, cou.startdate 
 		having cou.startdate > sysdate - 90
 		order by sum(lec.studentcount) desc
-		</select>
-	
+		)
+		where rownum &lt; 4
+	</select>
 	<!-- 전체 강좌 중 강좌 검색 (사이드 바)  - CourseDefualtMain -->
 	
 	

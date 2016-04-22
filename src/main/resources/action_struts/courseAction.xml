@@ -18,7 +18,7 @@
         </action>
         
         <action name="plusCourseDefaultMain" class="org.javatree.www.Action.CourseAction" method="plusCourseDefaultMain">
-        	<result type="json"></result>
+        	<result>/WEB-INF/views/course/courseDefaultMain.jsp</result>
         </action>
         
      	<action name="plusStudyMain" class="org.javatree.www.Action.CourseAction" method="plusStudyMain">

@@ -370,7 +370,7 @@
                         </div>
                         END / POST
  -->
-                        <ul class="pager">
+                       
                             
            <%--   <a href = "getAllCourseList.action?currentPage=${pagenavi.currentPage - 1}&searchText=${searchText}">&lt</a> --%>
 				
@@ -400,7 +400,25 @@
                             <li><a href="#">4</a></li>
                             <li><a href="#">next ›</a></li>
                             <li><a href="#">last »</a></li>  -->
-                            <li><a href="#" id= "watchMore">더보기</a></li>
+             <ul class="pager">                
+            
+            <s:if test="#session.currentPage == 1 & #session.endPageGroup == 1">
+             <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
+             </s:if>
+            
+            <s:elseif test="#session.currentPage == 1 & #session.endPageGroup != 1">
+             <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage + 1"/>">next &gt</a></li>
+            </s:elseif>
+			
+			<s:elseif test="#session.currentPage == #session.endPageGroup & #session.endPageGroup != 1">
+             <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>
+            </s:elseif>
+			
+			<s:else>
+             <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>
+             <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage + 1"/>">next &gt</a></li>
+            </s:else>
+                            
                             </ul>
                     </div>
                 </div>
@@ -465,7 +483,7 @@
                                         <s:iterator value="recentRank" status="counter" >
                                         <tr>
                                          <td class="count"> <s:property value="#counter.index + 1" /> </td>
-                                            <td><s:property value="coursename" />[ID: <s:property value="id" /> ]</td>                                          
+                                            <td><s:property value="coursename" />&nbsp;[ID: &nbsp;<s:property value="id" />&nbsp; ]</td>                                          
                                         </tr>
 										</s:iterator>
                                     </tbody>
@@ -559,44 +577,6 @@ $(function(){
 		 str = '';
 	 });
 
-	
-$("body").on('click', '#watchMore', function(){
-	
-	
-	
-	var start = $(".blog-list-content > div:last").attr('id');
-	start = parseInt(start) + 1;
-	var end = start + 1;
-	var stringForTokenizer = '';
-	//var test = $("[name=interest]");
-/* 	for(var i = 0; i < test.length; i++){
-		if(test[i].checked){
-			stringForTokenizer += test[i].value + ',';
-		}
-	} */
-	
-	alert(start);
-	alert(end);
-	$.ajax({
-		type: 'GET'
-		, url: 'plusCourseDefaultMain'
-		, data : 'start='+start+'&end='+end
-		, dataType : 'json'
-		, success : function(response){
-			var indexNum = start;
-			var list = response.courseList;
-			list.forEach(function(course){
-				var divTag = $('<div class="post" id='+(indexNum++)+'><div class="post-body"></div></div>');
-				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
-				+course.coursename+'</a></h3></div><div class="post-meta">by'
-				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
-				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').insertAfter(".blog-list-content > div:last");
-			
-			});
-		}
-	});
-	//event.preventDefault(); 
-});
 });	
 	
 </script>

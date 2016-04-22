@@ -1,6 +1,7 @@
-SELECT id, courseno, coursename, teacherid 
-from (select rownum as rnum, T1.* from (select * from studycourse where id = 2 group by courseno, id, coursename, teacherid order by courseno desc) T1)
-where rnum >= 1 and rnum <= 2
+SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from (select rownum as rnum, T1.* from (select * from course 
+		order by courseno desc) T1)
+		where rnum >= 8 and rnum <= 14
 
  CREATE sequence subnote_seq start with 1 increment by 1;--20160421ì¶”ê°€    	
   
@@ -14,7 +15,7 @@ alter table coding drop column lectureno;
 
 <<<<<<< HEAD
 
-CREATE TABLE lecturecoding--20160419Ãß°¡
+CREATE TABLE lecturecoding--20160419ï¿½ß°ï¿½
 =======
 CREATE TABLE lecturecoding
 >>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
@@ -32,15 +33,15 @@ ALTER TABLE lecturecoding
 
 alter table coding drop column typeno;
 
-alter table subnote modify originalfilename null--20160421Ãß°¡
-alter table subnote modify uploadedfilename null--20160421Ãß°¡
+alter table subnote modify originalfilename null--20160421ï¿½ß°ï¿½
+alter table subnote modify uploadedfilename null--20160421ï¿½ß°ï¿½
 
---notnullÁ¦°Å
---ALTER TABLE Å×ÀÌºí¸í MODIFY ÄÃ·¯¸í NULL;
---ALTER TABLE Å×ÀÌºí¸í DROP CONSTRAINT Á¦¾àÁ¶°Ç¸í
+--notnullï¿½ï¿½ï¿½ï¿½
+--ALTER TABLE ï¿½ï¿½ï¿½Ìºï¿½ï¿½ MODIFY ï¿½Ã·ï¿½ï¿½ï¿½ NULL;
+--ALTER TABLE ï¿½ï¿½ï¿½Ìºï¿½ï¿½ DROP CONSTRAINT ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½
 
 alter table lecture modity (uploadedfilename varchar2(900));
-alter table lecture modify (originalfilename varchar2(500));--20160422 ¼öÁö
+alter table lecture modify (originalfilename varchar2(500));--20160422 ï¿½ï¿½ï¿½ï¿½
 
 
 
@@ -295,7 +296,7 @@ CREATE TABLE subnote
 	PRIMARY KEY (subnoteno)
 );
 
-CREATE sequence subnote_seq start with 1 increment by 1;--20160421Ãß°¡
+CREATE sequence subnote_seq start with 1 increment by 1;--20160421ï¿½ß°ï¿½
 
 
 
