@@ -17,6 +17,14 @@
         	<result type="json"></result>
         </action>
         
+        <action name="plusCourseDefaultMain" class="org.javatree.www.Action.CourseAction" method="plusCourseDefaultMain">
+        	<result type="json"></result>
+        </action>
+        
+        <action name="plusStudyMain" class="org.javatree.www.Action.CourseAction" method="plusStudyMain">
+        	<result type="json"></result>
+        </action>
+       
         <action name="teachMainView">
         	<result>/WEB-INF/views/course/teachMain.jsp</result>
         </action>

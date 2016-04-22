@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@taglib prefix="s" uri="/struts-tags" %>
+<%@taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,13 +23,14 @@
 <title>Mega Course - Learning and Courses HTML5 Template</title>
 </head>
 <body>
-<!-- HEADER -->
+	<!-- HEADER -->
 		<header id="header" class="header">
 			<div class="container">
 
 				<!-- LOGO -->
 				<div class="logo">
-					<a href="index.action"><img src="resources/javatree_view/html/images/logo.png" alt=""></a>
+					<a href="index.html"><img
+						src="resources/javatree_view/html/images/logo.png" alt=""></a>
 				</div>
 				<!-- END / LOGO -->
 
@@ -43,71 +44,16 @@
 
 					<!-- MENU -->
 					<ul class="menu">
-						<li class="current-menu-item"><a href="index.action">HOME</a></li>
-						<li class="menu-item-has-children megamenu col-4"><a href="/javatree/course/selectAllCourseList.action">COURSE</a>
-							<ul class="sub-menu">
-								<li class="menu-item-has-children">
-								  <a href="#">Account1</a>
-									<ul class="sub-menu">
-										<li><a href="account-assignment.html">Account Assignment</a></li>
-										<li><a href="account-inbox.html">Account Inbox</a></li>
-										<li><a href="account-learning.html">Account Learning</a></li>
-										<li><a href="account-profile-owner-view.html">Account Profile Owner</a></li>
-										<li><a href="account-profile-guest-view.html">Account Profile Guest</a></li>
-										<li><a href="account-teaching.html">Account Teaching</a></li>
-										<li><a href="setting.html">Setting</a></li>
-									</ul></li>
-
-								<li class="menu-item-has-children"><a href="#">Asignment 2</a>
-									<ul class="sub-menu">
-										<li><a href="asignment-after-submit.html">Asignment After Submit</a></li>
-										<li><a href="asignment-list.html">Asignment List</a></li>
-										<li><a href="asignment-marking.html">Asignment Marking</a></li>
-										<li><a href="asignment-received.html">Asignment
-												Received</a></li>
-										<li><a href="asignment-submit.html">Asignment Submit</a></li>
-										<li><a href="become-teacher.html">Become Teacher</a></li>
-										<li><a href="categories.html">Categories</a></li>
-									</ul></li>
-								<li class="menu-item-has-children"><a href="#">Course 3</a>
-									<ul class="sub-menu">
-										<li><a href="course-intro.html">Course Intro</a></li>
-										<li><a href="course-learn.html">Course Learn</a></li>
-										<li><a href="create-basic-information.html">Create Basic Information</a></li>
-										<li><a href="create-design-course.html">Create Design Course</a></li>
-										<li><a href="create-publish-course.html">Create Publish Course</a></li>
-										<li><a href="request-teacher.html">Request Teacher</a></li>
-										<li><a href="search-result-found.html">Search Result Found</a></li>
-										<li><a href="search-result-not-found.html">Search Result Found</a></li>
-									</ul></li>
-								<li class="menu-item-has-children"><a href="#">Learn 3</a>
-									<ul class="sub-menu">
-										<li><a href="learning.html">Learning</a></li>
-										<li><a href="quizz-1.html">Quizz 1</a></li>
-										<li><a href="quizz-2.html">Quizz 2</a></li>
-										<li><a href="quizz-3.html">Quizz 3</a></li>
-										<li><a href="quizz-5.html">Quizz 5</a></li>
-										<li><a href="quizz-20.html">Quizz 20</a></li>
-										<li><a href="quizz-finish.html">Quizz Finish</a></li>
-										<li><a href="quizz-intro.html">Quizz Intro</a></li>
-									</ul></li>
-							</ul></li>
-						<li class="menu-item-has-children">
-							<a href="/javatree/qna/qnaDefaultMain.action" id="jt">JAVATree</a>
-							<ul class="sub-menu">
-								<li><a href="blog-list.html">Blog list</a></li>
-								<li><a href="blog-single.html">Blog single</a></li>
-							</ul></li>
-						<!-- <li class="menu-item-has-children"><a href="WEB-INF/views/login.jsp">LOGIN</a> -->
-					
+						<li class="current-menu-item"><a href="index.html">HOME</a></li>
+						<li class="menu-item-has-children megamenu col-4"><a href="#">COURSE</a></li>
+						<li class="menu-item-has-children"><a href="/javatree/qna/qnaDefaultMain.action" id="jt">JAVATree</a></li>					
 					<s:if test="%{#session.loginId != null}">
 						<li><a href="/javatree/member/logout.action">LOGOUT</a></li>
 					</s:if>
-					
 					<s:else>	
 						<li class="menu-item-has-children"><a href="/javatree/member/loginFrom.action">LOGIN</a></li>
 						<li><a href="/javatree/member/joinForm.action">JOIN IN</a></li>
-					</s:else>	
+					</s:else>
 					</ul>
 					<!-- END / MENU -->
 
@@ -121,13 +67,13 @@
 						</div>
 					</div>
 					<!-- END / SEARCH BOX -->
-					<!-- LIST ACCOUNT INFO -->
+										<!-- LIST ACCOUNT INFO -->
 					<ul class="list-account-info">
 					
-					<!-- accout 사진 및 로그아웃 -->
+					<!-- account 사진 및 로그아웃 -->
 					<li class="list-item account">
 							<div class="account-info item-click">
-								<img src="resources/javatree_view/html/images/team-13.jpg"
+								<img src="../resources/javatree_view/html/images/team-13.jpg"
 									alt="">
 							</div>
 							<div class="toggle-account toggle-list">
@@ -152,7 +98,6 @@
 								<ul class="list-notification">
 
 									<!-- LIST ITEM -->
-		<%-- <s:iterator value="courseList" status="st">	 --%>	
 									<li class="ac-new"><a href="#">
 											<div class="list-body">
 												<div class="author">
@@ -247,7 +192,6 @@
 											</div>
 									</a></li>
 									<!-- END / LIST ITEM -->
-
 								</ul>
 							</div>
 						</li>
@@ -256,23 +200,19 @@
 					<!-- END / LIST ACCOUNT INFO -->
 					<ul class="menu">
 						<li class="menu-item-has-children"><a href="/javatree/course/selectAllCourseList.action" id="jt">MY PAGE</a>
-							
-							<%-- <s:if test="%{#session.loginId != null}">
+							<s:if test="%{#session.loginId != null}">
 								<ul class="sub-menu">
-									<li><a href="/javatree/course/selectAllCourseListForTeach.action">Course MYPAGE</a></li>
-									<li><a href="/javatree/course/getAllCourseListForStudy.action">Course MYPAGE2</a></li>
+									<li><a href="/javatree/course/selectAllCourseListForTeach.action">Teach MYPAGE</a></li>
+									<li><a href="/javatree/course/selectAllCourseListForStudy.action">Study MYPAGE</a></li>
 								</ul>
-							</s:if> --%>
-							
+							</s:if>
 						</li>
 					</ul>
 				</nav>
 				<!-- END / NAVIGATION -->
-
 			</div>
 		</header>
 		<!-- END / HEADER -->
-		
 		<!-- HOME SLIDER -->
 		
 		<section class="slide" style="background-image: url(resources/javatree_view/html/images/homeslider/spring.jpg)">

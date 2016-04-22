@@ -77,7 +77,7 @@ public class MemberAction extends ActionSupport implements SessionAware {
 	}
 	
 	
-	public void insertMember() {
+	public String insertMember() {
 		
 		System.out.println("액션 insertMember 시작");
 		
@@ -109,7 +109,7 @@ public class MemberAction extends ActionSupport implements SessionAware {
 	    interestList.add(interest_etcframework);
 	    interestList.add(interest_etc);
 	    
-	    System.out.println("음");
+	    
 	    for(int i = 0; i < interestList.size(); i++){
 	    	interestList.get(i).setId(id);
 	    	interestList.get(i).setTypeno(i+1);	    	
@@ -142,12 +142,13 @@ public class MemberAction extends ActionSupport implements SessionAware {
 		
 		dao.insertAbility(abilityList);
 	
+		return SUCCESS;
 	}
 	
 	
 	public String login(){
 		logger.info(id+"=아이디");
-		System.out.println("fhrmdlfjsdlkf"+id);
+		System.out.println("아이디 : "+id);
 		memberDAO dao = sqlSession.getMapper(memberDAO.class);
 		member_jt = dao.selectMember(id);
 		logger.info(member_jt+"멤버");
@@ -197,32 +198,6 @@ public class MemberAction extends ActionSupport implements SessionAware {
 		
 		return SUCCESS;
 	}
-
-
-/*	public String searchCustomer() {
-		
-		Member_jt m = dao.searchCustomer(member_jt);
-		
-		if(m != null){
-			if(m.getId() != null){
-				//���̵� ã��
-				searchResult = "���̵� : " + m.getId();
-			} else if (c.getPassword() != null) {
-				//�н����� ã��
-				searchResult = "��й�ȣ : " + m.getPassword();
-			}
-			
-		} else {
-			searchResult = "�ش� ������ �������� �ʽ��ϴ�.";
-		}
-		
-		return SUCCESS;
-	}
-	*/
-	
-	
-
-
 	public Member_jt getMember_jt() {
 		return member_jt;
 	}

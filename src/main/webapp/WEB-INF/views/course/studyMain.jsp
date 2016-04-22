@@ -323,37 +323,60 @@
 				 <h2>MY COURSE</h2>
 				<br>
 				<div class = "form-study">
-				
-				
-		<s:iterator value="courseList">		
-				<div class = "form-study-course">
-				         <div class="study-course-bg mc-item3">
-                        <div class="meta-categories"><s:iterator value="courseTypeList" ><s:property/>&nbsp;</s:iterator></div>
+
+		<s:iterator value="courseList" status="incr">		
+				<div class = "form-study-course" id ="<s:property value="%{#incr.index+1}"/>">
+				    <div class="study-course-bg mc-item3">
+                        
+                        <div class="meta-categories"><s:iterator value="courseTypeList" ><s:property/>&nbsp;&nbsp;&nbsp;&nbsp;</s:iterator>
+                        </div>
+                        
                         <div class="content-item">
-                            <h3><a href="/javatree/course/CourseDetailStudyView.action"><s:property value="coursename" /></a></h3>
+                            <h3><a href="CourseDetailStudyView.action?=<s:property value="courseno" />"><s:property value="coursename" /></a></h3>
                             <div class="name-author">
                                 By &nbsp;<s:property value="teacherid" />
                             </div>
-                            
                         </div>
                     </div>
                 </div>
                </s:iterator>
-                
-            
+
+        
                 
                 <div class = "paging" align="center">
                		   <ul class="pager">
-                            <li class="pager-current">1</li>
+               		   
+					<s:iterator status="counter" begin = "#session.startPage" end="#session.endPage">
+					<s:if test="#session.currentPage == #counter">
+					 <<li class="pager-current">
+					 <a href = "selectAllCourseList.action?currentPage=<s:property value="#counter"/>">
+						<s:property value="#counter"/>
+					</a>
+					 </li>
+					
+					</s:if>
+					<s:else>
+					<li><a href = "selectAllCourseList.action?currentPage=<s:property value="#counter"/>">
+						<s:property value="#counter"/>
+					</a></li>
+					
+					</s:else>			
+				</s:iterator>
+				<%-- ...
+				<a href = "getAllCourseList.action?currentPage=${pagenavi.currentPage + 1}&&searchText=${searchText}">&gt 
+				</a> --%>               		   
+               		   
+                            <!-- <li class="pager-current">1</li>
                             <li><a href="#">2</a></li>
                             <li><a href="#">3</a></li>
                             <li><a href="#">4</a></li>
                             <li><a href="#">next ›</a></li>
                             <li><a href="#">last »</a></li>
+                            <li><a href="#" id= "watchMore">더보기</a></li> -->
                         </ul>
                  </div>       
-                </div>
-                  
+                
+             </div>         
 				
 				<!-- SIDEBAR -->
                 <div class = "course-side">
@@ -387,20 +410,14 @@
                             <div class="tab-pane fade in active" id="design-question">                               
                                 <table class="table-quest">
                                     <tbody>
+                                      
+                                      <s:iterator value="recentlyCompletedLectureList" status="counter" >
                                         <tr>
-                                         <td class="count">1</td>
-                                            <td>완료 강의 1</td>                                          
+                                         <td class="count"> <s:property value="#counter.index + 1" /> </td>
+                                            <td><s:property value="lecturename" /> &nbsp;[ &nbsp;강좌명: &nbsp; <s:property value="coursename" /> &nbsp; ]</td>                                          
                                         </tr>
-
-                                        <tr>
-                                         <td class="count">2</td>
-                                            <td>완료 강의 2</td>                                         
-                                        </tr>
-
-                                        <tr>    
-                                         <td class="count">3</td>                                       
-                                            <td>완료 강의 3</td>                                            
-                                        </tr>
+										</s:iterator>
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -412,22 +429,13 @@
                                 
                                 <table class="table-assignment">
                                     <tbody>
+                                     <s:iterator value="latelyPurchasedLectureList" status="counter" >
                                         <tr>
-                                            <td class="count">1</td>
-                                            <td>최근 구입강의1</td>
-                                           
+                                         <td class="count"> <s:property value="#counter.index + 1" /> </td>
+                                            <td><s:property value="lecturename" /> &nbsp;[ &nbsp;강좌명: &nbsp; <s:property value="coursename" /> &nbsp; ]</td>                                          
                                         </tr>
-
-                                        <tr>
-                                            <td class="count">2</td>
-                                            <td>최근 구입강의2</td>
-                                            
-                                        </tr>
-
-                                        <tr>
-                                            <td class="count">3</td>
-                                            <td>최근 구입강의3</td>                                        
-                                        </tr>
+										</s:iterator>
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -469,18 +477,61 @@
 	
 	<!-- Load jQuery -->
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/bootstrap.min.js"></script>
+		src="../resources/javatree_view/html/js/library/bootstrap.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
+		src="../resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/scripts.js"></script>
+		src="../resources/javatree_view/html/js/scripts.js"></script>
+		
+<script>
+$(function(){
+	 
+$("body").on('click', '#watchMore', function(){
+	
+	var start = $(".form-study > div:first").attr('id');
+	start = parseInt(start) + 2;
+	var end = start + 1;
+	var stringForTokenizer = '';
+	//var test = $("[name=interest]");
+/* 	for(var i = 0; i < test.length; i++){
+		if(test[i].checked){
+			stringForTokenizer += test[i].value + ',';
+		}
+	} */
+	
+	alert(start);
+	alert(end);
+	$.ajax({
+		type: 'GET'
+		, url: 'plusStudyMain'
+		, data : 'start='+start+'&end='+end
+		, success : function(response){
+			var indexNum = start;
+			var list = response.courseList;
+			
+			$('.form-study').html('');
+			
+			list.forEach(function(course){
+				
+				var divTag = $('<div class="form-study-course" id='+(indexNum++)+'><div class="study-course-bg mc-item3"></div></div>');
+				
+				divTag.html('<div class="meta-categories">'+ course.courseTypeList +'</div><div class="content-item"><h3><a href="CourseDetailStudyView.action?courseno='+course.courseno
+						+'">'+course.coursename+'</a></h3><div class="name-author"> By '+course.teacherid+'</div></div>').prependTo(".form-study");
+			
+			});
+		}
+	});
+	//event.preventDefault(); 
+});
+});	
+</script>
 </body>
 </html>

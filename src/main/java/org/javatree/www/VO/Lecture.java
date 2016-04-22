@@ -9,20 +9,37 @@ public class Lecture {
 	private String regdate;
 	private String originalfilename;
 	private String uploadedfilename;
+	private String startdate;
+	private String enddate;
+	private String coursename;
 	/*private ArrayList<Lecture> lectureList;*/
 
 	public Lecture() {
 	}
+	
+	public Lecture(String lecturename, String coursename) {
+		super();
+		this.lecturename = lecturename;
+		this.coursename = coursename;
+	}
+
+
 
 	public Lecture(int courseno, int lectureno, String lecturename, String regdate, String originalfilename,
-			String uploadedfilename) {
+			String uploadedfilename, String startdate, String enddate, String coursename) {
+		super();
 		this.courseno = courseno;
 		this.lectureno = lectureno;
 		this.lecturename = lecturename;
 		this.regdate = regdate;
 		this.originalfilename = originalfilename;
 		this.uploadedfilename = uploadedfilename;
+		this.startdate = startdate;
+		this.enddate = enddate;
+		this.coursename = coursename;
 	}
+
+
 
 	public int getCourseno() {
 		return courseno;
@@ -72,11 +89,47 @@ public class Lecture {
 		this.uploadedfilename = uploadedfilename;
 	}
 
+
+
+	public String getStartdate() {
+		return startdate;
+	}
+
+
+
+	public void setStartdate(String startdate) {
+		this.startdate = startdate;
+	}
+
+
+
+	public String getEnddate() {
+		return enddate;
+	}
+
+
+
+	public void setEnddate(String enddate) {
+		this.enddate = enddate;
+	}
+
+	public String getCoursename() {
+		return coursename;
+	}
+
+	public void setCoursename(String coursename) {
+		this.coursename = coursename;
+	}
+
 	@Override
 	public String toString() {
 		return "Lecture [courseno=" + courseno + ", lectureno=" + lectureno + ", lecturename=" + lecturename
 				+ ", regdate=" + regdate + ", originalfilename=" + originalfilename + ", uploadedfilename="
-				+ uploadedfilename + "]";
+				+ uploadedfilename + ", startdate=" + startdate + ", enddate=" + enddate + ", coursename=" + coursename
+				+ "]";
 	}
 
+	
+
+	
 }

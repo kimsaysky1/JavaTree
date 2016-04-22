@@ -30,6 +30,16 @@
       <collection property="courseTypeList" javaType="java.util.ArrayList" column="courseno" ofType="int" select="selectTypeno"/>
    </resultMap>
 	
+	<resultMap type="Lecture" id="sLectureMap">
+       	<result property="coursename" column="coursename"/>
+      	<result property="lecturename" column="lecturename"/>
+		<!-- <association property="coursename" column="courseno" javaType="int" select="selectCoursename"/> -->
+   	</resultMap>
+	
+	<select id="selectCoursename" resultType="String">
+		select coursename from course where courseno = #{courseno}
+	</select> 
+	
 	<!-- <select parameterType="String" resultType="Course" id="getAllCourseListForStudy">
 		select * from course where courseno = ((select courseno from studycourse where id = #{id}) courseno)
 	</select> -->
@@ -43,6 +53,16 @@
    </if>
     order by regdate desc
    </select>
+	
+	<!-- courseDefaultMain 초기(전체) 페이징  -->
+	<select id="pagingCourse" resultType="Course" parameterType="map">
+		SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, teacherid 
+		from (select rownum as rnum, T1.* from (select * from course order by courseno desc) T1)
+		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
+		
+	</select>
+	
+	
 	
 	<!-- 전체 강좌 리스트 분야 별 리스트 - CourseDefualtMain -->
 	
@@ -108,6 +128,53 @@
      	group by courseno, id, coursename, teacherid
      	order by courseno desc
      </select> 
+     
+    <!-- studyMain 초기(전체) 페이징  -->
+	<select id="pagingStudyCourse" resultMap="sCourseMap" parameterType="map">
+		SELECT id, courseno, coursename, teacherid 
+		from (select rownum as rnum, T1.* from (select * from studycourse where id = #{id} group by courseno, id, coursename, teacherid order by courseno desc) T1)
+		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
+		
+	</select>
+     
+     <!-- 전체 갯수 -->
+    <select id="selectTotal" resultType="int" parameterType="map">
+		SELECT count(*) 
+		from (select rownum as rnum, T1.* from (select * from studycourse where id = #{id} group by courseno, id, coursename, teacherid order by courseno desc) T1)
+		
+	</select> 
+     <!-- 완료된 강의 lecturename -->
+     <select resultType="String" id="recentlyCompletedLectureList1" parameterType="map">
+     	select l.lecturename
+     	from lecture l, studylecture sl
+     	where l.lectureno = sl.lectureno and sl.id = #{id} and sl.enddate &lt; sysdate and rownum &lt; 4
+     	order by sl.enddate desc
+     </select> 
+     
+     <!-- 완료된 강의 coursename -->
+     <select resultType="String" id="recentlyCompletedLectureList2" parameterType="map">
+     	select c.coursename
+     	from course c, studylecture sl
+     	where c.courseno = sl.courseno and sl.id = #{id} and sl.enddate &lt; sysdate and rownum &lt; 4
+     	order by sl.enddate desc
+     </select> 
+     
+     <!-- 최근 구입한 강의(lecturename) -->
+	<select resultType="String" id="selectLatelyPurchasedLectureList1" parameterType="map">
+     	select l.lecturename
+     	from lecture l, studylecture sl
+     	where l.lectureno = sl.lectureno and sl.id = #{id} and sl.startdate &lt; sysdate and rownum &lt; 4 
+     	order by sl.startdate desc
+     </select> 
+     
+      <!-- 최근 구입한 강의(coursename) -->
+	<select resultType="String" id="selectLatelyPurchasedLectureList2" parameterType="map">
+     	select c.coursename
+     	from course c, studylecture sl
+     	where c.courseno = sl.courseno and sl.id = #{id} and sl.startdate &lt; sysdate and rownum &lt; 4 
+     	order by sl.startdate desc
+     </select> 
+     
 		
 	<!-- 내가 가르치는 강좌 리스트 - teachMain -->
 	<select id="selectAllCourseListForTeach" parameterType="String" resultType="Course">
@@ -115,7 +182,6 @@
 		select * from course where courseno in 
 		(select courseno from teachcourse where id = #{id})
 	</select>
-	
 	
 	<!-- 해당 강좌 안에 있는 강의 리스트 - CourseDetailForTeach -->
 	
@@ -144,8 +210,12 @@
       		insert into teachcourse (id, courseno, coursename, startdate)
      		values (#{id}, #{courseno}, #{coursename},sysdate)
   	</insert>
+<<<<<<< HEAD
 	
 	
+=======
+  	
+>>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
 	<!-- 강의 등록 - insertLecture -->
 
 	<insert id="insertLecture" parameterType="Lecture">
