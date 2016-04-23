@@ -402,6 +402,9 @@
                             <li><a href="#">last »</a></li>  -->
              <ul class="pager">                
             
+            < >
+            
+            
             <s:if test="#session.currentPage == 1 & #session.endPageGroup == 1">
              <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
              </s:if>
@@ -599,42 +602,30 @@ $(function(){
 			 			
 			 			});
 			        	 
-			        	 var curPage = response.currentPage;
-			        	 alert("cur> "+curPage);
-			        	 var endPage = response.endPageGroup;
-			        	 alert("end> " + endPage);
+			        	 var curPage = Number(response.currentPage);
+			        	 alert("cur> "+typeof curPage);
+			        	 var endPage =  Number(response.endPageGroup);
+			        	 alert("end> " +typeof endPage);
 			        	 			        	 
 			        	 var paging = $('<ul class="pager"></ul>');
-			        	 
-			        	 var paging0 = '<s:if test="'+ curPage +' == 1 & '+ endPage +' == 1"><li><a href = "#"> <s:property value="'+ curPage +'"/> </a></li></s:if>';
-			        	 var paging1 = '<s:elseif test="'+ curPage +' == 1 & '+ endPage +' != 1"><li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="'+ curPage+1 +'"/>">next &gt</a></li></s:elseif>';
-			        	 var paging2 = '<s:elseif test="'+ curPage +' == '+ endPage +' & '+ endPage +' != 1"><li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="'+ curPage- 1 +' "/>">&lt prev</a></li></s:elseif>';	
-			        	 var paging3 = '<s:else><li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="'+ curPage- 1 +' "/>">&lt prev</a></li><li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="'+ curPage + 1 +' "/>">next &gt</a></li></s:else>';
-			        	 
-			        	 paging.html(paging0 + paging1 + paging2 + paging3).insertAfter(".blog-list-content > div:last");
-			        
-			/*         	 <s:if test="'+ curPage +' == 1 & '+ endPage +' == 1">
-			             <li><a href = "#"> <s:property value="'+ curPage +'"/> </a></li>
-			             </s:if> */
-			            
-			           /*  <s:elseif test="'+ curPage +' == 1 & '+ endPage +' != 1">
-			             <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="'+ curPage+1 +'"/>">next &gt</a></li>
-			            </s:elseif> */
-						
-						/* <s:elseif test="'+ curPage +' == '+ endPage +' & '+ endPage +' != 1">
-			             <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="'+ curPage- 1 +' "/>">&lt prev</a></li>
-			            </s:elseif> */
-						
-						/* 
-						<s:else>
-			             <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="'+ curPage- 1 +' "/>">&lt prev</a></li>
-			             <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="'+ curPage + 1 +' "/>">next &gt</a></li>
-			            </s:else> */
+			        	 if(curPage == 1 & endPage == 1){
+			        		 var paging0 = '<li><a href = "#">'+ curPage +'</a></li>';
+			        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
+			        	 }else if(curPage == 1 & endPage != 1){
+			        		 var paging1 = '<li><a href = "#">next &gt</a></li>';
+			        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
+			        	 }else if(curPage == endPage & endPage != 1){
+			        		 var paging2 = '<li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="'+ curPage- 1 +' "/>">&lt prev</a></li>';	
+			        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
+			        	 }else{
+			        		 var paging3 = '<li><a href = "#">&lt prev</a></li><li><a href = "#">next &gt</a></li>';
+			        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
+			        	 }
 			        
 			        }
 			 
 			 });
-			 //event.preventDefault();
+			 event.preventDefault();
 	 });
 });	
 	
