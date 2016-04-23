@@ -734,7 +734,8 @@ $(function(){
 	 	
 		 	var text = '';
 		 	text = $("#searchText").val();
-			 $.ajax({
+			
+		 	$.ajax({
 			        type : 'get', 
 			        url : 'searchCourse',
 			        data : "searchText="+text,

@@ -320,7 +320,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			
 			kong.put("start", start);
 			kong.put("end", end);
-			
+									
 			int totalRecordsCount = dao.selectDefaultTotal(kong);
 			
 			int countPerPage = 7;		//페이지당 글목록 수
