@@ -332,7 +332,7 @@
                         </div>
                         
                         <div class="content-item">
-                            <h3><a href="CourseDetailStudyView.action?=<s:property value="courseno" />"><s:property value="coursename" /></a></h3>
+                            <h3><a href="selectCourseDetailForStudy.action?=<s:property value="courseno" />"><s:property value="coursename" /></a></h3>
                             <div class="name-author">
                                 By &nbsp;<s:property value="teacherid" />
                             </div>
@@ -513,7 +513,7 @@ $("body").on('click', '#watchMore', function(){
 				
 				var divTag = $('<div class="form-study-course" id='+(indexNum++)+'><div class="study-course-bg mc-item3"></div></div>');
 				
-				divTag.html('<div class="meta-categories">'+ course.courseTypeList +'</div><div class="content-item"><h3><a href="CourseDetailStudyView.action?courseno='+course.courseno
+				divTag.html('<div class="meta-categories">'+ course.courseTypeList +'</div><div class="content-item"><h3><a href="selectCourseDetailForStudy.action?courseno='+course.courseno
 						+'">'+course.coursename+'</a></h3><div class="name-author"> By '+course.teacherid+'</div></div>').prependTo(".form-study");
 			
 			});
