@@ -346,33 +346,23 @@
                 <div class = "paging" align="center">
                		   <ul class="pager">
                		   
-					<s:iterator status="counter" begin = "#session.startPage" end="#session.endPage">
-					<s:if test="#session.currentPage == #counter">
-					 <<li class="pager-current">
-					 <a href = "selectAllCourseList.action?currentPage=<s:property value="#counter"/>">
-						<s:property value="#counter"/>
-					</a>
-					 </li>
-					
-					</s:if>
-					<s:else>
-					<li><a href = "selectAllCourseList.action?currentPage=<s:property value="#counter"/>">
-						<s:property value="#counter"/>
-					</a></li>
-					
-					</s:else>			
-				</s:iterator>
-				<%-- ...
-				<a href = "getAllCourseList.action?currentPage=${pagenavi.currentPage + 1}&&searchText=${searchText}">&gt 
-				</a> --%>               		   
-               		   
-                            <!-- <li class="pager-current">1</li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">next ›</a></li>
-                            <li><a href="#">last »</a></li>
-                            <li><a href="#" id= "watchMore">더보기</a></li> -->
+			<s:if test="#session.currentPage == 1 & #session.endPageGroup == 1">
+             <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
+             </s:if>
+            
+            <s:elseif test="#session.currentPage == 1 & #session.endPageGroup != 1">
+             <li><a href = "plusStudyMain.action?currentPage=<s:property value="#session.currentPage + 1"/>">next &gt</a></li>
+            </s:elseif>
+			
+			<s:elseif test="#session.currentPage == #session.endPageGroup & #session.endPageGroup != 1">
+             <li><a href = "plusStudyMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>
+            </s:elseif>
+			
+			<s:else>
+             <li><a href = "plusStudyMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>
+             <li><a href = "plusStudyMain.action?currentPage=<s:property value="#session.currentPage + 1"/>">next &gt</a></li>
+            </s:else>
+				
                         </ul>
                  </div>       
                 

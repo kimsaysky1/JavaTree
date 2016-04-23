@@ -216,9 +216,9 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 				result += (line + "\n");
 				System.out.println("result:" + result);
 			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
+			System.out.println("에러들어옴");
+			result = e.getMessage();
 			e.printStackTrace();
 		}
 	}
