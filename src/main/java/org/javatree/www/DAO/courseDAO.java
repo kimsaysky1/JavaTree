@@ -40,6 +40,7 @@ public interface courseDAO {
 	public ArrayList<Lecture> selectAllLectureListForTeach(String id);
 	public Course selectCourse(int courseno);
 	public int selectDefaultTotal(Map<String, Object> kong);
+	public int selectFieldTotal(Map<String, Object> kong);
 	
 	
 }

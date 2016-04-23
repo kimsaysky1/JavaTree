@@ -123,9 +123,11 @@
 	<!-- 전체 강좌 중 강좌 검색 (사이드 바)  - CourseDefualtMain -->
 	
 	
-	<!-- 분야별 검색  - ajax 미완성 부분, 매퍼 수정 필요  -->	
+	<!-- 분야별 검색   -->	
 		<select resultType="Course" id="selectListbyField" parameterType="map">
-	select courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/mm/dd') as regdate from course
+	
+	select courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/mm/dd') as regdate
+	from (select rownum as rnum, courseno, coursename, id, username, INTRODUTION, regdate from course
 	 where courseno in (select courseno from coursetype where typeno IN 
 		(
 		<if test="interest0 != null">
@@ -143,10 +145,36 @@
 		<if test="interest4 != null">
 			, #{interest4}
 		</if>
+		))
+		order by regdate desc)
+		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
 		
+	</select>	
+	
+		<!-- 분야별 검색 total 가져오기  -->	
+		<select resultType="int" id="selectFieldTotal" parameterType="map">
+		select count(*) from course
+	 	where courseno in (select courseno from coursetype where typeno IN 
+		(
+		<if test="interest0 != null">
+			#{interest0}
+		</if>
+		<if test="interest1 != null">
+			, #{interest1}
+		</if>
+		<if test="interest2 != null">
+			, #{interest2}
+		</if>
+		<if test="interest3 != null">
+			, #{interest3}
+		</if>
+		<if test="interest4 != null">
+			, #{interest4}
+		</if>
 		))
 		order by regdate desc
 	</select>		
+		
 	<!-- 강좌타입검색 -->
 	<select id="selectTypeno" parameterType="String" resultType="String">
 		select typeno, courseno from coursetype where courseno = #{courseno}

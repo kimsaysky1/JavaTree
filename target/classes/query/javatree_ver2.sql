@@ -5,19 +5,17 @@ SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate
 		) T1)
 		where rnum >= 8 and rnum <= 14
 
-		SELECT rownum, coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
-		from (select rownum, T1.* from (
-		select * from course 
-		<if test="id != null">
-     	where courseno in (select courseno from coursetype where typeno IN (select typeno from interest where id = #{id} and value = 3))
-   		</if>
-   		<if test="id == null">
-   		order by courseno desc
-   		</if>
-		) T1)
-		where rownum <![CDATA[>]]>= #{start} and rownum <![CDATA[<]]>= #{end}
-		<if test="searchText != null">
-		and coursename like #{searchText}
+	select courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/mm/dd') as regdate
+	from (select rownum as rnum, courseno, coursename, id, username, INTRODUTION, regdate from course
+	 where courseno in (select courseno from coursetype where typeno IN 
+		(
+			8
+			, 1
+			, 2
+			, 3
+		))
+		order by regdate desc)
+where rnum >= 1 and rnum <= 7
 
 SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
 		from (select rownum as rnum, T1.* from (select * from course 
