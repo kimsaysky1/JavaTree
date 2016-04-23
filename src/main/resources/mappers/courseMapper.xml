@@ -218,6 +218,8 @@
 	
 	<!-- 해당 강좌 안에 있는 강의 리스트 - CourseDetailForTeach -->
 	
+	
+	
 	<!-- 강좌 등록 (사이드 바)  - insertCousre -->
 	<!-- Course -->
 	<insert id="insertCourse" parameterType="Course">
@@ -243,6 +245,10 @@
       		insert into teachcourse (id, courseno, coursename, startdate)
      		values (#{id}, #{courseno}, #{coursename},sysdate)
   	</insert>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 79d815a0e8496c0f068f404c90036223d13cd654
 	<!-- 강의 등록 - insertLecture -->
 
 	<insert id="insertLecture" parameterType="Lecture">
@@ -279,6 +285,16 @@
       		insert into coding (codingno, codingquestion, codingtemplet, codinganswer, regdate)
      		values (lecture_seq.nextVal, #{codingquestion}, #{codingtemplet:VARCHAR}, #{codinganswer:VARCHAR}, regdate)
   	</insert> -->
+	
+	
+	<select id="selectAllLectureListForTeach" resultType="Lecture" parameterType="String">
+		select * from lecture where courseno in 
+		(select courseno from teachcourse where id = #{id})
+	</select>
+	
+	<select id="selectCourse" resultType="Course" parameterType="int">
+		select * from Course where courseno = #{courseno}
+	</select>
 	
 	
 	<!-- teachcourse 리스트 의 갯수 -->

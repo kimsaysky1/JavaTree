@@ -100,22 +100,39 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private List<File> upload = new ArrayList<File>();
 	private List<String> uploadFileName = new ArrayList<String>();
 	private List<String> uploadContentType = new ArrayList<String>();
+<<<<<<< HEAD
+	
+
+	
+	ArrayList<Lecture> recentlyCompletedLectureList;
+	ArrayList<Lecture> latelyPurchasedLectureList;
+=======
 
 	private ArrayList<Lecture> recentlyCompletedLectureList;
 	private ArrayList<Lecture> latelyPurchasedLectureList;
+>>>>>>> 79d815a0e8496c0f068f404c90036223d13cd654
 	
 	Map<String, Object> session;
 	
 	@Autowired
 	SqlSession sqlSession;
 	
+<<<<<<< HEAD
+
+	courseDAO dao;
+=======
 	private courseDAO dao;
+>>>>>>> 79d815a0e8496c0f068f404c90036223d13cd654
 	
 	private int start;
 	private int end;
 	
 	private int endPageGroup;
 	
+<<<<<<< HEAD
+
+=======
+>>>>>>> 79d815a0e8496c0f068f404c90036223d13cd654
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		session=arg0;
@@ -703,7 +720,6 @@ for (int i = 0; i < courseList.size(); i++) {
 		 * 수강자-수강중인 강의
 		 * **/
 		public ArrayList<Course> getAllIngCourseForStudy(String id){
-			
 			return courseList;
 		} 
 		
@@ -854,7 +870,14 @@ for (int i = 0; i < courseList.size(); i++) {
 		
 		
 		
-		
+		public String CourseDetailForTeachForm(){
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			id=(String) session.get("loginId");
+			lectureList = dao.selectAllLectureListForTeach(id);
+			System.out.println(courseno+"courseno");
+			course=dao.selectCourse(courseno);     
+			return SUCCESS;
+		}
 		
 		
 		
@@ -1213,7 +1236,11 @@ for (int i = 0; i < courseList.size(); i++) {
 		}
 
 
+<<<<<<< HEAD
+		
+=======
 	
+>>>>>>> 79d815a0e8496c0f068f404c90036223d13cd654
 		public String getUploadedfilename() {
 			return uploadedfilename;
 		}
@@ -1230,6 +1257,10 @@ for (int i = 0; i < courseList.size(); i++) {
 			this.originalfilename = originalfilename;
 		}
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 79d815a0e8496c0f068f404c90036223d13cd654
 		public Subnote getSubnote() {
 			return subnote;
 		}
@@ -1273,11 +1304,12 @@ for (int i = 0; i < courseList.size(); i++) {
 		public void setUploadContentType(List<String> uploadContentType) {
 			this.uploadContentType = uploadContentType;
 		}
+		
+<<<<<<< HEAD
 
+=======
 		
-		
-		
-		
+>>>>>>> 79d815a0e8496c0f068f404c90036223d13cd654
 		public ArrayList<Lecture> getRecentlyCompletedLectureList() {
 			return recentlyCompletedLectureList;
 		}
@@ -1310,6 +1342,8 @@ for (int i = 0; i < courseList.size(); i++) {
 			this.end = end;
 		}
 
+<<<<<<< HEAD
+=======
 		public int getEndPageGroup() {
 			return endPageGroup;
 		}
@@ -1318,6 +1352,7 @@ for (int i = 0; i < courseList.size(); i++) {
 			this.endPageGroup = endPageGroup;
 		}
 
+>>>>>>> 79d815a0e8496c0f068f404c90036223d13cd654
 		
 	
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+ <%@taglib prefix="s" uri="/struts-tags"%>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,15 +16,15 @@
 	rel='stylesheet' type='text/css'>
 <!-- Css -->
 <link rel="stylesheet" type="text/css"
-	href="resources/javatree_view/html/css/library/bootstrap.min.css">
+	href="../resources/javatree_view/html/css/library/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/javatree_view/html/css/library/font-awesome.min.css">
+	href="../resources/javatree_view/html/css/library/font-awesome.min.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/javatree_view/html/css/library/owl.carousel.css">
+	href="../resources/javatree_view/html/css/library/owl.carousel.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/javatree_view/html/css/md-font.css">
+	href="../resources/javatree_view/html/css/md-font.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/javatree_view/html/css/style.css">
+	href="../resources/javatree_view/html/css/style.css">
 <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
@@ -300,6 +301,8 @@
 	<!-- END / PROFILE FEATURE -->
 
 	<!-- 가운데 영역 -->
+ 	
+	
 	<section class="blog">
 
 		<div class="mid-detail-course">
@@ -312,11 +315,13 @@
 							<div class="create-course-1">
 								<h4>Title</h4>
 							</div>
+<s:iterator value="course" status="st">							
 							<div class="create-course-3">
 								<div class="form-item">
-									<input type="text" placeholder="title">
+									<input type="text" placeholder="title" value='<s:property value="coursename"/>'>
 								</div>
 							</div>
+</s:iterator>							
 							<div class="form-action2">
 								<input type="submit" value="Edit" class="submit mc-btn-3 btn-style-1">
 							</div>
@@ -330,11 +335,13 @@
 							<div class="create-course-1">
 								<h4>Description</h4>
 							</div>
+<s:iterator value="course" status="st">								
 							<div class="create-course-2">
 								<div class="description-editor text-form-editor">
-									<textarea placeholder="Discription"></textarea>
+									<textarea placeholder="Discription"><s:property value="introdution"/></textarea>
 								</div>
 							</div>
+</s:iterator>							
 							<div class="form-action">
 								<input type="submit" value="Edit" class="submit mc-btn-3 btn-style-1">
 							</div>
@@ -361,9 +368,11 @@
 							</tr>
 						</thead>
 
+
 						<tbody>
+<s:iterator value="lectureList" status="st">						
 							<tr class="new">
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
+								<td class="submissions"><a href="#"><s:property value="lecturename"/></a></td>
 								<td class="author"><a href="">Edit</a></td>
 								<td class="score"><a href="">Delete</a></td>
 								<td class="submit-date"><a href="">Paper</a></td>
@@ -371,7 +380,7 @@
 								<td class="submit-date"><a href="">PlayView</a></td>
 							</tr>
 
-							<tr class="new">
+<!-- 							<tr class="new">
 								<td class="submissions"><a href="#">Title of Lecture</a></td>
 								<td class="author"><a href="">Edit</a></td>
 								<td class="score"><a href="">Delete</a></td>
@@ -441,8 +450,8 @@
 								<td class="submit-date"><a href="">Paper</a></td>
 								<td class="submit-date"><a href="">Question</a></td>
 								<td class="submit-date"><a href="">PlayView</a></td>
-							</tr>
-
+							</tr> -->
+</s:iterator>
 						</tbody>
 					</table>
 				</div>
@@ -495,19 +504,19 @@
 
 	<!-- Load jQuery -->
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/bootstrap.min.js"></script>
+		src="../resources/javatree_view/html/js/library/bootstrap.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
+		src="../resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/scripts.js"></script>
+		src="../resources/javatree_view/html/js/scripts.js"></script>
 
 </body>
 </html>

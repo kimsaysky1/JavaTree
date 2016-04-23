@@ -69,9 +69,11 @@
         	<result type="redirect">insertLectureForm</result>
         </action>
         <!-- 문제보관함 폼(codingMain) -->
-         <action name="codingForm">
+        <action name="codingForm" class="org.javatree.www.Action.CourseAction" method="codingForm">
         	<result>/WEB-INF/views/course/codingMain.jsp</result>
         </action>
+        
+        
         <!-- 문제보관함 처리 -->
         <!--  <action name="insertIntoQuestionBox" class="org.javatree.www.Action.CourseAction" method="insertIntoQuestionBox">
         	<result type="redirect">questionBoxForm</result>
@@ -89,6 +91,13 @@
         <!-- <action name="updateCoding" class="org.javatree.www.Action.CourseAction" method="updateCoding">
         	<result type="redirect">codingForm</result>
         </action> -->
+        
+        
+        <!-- 강사용 강의리스트 페이지 폼 courseDetailForTeach -->
+        <action name="CourseDetailForTeachForm" class="org.javatree.www.Action.CourseAction" method="CourseDetailForTeachForm">
+        	<result>/WEB-INF/views/course/CourseDetailForTeach.jsp</result>
+        </action>
+        
     </package>
 
     <!-- Add packages here -->
