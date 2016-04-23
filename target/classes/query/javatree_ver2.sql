@@ -1,15 +1,33 @@
-SELECT rownum, coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
 		from (select rownum as rnum, T1.* from (
 		select * from course 
-   		order by courseno desc
+   		order by courseno desc 
 		) T1)
-		where rownum >= 1 and rownum <= 7 
-		
+		where rnum >= 8 and rnum <= 14
+
+		SELECT rownum, coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from (select rownum, T1.* from (
+		select * from course 
+		<if test="id != null">
+     	where courseno in (select courseno from coursetype where typeno IN (select typeno from interest where id = #{id} and value = 3))
+   		</if>
+   		<if test="id == null">
+   		order by courseno desc
+   		</if>
+		) T1)
+		where rownum <![CDATA[>]]>= #{start} and rownum <![CDATA[<]]>= #{end}
+		<if test="searchText != null">
+		and coursename like #{searchText}
 
 SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
 		from (select rownum as rnum, T1.* from (select * from course 
 		order by courseno desc) T1)
 		where coursename like '%java%';
+
+SELECT id, courseno, coursename, teacherid 
+		from (select rownum as rnum, T1.* from (select * from studycourse where id = 2 
+		group by courseno, id, coursename, teacherid order by courseno desc) T1)
+		where rnum >= 1 and rnum <= 7		
 		
  CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
   

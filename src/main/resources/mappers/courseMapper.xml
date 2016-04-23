@@ -56,17 +56,17 @@
 	
 	<!-- courseDefaultMain 초기(전체) 페이징  -->
 	<select id="pagingCourse" resultType="Course" parameterType="map">
-		SELECT rownum, coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
-		from (select rownum, T1.* from (
+		SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from (select rownum as rnum, T1.* from (
 		select * from course 
-		<if test="id != null">
+   		<if test="id != null">
      	where courseno in (select courseno from coursetype where typeno IN (select typeno from interest where id = #{id} and value = 3))
    		</if>
    		<if test="id == null">
    		order by courseno desc
-   		</if>
+   		</if> 
 		) T1)
-		where rownum <![CDATA[>]]>= #{start} and rownum <![CDATA[<]]>= #{end}
+		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
 		<if test="searchText != null">
 		and coursename like #{searchText}
 		</if>
@@ -245,10 +245,6 @@
       		insert into teachcourse (id, courseno, coursename, startdate)
      		values (#{id}, #{courseno}, #{coursename},sysdate)
   	</insert>
-<<<<<<< HEAD
-
-=======
->>>>>>> 79d815a0e8496c0f068f404c90036223d13cd654
 	<!-- 강의 등록 - insertLecture -->
 
 	<insert id="insertLecture" parameterType="Lecture">

@@ -551,6 +551,53 @@
 		
 <script>
 	
+function clickNext(page) {
+ 	Number(page);
+	var temp = page;
+ 	$.ajax({
+	        type : 'get', 
+	        url : 'plusSearchCourse',
+	        data : "currentPage="+temp,
+	        success : function(response){
+	        	
+	        	$(".blog-list-content").html(' ');
+	        		
+	        	 var list = response.courseList;
+	        	 list.forEach(function(course){
+	 				var divTag = $('<div class="post"><div class="post-body"></div></div>');
+	 				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
+	 				+course.coursename+'</a></h3></div><div class="post-meta">by'
+	 				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
+	 				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').appendTo(".blog-list-content");
+	 			
+	 			});
+	        	 
+	        	 var curPage = Number(response.currentPage);
+	        	 var curPagePlus = Number(response.currentPage+1);
+	        	 var curPageMinus = Number(response.currentPage-1);
+	        	 var endPage =  Number(response.endPageGroup);
+	        	 			        	 
+	        	 var paging = $('<ul class="pager"></ul>');
+	        	 if(curPage == 1 & endPage == 1){
+	        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
+	        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
+	        	 }else if(curPage == 1 & endPage != 1){
+	        		 var paging1 = '<li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+	        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
+	        	 }else if(curPage == endPage & endPage != 1){
+	        		 var paging2 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li>';	
+	        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
+	        	 }else{
+	        		 var paging3 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+	        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
+	        	 }
+	        
+	        }
+	 
+	 });
+	 event.preventDefault(); 
+}	
+	
 $(function(){
 	 
 	 $("#searchByField").click(function(){
@@ -603,22 +650,22 @@ $(function(){
 			 			});
 			        	 
 			        	 var curPage = Number(response.currentPage);
-			        	 alert("cur> "+typeof curPage);
+			        	 var curPagePlus = Number(response.currentPage+1);
+			        	 var curPageMinus = Number(response.currentPage-1);
 			        	 var endPage =  Number(response.endPageGroup);
-			        	 alert("end> " +typeof endPage);
 			        	 			        	 
 			        	 var paging = $('<ul class="pager"></ul>');
 			        	 if(curPage == 1 & endPage == 1){
-			        		 var paging0 = '<li><a href = "#">'+ curPage +'</a></li>';
+			        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
 			        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
 			        	 }else if(curPage == 1 & endPage != 1){
-			        		 var paging1 = '<li><a href = "#">next &gt</a></li>';
+			        		 var paging1 = '<li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
 			        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
 			        	 }else if(curPage == endPage & endPage != 1){
-			        		 var paging2 = '<li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="'+ curPage- 1 +' "/>">&lt prev</a></li>';	
+			        		 var paging2 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li>';	
 			        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
 			        	 }else{
-			        		 var paging3 = '<li><a href = "#">&lt prev</a></li><li><a href = "#">next &gt</a></li>';
+			        		 var paging3 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
 			        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
 			        	 }
 			        
@@ -627,9 +674,10 @@ $(function(){
 			 });
 			 event.preventDefault();
 	 });
+	 
 });	
-	
-	
+
+
 
 </script>
 		
