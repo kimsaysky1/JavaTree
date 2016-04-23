@@ -36,6 +36,9 @@ public interface courseDAO {
 	public ArrayList<Course> pagingCourse(Map gong);
 	public ArrayList<Course> pagingStudyCourse(Map<String, Object> kong);
 	public int selectTotal(Map<String, Object> kong);
+	public ArrayList<Course> selectAllCourseListForTeachforDetail(String id);
+	public ArrayList<Lecture> selectAllLectureListForTeach(String id);
+	public Course selectCourse(int courseno);
 	
 	
 	

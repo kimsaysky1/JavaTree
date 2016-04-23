@@ -45,7 +45,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private ArrayList<Coding> codingList;
 	private ArrayList<Course> teachCourseList;
 	private ArrayList<Course> courseList;
-<<<<<<< HEAD
+
 	private ArrayList<Lecture> lectureList;
 	private Member_jt member_jt;
 	private Question question;
@@ -101,49 +101,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private List<String> uploadFileName = new ArrayList<String>();
 	private List<String> uploadContentType = new ArrayList<String>();
 	
-=======
-	ArrayList<Lecture> lectureList;
-	Member_jt member_jt;
-	Question question;
-	Error error;
-	String id;
-	String username;
-	int courseno;
-	int lectureno;
-	int codingno;
-	String content;
-	
-	String coursename;
-	String teacherid;
-	boolean check;
-	
-	PageNavigator navi;
-	int currentPage;
-	int page;
-	int total;
-	
-	ArrayList<Course> recentRank;
-	ArrayList<Course> allRank;
-	String interestString;
-	
-	String purejava;
-	String web;
-	String mobile;
-	String iot;
-	String swing;
-	String jdbc;
-	String api;
-	String spring;
-	String struts;
-	String etcframework;
-	String ect;
-	ArrayList<String> courseTypeList;
-	
-	String lecturename;
-	String regdate;
-	File upload;
-	String uploadedfilename, originalfilename;
->>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
+
 	
 	ArrayList<Lecture> recentlyCompletedLectureList;
 	ArrayList<Lecture> latelyPurchasedLectureList;
@@ -153,14 +111,13 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	@Autowired
 	SqlSession sqlSession;
 	
-<<<<<<< HEAD
-=======
+
 	courseDAO dao;
 	
 	int start;
 	int end;
 	
->>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
+
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		session=arg0;
@@ -565,7 +522,6 @@ for (int i = 0; i < courseList.size(); i++) {
 		 * 수강자-수강중인 강의
 		 * **/
 		public ArrayList<Course> getAllIngCourseForStudy(String id){
-			
 			return courseList;
 		} 
 		
@@ -716,7 +672,14 @@ for (int i = 0; i < courseList.size(); i++) {
 		
 		
 		
-		
+		public String CourseDetailForTeachForm(){
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			id=(String) session.get("loginId");
+			lectureList = dao.selectAllLectureListForTeach(id);
+			System.out.println(courseno+"courseno");
+			course=dao.selectCourse(courseno);     
+			return SUCCESS;
+		}
 		
 		
 		
@@ -1074,18 +1037,8 @@ for (int i = 0; i < courseList.size(); i++) {
 			this.teacherid = teacherid;
 		}
 
-<<<<<<< HEAD
-	
-=======
-		public File getUpload() {
-			return upload;
-		}
 
-		public void setUpload(File upload) {
-			this.upload = upload;
-		}
->>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
-
+		
 		public String getUploadedfilename() {
 			return uploadedfilename;
 		}
@@ -1102,7 +1055,7 @@ for (int i = 0; i < courseList.size(); i++) {
 			this.originalfilename = originalfilename;
 		}
 
-<<<<<<< HEAD
+
 		public Subnote getSubnote() {
 			return subnote;
 		}
@@ -1146,16 +1099,8 @@ for (int i = 0; i < courseList.size(); i++) {
 		public void setUploadContentType(List<String> uploadContentType) {
 			this.uploadContentType = uploadContentType;
 		}
+		
 
-		
-		
-		
-		
-		
-		
-		
-		
-=======
 		public ArrayList<Lecture> getRecentlyCompletedLectureList() {
 			return recentlyCompletedLectureList;
 		}
@@ -1188,7 +1133,6 @@ for (int i = 0; i < courseList.size(); i++) {
 			this.end = end;
 		}
 
->>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
 		
 	
 }
