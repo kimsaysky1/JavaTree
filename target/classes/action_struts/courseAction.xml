@@ -25,13 +25,22 @@
         	<result>/WEB-INF/views/course/studyMain.jsp</result>
         </action>
        
+        <action name="studyMainView" class="org.javatree.www.Action.CourseAction" method="studyMainView">
+        	<result>/WEB-INF/views/course/studyMain.jsp</result>
+        </action>
+        
+        <action name="searchCourse" class="org.javatree.www.Action.CourseAction" method="searchCourse">
+        	<result type="json"></result>
+        </action>
+        
+        <action name="plusSearchCourse" class="org.javatree.www.Action.CourseAction" method="plusSearchCourse">
+        	<result type="json"></result>
+        </action>
+        
         <action name="teachMainView">
         	<result>/WEB-INF/views/course/teachMain.jsp</result>
         </action>
         
-          <action name="studyMainView" class="org.javatree.www.Action.CourseAction" method="studyMainView">
-        	<result>/WEB-INF/views/course/studyMain.jsp</result>
-        </action>
                
         <action name="insertCourseView">
         	<result>/WEB-INF/views/course/insertCourse.jsp</result>

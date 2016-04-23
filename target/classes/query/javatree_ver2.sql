@@ -1,8 +1,16 @@
+SELECT rownum, coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from (select rownum as rnum, T1.* from (
+		select * from course 
+   		order by courseno desc
+		) T1)
+		where rownum >= 1 and rownum <= 7 
+		
+
 SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
 		from (select rownum as rnum, T1.* from (select * from course 
 		order by courseno desc) T1)
 		where coursename like '%java%';
-
+		
  CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
   
 alter table studylecture add (courseno number(6,0) NOT NULL)

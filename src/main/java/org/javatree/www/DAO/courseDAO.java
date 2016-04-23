@@ -33,7 +33,7 @@ public interface courseDAO {
 	public ArrayList<String> selectLatelyPurchasedLectureList2(Map<String, Object> kong);
 	public ArrayList<String> recentlyCompletedLectureList1(Map<String, Object> kong);
 	public ArrayList<String> recentlyCompletedLectureList2(Map<String, Object> kong);
-	public ArrayList<Course> pagingCourse(Map gong);
+	public ArrayList<Course> pagingCourse(Map<String, Object> gong);
 	public ArrayList<Course> pagingStudyCourse(Map<String, Object> kong);
 	public int selectTotal(Map<String, Object> kong);
 	public int selectDefaultTotal(Map<String, Object> kong);

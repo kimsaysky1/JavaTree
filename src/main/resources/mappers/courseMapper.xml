@@ -56,8 +56,8 @@
 	
 	<!-- courseDefaultMain 초기(전체) 페이징  -->
 	<select id="pagingCourse" resultType="Course" parameterType="map">
-		SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
-		from (select rownum as rnum, T1.* from (
+		SELECT rownum, coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from (select rownum, T1.* from (
 		select * from course 
 		<if test="id != null">
      	where courseno in (select courseno from coursetype where typeno IN (select typeno from interest where id = #{id} and value = 3))
@@ -66,15 +66,15 @@
    		order by courseno desc
    		</if>
 		) T1)
-		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
+		where rownum <![CDATA[>]]>= #{start} and rownum <![CDATA[<]]>= #{end}
 		<if test="searchText != null">
-		and coursename = #{searchText}
+		and coursename like #{searchText}
 		</if>
 	</select>
 	
 	<select id="selectDefaultTotal" resultType="int" parameterType="map">
 		SELECT count(*)
-		from (select rownum as rnum, T1.* from (select * from course
+		from (select rownum, T1.* from (select * from course
 		<if test="id != null">
      	where courseno in (select courseno from coursetype where typeno IN (select typeno from interest where id = #{id} and value = 3))
    		</if>
@@ -83,7 +83,7 @@
    		</if>
 		) T1)
 		<if test="searchText != null">
-		where coursename = #{searchText}
+		where coursename like #{searchText}
 		</if>
 		
 	</select>
