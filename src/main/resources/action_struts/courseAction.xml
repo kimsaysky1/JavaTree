@@ -17,20 +17,40 @@
         	<result type="json"></result>
         </action>
         
-        <action name="plusCourseDefaultMain" class="org.javatree.www.Action.CourseAction" method="plusCourseDefaultMain">
+        <action name="plusSelectListbyField" class="org.javatree.www.Action.CourseAction" method="plusSelectListbyField">
         	<result type="json"></result>
         </action>
         
-        <action name="plusStudyMain" class="org.javatree.www.Action.CourseAction" method="plusStudyMain">
-        	<result type="json"></result>
+        <action name="plusCourseDefaultMain" class="org.javatree.www.Action.CourseAction" method="plusCourseDefaultMain">
+        	<result>/WEB-INF/views/course/courseDefaultMain.jsp</result>
+        </action>
+        
+     	<action name="plusStudyMain" class="org.javatree.www.Action.CourseAction" method="plusStudyMain">
+        	<result>/WEB-INF/views/course/studyMain.jsp</result>
         </action>
        
-        <action name="teachMainView">
-        	<result>/WEB-INF/views/course/teachMain.jsp</result>
+        <action name="studyMainView" class="org.javatree.www.Action.CourseAction" method="studyMainView">
+        	<result>/WEB-INF/views/course/studyMain.jsp</result>
         </action>
         
-          <action name="studyMainView" class="org.javatree.www.Action.CourseAction" method="studyMainView">
-        	<result>/WEB-INF/views/course/studyMain.jsp</result>
+        <action name="searchCourse" class="org.javatree.www.Action.CourseAction" method="searchCourse">
+        	<result type="json"></result>
+        </action>
+        
+        <action name="plusSearchCourse" class="org.javatree.www.Action.CourseAction" method="plusSearchCourse">
+        	<result type="json"></result>
+        </action>
+        
+        <action name="selectCourseDefaultDetail" class="org.javatree.www.Action.CourseAction" method="selectCourseDefaultDetail">
+        	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>
+        </action>
+        
+        <action name="insertLectureForStudy" class="org.javatree.www.Action.CourseAction" method="insertLectureForStudy">
+        	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>
+        </action>
+        
+        <action name="teachMainView">
+        	<result>/WEB-INF/views/course/teachMain.jsp</result>
         </action>
                
         <action name="insertCourseView">
@@ -60,9 +80,39 @@
         	<result type="redirect">insertLectureForm</result>
         </action>
         <!-- 문제보관함 폼(codingMain) -->
-         <action name="codingForm">
+        <action name="codingForm" class="org.javatree.www.Action.CourseAction" method="codingForm">
         	<result>/WEB-INF/views/course/codingMain.jsp</result>
         </action>
+        
+        <action name="mediaPlayerForm" class="org.javatree.www.Action.CourseAction" method="mediaPlayerForm">
+        	<result>/WEB-INF/views/course/mediaPlayerForCheck.jsp</result>
+        </action>
+        
+        <!-- 강의삭제 - courseDetailForteach -->
+        <action name="deleteLecture" class="org.javatree.www.Action.CourseAction" method="deleteLecture" >
+        	<result type="redirect">CourseDetailForTeachForm</result>
+        </action>
+        
+        	<!-- 강의 비디오 수정 폼-->
+         <action name="updateLectureForm" class="org.javatree.www.Action.CourseAction" method="updateLectureForm">
+        	<result>/WEB-INF/views/course/updateLecture.jsp</result>
+        </action>	
+        
+      	<!-- 강의 비디오 수정 -->
+        <action name="updateLecture" class="org.javatree.www.Action.CourseAction" method="updateLecture" >
+        	<result type="redirect">CourseDetailForTeachForm</result>
+        </action>
+        
+        <!-- 강의 서브노트 수정 폼-->
+         <action name="updateSubnoteForm" class="org.javatree.www.Action.CourseAction" method="updateSubnoteForm">
+        	<result>/WEB-INF/views/course/updateSubnote.jsp</result>
+        </action>	
+        
+        <!-- 강의 서브노트 수정 -->
+        <action name="updateSubnote" class="org.javatree.www.Action.CourseAction" method="updateSubnote" >
+        	<result type="redirect">CourseDetailForTeachForm</result>
+        </action>
+        
         <!-- 문제보관함 처리 -->
         <!--  <action name="insertIntoQuestionBox" class="org.javatree.www.Action.CourseAction" method="insertIntoQuestionBox">
         	<result type="redirect">questionBoxForm</result>
@@ -80,6 +130,13 @@
         <!-- <action name="updateCoding" class="org.javatree.www.Action.CourseAction" method="updateCoding">
         	<result type="redirect">codingForm</result>
         </action> -->
+        
+        
+        <!-- 강사용 강의리스트 페이지 폼 courseDetailForTeach -->
+        <action name="CourseDetailForTeachForm" class="org.javatree.www.Action.CourseAction" method="CourseDetailForTeachForm">
+        	<result>/WEB-INF/views/course/CourseDetailForTeach.jsp</result>
+        </action>
+        
     </package>
 
     <!-- Add packages here -->

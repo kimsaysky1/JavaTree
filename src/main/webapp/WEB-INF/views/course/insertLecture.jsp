@@ -44,7 +44,10 @@ function insertLectureForm(){
 	window.open('codingForm.action','pop','resizable=no scrollbars=yes top=300 left=500 width=300 height=180');	
 } */
 
-
+function stgoback(){
+	alert("등록을 그만하시겠습니까");
+	location.href="/javatree/course/selectAllCourseListForTeach.action";
+}
 
 </script>
 
@@ -564,7 +567,7 @@ function insertLectureForm(){
                        
   						<div class="form-action">
                             <input type="submit" value="Save and Next" onclick="javascript:insertLectureForm()" class="submit mc-btn-3 btn-style-1">
-                             <input type="submit" value="Cancel" class="submit mc-btn-3 btn-style-1">
+                             <input type="submit" value="Cancel" onclick="javascript:stgoback()" class="submit mc-btn-3 btn-style-1">
                         </div>
 
                      

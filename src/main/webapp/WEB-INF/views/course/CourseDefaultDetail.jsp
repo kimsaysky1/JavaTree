@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,15 +17,15 @@
 	rel='stylesheet' type='text/css'>
 <!-- Css -->
 <link rel="stylesheet" type="text/css"
-	href="resources/javatree_view/html/css/library/bootstrap.min.css">
+	href="../resources/javatree_view/html/css/library/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/javatree_view/html/css/library/font-awesome.min.css">
+	href="../resources/javatree_view/html/css/library/font-awesome.min.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/javatree_view/html/css/library/owl.carousel.css">
+	href="../resources/javatree_view/html/css/library/owl.carousel.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/javatree_view/html/css/md-font.css">
+	href="../resources/javatree_view/html/css/md-font.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/javatree_view/html/css/style.css">
+	href="../resources/javatree_view/html/css/style.css">
 <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
@@ -296,7 +298,7 @@
 							</div>
 							<div class="create-course-4">
 								<div class="form-item">
-									<input type="text" placeholder="title">
+									<input type="text" placeholder="title" value="<s:property value="coursename" />" readonly="readonly">
 								</div>
 							</div>
 						
@@ -310,11 +312,11 @@
 					<div class="promo-video create-item">
 						
 							<div class="create-course-1">
-								<h4>Description</h4>
+								<h4>Introduction</h4>
 							</div>
 							<div class="create-course-4">
 								<div class="description-editor text-form-editor">
-									<textarea placeholder="Discription"></textarea>
+									<textarea placeholder="Discription" readonly="readonly"><s:property value="introdution" /></textarea>
 								</div>
 							</div>
 						
@@ -341,86 +343,26 @@
 						</thead>
 
 						<tbody>
+						
+						<s:iterator value="lectureList" status="counter">
 							<tr class="new">
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
+								<td class="submissions"><a href="#"><s:property value="#counter.index + 1" />.&nbsp;&nbsp;&nbsp;<s:property value="lecturename" /></a></td>
 								<td class="author"></td>
 								<td class="score"></td>
 								<td class="submit-date"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"><a href="">Apply</a></td>
+								<td class="submit-date"><s:property value="regdate" /></td>
+								
+								<s:if test="studying != null">
+									<td class="submit-date"><a href="watchLecture.action?lectureno="<s:property value="lectureno" />>Watch</a></td>
+								</s:if>
+								<s:else>
+									<td class="submit-date"><a href='insertLectureForStudy.action?lectureno=<s:property value="lectureno" />&courseno=<s:property value="courseno" />
+									&coursename=<s:property value="coursename" />&teacherid=<s:property value="teacherid" />'>Apply</a></td>
+								</s:else>
+								
 							</tr>
-
-							<tr class="new">
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"></td>
-								<td class="score"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"><a href="">Apply</a></td>
-							</tr>
-
-							<tr class="new">
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"></td>
-								<td class="score"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"><a href="">Apply</a></td>
-							</tr>
-
-							<tr class="new">
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"></td>
-								<td class="score"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"><a href="">Apply</a></td>
-							</tr>
-
-							<tr class="new">
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"></td>
-								<td class="score"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"><a href="">Apply</a></td>
-							</tr>
-
-							<tr>
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"></td>
-								<td class="score"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"><a href="">Apply</a></td>
-							</tr>
-
-							<tr>
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"></td>
-								<td class="score"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"><a href="">Apply</a></td>
-							</tr>
-
-							<tr>
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"></td>
-								<td class="score"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"><a href="">Apply</a></td>
-							</tr>
-
-							<tr>
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"></td>
-								<td class="score"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"></td>
-								<td class="submit-date"><a href="">Apply</a></td>
-							</tr>
+						</s:iterator>
+							
 
 						</tbody>
 					</table>
@@ -470,20 +412,33 @@
 	<!-- END / FOOTER -->
 
 	<!-- Load jQuery -->
+	<script src="../resources/jquery-2.2.3.min.js"></script>
+	<script src="../resources/jquery-ui.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/bootstrap.min.js"></script>
+		src="../resources/javatree_view/html/js/library/bootstrap.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
+		src="../resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/scripts.js"></script>
+		src="../resources/javatree_view/html/js/scripts.js"></script>
+	
+	<script>
+	
+	<%-- window.onload = function () {
+		<%
+		String ko = request.getParameter("message").trim();
+		%>
+		var k = <%=ko%>;
+		alert(k);
+		} --%>
+	</script>
 		
 </body>
 </html>

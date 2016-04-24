@@ -1,8 +1,32 @@
-SELECT id, courseno, coursename, teacherid 
-from (select rownum as rnum, T1.* from (select * from studycourse where id = 2 group by courseno, id, coursename, teacherid order by courseno desc) T1)
-where rnum >= 1 and rnum <= 2
+SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from (select rownum, T1.* from (
+		select * from course where coursename like '%spring%' 
+		) T1 where rownum >= 1 and rownum <= 14)
+		
 
- CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
+
+
+SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from (select rownum as rnum, T1.* from (select * from course where coursename like '%spring%' order by courseno desc) T1)
+		where rnum >= 1 and rnum <= 7 
+
+SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from (select rownum as rnum, T1.* from (
+		select * from course 
+   		order by courseno desc
+		) T1)
+		where rownum >= 8 and rownum <= 14 and coursename like '%spring%' 
+		
+
+
+		select * 
+		from (SELECT rownum, coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from course
+		where coursename like '%spring%')
+		where rownum >= 8 and rownum <= 14
+		order by courseno desc
+		
+CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
   
 alter table studylecture add (courseno number(6,0) NOT NULL)
 
@@ -12,6 +36,15 @@ alter table course add (regdate date default sysdate not null);
 alter table coding add (regdate date default sysdate not null); -- 20160423 김영호 추가
 alter table coding add (codinganswer clob not null);
 alter table coding drop column lectureno;
+<<<<<<< HEAD
+=======
+
+alter table coding drop column regdate;--20160424 박수지 추가
+<<<<<<< HEAD
+
+CREATE TABLE lecturecoding--20160419�߰�
+=======
+>>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
 CREATE TABLE lecturecoding
 (
 	lectureno number(6,0) NOT NULL,
@@ -160,7 +193,8 @@ CREATE TABLE coding
 	lectureno number(6,0),
 	PRIMARY KEY (codingno)
 );
-
+CREATE sequence coding_seq start with 1 increment by 1;--20160424 박수지 수정
+--drop sequence coding_seq;
 
 CREATE TABLE teachcourse
 (

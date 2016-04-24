@@ -119,10 +119,10 @@
 
 					<!-- SEARCH BOX -->
 					<div class="search-box">
-						<i class="icon md-search"></i>
+						<i class="icon md-search" ></i>
 						<div class="search-inner">
 							<form>
-								<input type="text" placeholder="key words">
+								<input type="text" placeholder="key words" >
 							</form>
 						</div>
 					</div>
@@ -288,20 +288,23 @@
 		 <div class="course-list-field">
 		 <fieldset>
 		 <legend>Field</legend>
-		 <input type="checkbox" name="interest" value="1" />&nbsp;<label>PUREJAVA</label>
-		 &nbsp;<input type="checkbox" name="interest" value="2" />&nbsp;<label>WEB</label>
-		 &nbsp;<input type="checkbox" name="interest" value="3" />&nbsp;<label>MOBILE</label>
-		 &nbsp;<input type="checkbox" name="interest" value="4" />&nbsp;<label>IOT</label>
-		 &nbsp;<input type="checkbox" name="interest" value="5" />&nbsp;<label>SWING</label>
-		 &nbsp;<input type="checkbox" name="interest" value="6" />&nbsp;<label>JDBC</label>
-		 &nbsp;<input type="checkbox" name="interest" value="7" />&nbsp;<label>API</label>
+		 <form name="form">
+		 <input type="checkbox" name="interest" value="1" onchange="javascript:selectByField(this)"/>&nbsp;<label>PUREJAVA</label>
+		 &nbsp;<input type="checkbox" name="interest" value="2" onchange="javascript:selectByField(this)"/>&nbsp;<label>WEB</label>
+		 &nbsp;<input type="checkbox" name="interest" value="3" onchange="javascript:selectByField(this)"/>&nbsp;<label>MOBILE</label>
+		 &nbsp;<input type="checkbox" name="interest" value="4" onchange="javascript:selectByField(this)"/>&nbsp;<label>IOT</label>
+		 &nbsp;<input type="checkbox" name="interest" value="5" onchange="javascript:selectByField(this)"/>&nbsp;<label>SWING</label>
+		 &nbsp;<input type="checkbox" name="interest" value="6" onchange="javascript:selectByField(this)"/>&nbsp;<label>JDBC</label>
+		 &nbsp;<input type="checkbox" name="interest" value="7" onchange="javascript:selectByField(this)"/>&nbsp;<label>API</label>
 		 <br>
-		 <input type="checkbox" name="interest" value="8" />&nbsp;<label>SPRING</label>
-		 &nbsp;<input type="checkbox" name="interest" value="9" />&nbsp;<label>STRUTS</label>
-		 <input type="checkbox" name="interest" value="10" />&nbsp;<label>etcFramework</label>
-		 &nbsp;<input type="checkbox" name="interest" value="11" />&nbsp;<label>ETC</label>
+		 <input type="checkbox" name="interest" value="8" onchange="javascript:selectByField(this)"/>&nbsp;<label>SPRING</label>
+		 &nbsp;<input type="checkbox" name="interest" value="9" onchange="javascript:selectByField(this)"/>&nbsp;<label>STRUTS</label>
+		 <input type="checkbox" name="interest" value="10" onchange="javascript:selectByField(this)"/>&nbsp;<label>etcFramework</label>
+		 &nbsp;<input type="checkbox" name="interest" value="11" onchange="javascript:selectByField(this)"/>&nbsp;<label>ETC</label>
+		 </form>
 		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		 <input type="button" value = "SEARCH" class = "mc-btn-7 btn-style-1" id="searchByField">
+		 <!-- <input type="button" value = "SEARCH" class = "mc-btn-7 btn-style-1" id="searchByField"> -->
+       
        </fieldset>
        </div>
        
@@ -344,63 +347,30 @@
 		<!-- end post -->     
      </s:iterator>
      
-     	
-     
-     
          
-<!-- 
-                        POST
-                        <div class="post">
-                            POST BODY
-                            <div class="post-body">
-                                <div class="post-title">
-                                    <h3 class="md"><a href="blog-single.html">Top 10 Design courses of October 2013</a></h3>
-                                </div>
-                                <div class="post-meta">
-                                    by <a href="#">Brett Todd</a> on October 7, 2014
-                                </div>  
-                                   <div class="post-link">
-                                    <a href="blog-single.html">
-                                        <i class="fa fa-play-circle-o"></i>
-                                        Read More
-                                    </a>
-                                	</div>                           
-                            </div>
-                            END / POST BODY
-                        </div>
-                        END / POST
- -->
-                        <ul class="pager">
+             <ul class="pager">                
+            
+            
+            <s:if test="#session.currentPage == 1 & #session.endPageGroup == 1">
+             <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
+             </s:if>
+            
+            <s:elseif test="#session.currentPage == 1 & #session.endPageGroup != 1">
+            <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
+             <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage + 1"/>">next &gt</a></li>
+            </s:elseif>
+			
+			<s:elseif test="#session.currentPage == #session.endPageGroup & #session.endPageGroup != 1">
+             <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>
+            <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
+            </s:elseif>
+			
+			<s:else>
+             <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>
+             <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
+             <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage + 1"/>">next &gt</a></li>
+            </s:else>
                             
-           <%--   <a href = "getAllCourseList.action?currentPage=${pagenavi.currentPage - 1}&searchText=${searchText}">&lt</a> --%>
-				
-		<%-- 		<s:iterator var = "counter" begin = "pagenavi.startPageGroup" end="pagenavi.endPageGroup">
-					<s:if test="#session.currentPage == #counter">
-					 <li class="pager-current">
-					 <a href = "getAllCourseList.action?currentPage=<s:property value="#counter"/>&searchText=${searchText}">
-						<s:property value="#counter"/>
-					</a>
-					 </li>
-					
-					</s:if>
-					<s:else>
-					<li><a href = "getAllCourseList.action?currentPage=<s:property value="#counter"/>&searchText=${searchText}">
-						<s:property value="#counter"/>
-					</a></li>
-					
-					</s:else>			
-				</s:iterator> --%>
-				<%-- ...
-				<a href = "getAllCourseList.action?currentPage=${pagenavi.currentPage + 1}&&searchText=${searchText}">&gt 
-				</a> --%>
-                            
-                          <!-- <li class="pager-current">1</li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">next ›</a></li>
-                            <li><a href="#">last »</a></li>  -->
-                            <li><a href="#" id= "watchMore">더보기</a></li>
                             </ul>
                     </div>
                 </div>
@@ -414,10 +384,10 @@
                             <h4 class="sm">Search Course</h4>
                             <form>
                                 <div class="form-item">
-                                    <input type="text">
+                                    <input type="text" id="searchText">
                                 </div>
                                 <div class="form-actions">
-                                    <input type="submit">
+                                    <input type="submit" id="searchIcon">
                                 </div>
                             </form>
                         </div>
@@ -465,7 +435,7 @@
                                         <s:iterator value="recentRank" status="counter" >
                                         <tr>
                                          <td class="count"> <s:property value="#counter.index + 1" /> </td>
-                                            <td><s:property value="coursename" />[ID: <s:property value="id" /> ]</td>                                          
+                                            <td><s:property value="coursename" />&nbsp;[ID: &nbsp;<s:property value="id" />&nbsp; ]</td>                                          
                                         </tr>
 										</s:iterator>
                                     </tbody>
@@ -512,7 +482,7 @@
 	
 	<!-- Load jQuery -->
 	<script src="../resources/jquery-2.2.3.min.js"></script>
-	<script src="../resources/jquery-ui.min.js"></script> --%>
+	<script src="../resources/jquery-ui.min.js"></script>
 	<script type="text/javascript"
 		src="../resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript"
@@ -530,75 +500,239 @@
 		
 <script>
 	
+function clickNext(page) {
+ 	Number(page);
+	var temp = page;
+ 	$.ajax({
+	        type : 'get', 
+	        url : 'plusSearchCourse',
+	        data : "currentPage="+temp,
+	        success : function(response){
+	        	
+	        	$(".blog-list-content").html(' ');
+	        		
+	        	 var list = response.courseList;
+	        	 list.forEach(function(course){
+	 				var divTag = $('<div class="post"><div class="post-body"></div></div>');
+	 				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
+	 				+course.coursename+'</a></h3></div><div class="post-meta">by'
+	 				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
+	 				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').appendTo(".blog-list-content");
+	 			
+	 			});
+	        	 
+	        	 var curPage = Number(response.currentPage);
+	        	 var curPagePlus = Number(response.currentPage+1);
+	        	 var curPageMinus = Number(response.currentPage-1);
+	        	 var endPage =  Number(response.endPageGroup);
+	        	 			        	 
+	        	 var paging = $('<ul class="pager"></ul>');
+	        	 if(curPage == 1 & endPage == 1){
+	        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
+	        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
+	        	 }else if(curPage == 1 & endPage != 1){
+	        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+	        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
+	        	 }else if(curPage == endPage & endPage != 1){
+	        		 var paging2 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
+	        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
+	        	 }else{
+	        		 var paging3 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+	        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
+	        	 }
+	        
+	        }
+	 
+	 });
+	 event.preventDefault(); 
+}	
+	
+function clickNextField(page) {
+ 	Number(page);
+	var temp = page;
+	
+	var str = '';	
+	var cnt;
+	 $(":checkbox:checked").each(function(index){
+	        if(index == cnt-1){
+	        	str += $(this).val();
+	        }else{
+	        	str += $(this).val()+",";
+	        }
+	    });
+	 
+	 alert(str);
+	
+	$.ajax({
+ 		 type : 'get', 
+	        url : 'plusSelectListbyField',
+	        data : "interestString="+str+"&currentPage="+temp,
+	        success : function(response){
+	        	
+	        	$(".blog-list-content").html(' ');
+	        		
+	        	 var list = response.courseList;
+	        	 list.forEach(function(course){
+	 				var divTag = $('<div class="post"><div class="post-body"></div></div>');
+	 				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
+	 				+course.coursename+'</a></h3></div><div class="post-meta">by'
+	 				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
+	 				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').appendTo(".blog-list-content");
+	 			
+	 			});
+	        	 
+	        	 var curPage = Number(response.currentPage);
+	        	 var curPagePlus = Number(response.currentPage+1);
+	        	 var curPageMinus = Number(response.currentPage-1);
+	        	 var endPage =  Number(response.endPageGroup);
+	        	 			        	 
+	        	 var paging = $('<ul class="pager"></ul>');
+	        	 if(curPage == 1 & endPage == 1){
+	        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
+	        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
+	        	 }else if(curPage == 1 & endPage != 1){
+	        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+	        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
+	        	 }else if(curPage == endPage & endPage != 1){
+	        		 var paging2 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
+	        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
+	        	 }else{
+	        		 var paging3 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+	        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
+	        	 }
+	        
+	        }
+	 
+	 });
+	 event.preventDefault(); 
+}		
+	
+function selectByField(asd) {
+	 var sum = 0;
+	 sum = $(":checkbox:checked").length;
+	 
+	 if(sum > 5){
+		 alert( sum + "개 이상은 선택할 수 없습니다." );	
+		 $(asd).prop("checked",false);	 
+	 }
+	 
+	 var str = '';	
+	 var cnt;
+	 $(":checkbox:checked").each(function(index){
+	        if(index == cnt-1){
+	        	str += $(this).val();
+	        }else{
+	        	str += $(this).val()+",";
+	        }
+	    });
+	 
+	 alert(str);
+	 
+	 $.ajax({
+	        type : 'get', 
+	        url : 'selectListbyField',
+	        data : "interestString="+str,
+	        success : function(response){
+	        	$(".blog-list-content").html(' ');
+        		
+	        	 var list = response.courseList;
+	        	 list.forEach(function(course){
+	 				var divTag = $('<div class="post"><div class="post-body"></div></div>');
+	 				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
+	 				+course.coursename+'</a></h3></div><div class="post-meta">by'
+	 				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
+	 				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').appendTo(".blog-list-content");
+	 			
+	 			});
+	        	 
+	        	 var curPage = Number(response.currentPage);
+	        	 var curPagePlus = Number(response.currentPage+1);
+	        	 var curPageMinus = Number(response.currentPage-1);
+	        	 var endPage =  Number(response.endPageGroup);
+	        	 			        	 
+	        	 var paging = $('<ul class="pager"></ul>');
+	        	 if(curPage == 1 & endPage == 1){
+	        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
+	        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
+	        	 }else if(curPage == 1 & endPage != 1){
+	        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+	        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
+	        	 }else if(curPage == endPage & endPage != 1){
+	        		 var paging2 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
+	        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
+	        	 }else{
+	        		 var paging3 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+	        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
+	        	 }
+	        
+	        }
+	 
+	 });
+	 str = '';
+	 
+}	
+	
+	
 $(function(){
 	 
-	 $("#searchByField").click(function(){
-		 var str = '';
-		 var cnt;
-		 
-		 cnt = $(":checkbox:checked").length;
-		 $(":checkbox:checked").each(function(index){
-		        if(index == cnt-1){
-		        	str += $(this).val();
-		        }else{
-		        	str += $(this).val()+",";
-		        }
-		    });
-	 
-		 $.ajax({
-		        type : 'get', 
-		        url : 'selectListbyField',
-		        data : "str="+str,
-		        dataType : "json",
-		        success : function(response){
-		        	 var data = response.courseList;
-		        	 alert(data);
-		        }
-		 
-		 });
-		 str = '';
-	 });
 
-	
-$("body").on('click', '#watchMore', function(){
-	
-	
-	
-	var start = $(".blog-list-content > div:last").attr('id');
-	start = parseInt(start) + 1;
-	var end = start + 1;
-	var stringForTokenizer = '';
-	//var test = $("[name=interest]");
-/* 	for(var i = 0; i < test.length; i++){
-		if(test[i].checked){
-			stringForTokenizer += test[i].value + ',';
-		}
-	} */
-	
-	alert(start);
-	alert(end);
-	$.ajax({
-		type: 'GET'
-		, url: 'plusCourseDefaultMain'
-		, data : 'start='+start+'&end='+end
-		, dataType : 'json'
-		, success : function(response){
-			var indexNum = start;
-			var list = response.courseList;
-			list.forEach(function(course){
-				var divTag = $('<div class="post" id='+(indexNum++)+'><div class="post-body"></div></div>');
-				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
-				+course.coursename+'</a></h3></div><div class="post-meta">by'
-				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
-				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').insertAfter(".blog-list-content > div:last");
-			
-			});
-		}
-	});
-	//event.preventDefault(); 
-});
+	 $("#searchIcon").on("click", function(){
+	 	
+		 	var text = '';
+		 	text = $("#searchText").val();
+			 
+			 $(":checkbox:checked").each(function(index){
+			        $(this).prop("checked",false);
+			    });
+		 	
+		 	$.ajax({
+			        type : 'get', 
+			        url : 'searchCourse',
+			        data : "searchText="+text,
+			        success : function(response){
+			        	
+			        	$(".blog-list-content").html(' ');
+			        		
+			        	 var list = response.courseList;
+			        	 list.forEach(function(course){
+			 				var divTag = $('<div class="post"><div class="post-body"></div></div>');
+			 				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
+			 				+course.coursename+'</a></h3></div><div class="post-meta">by'
+			 				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
+			 				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').appendTo(".blog-list-content");
+			 			
+			 			});
+			        	 
+			        	 var curPage = Number(response.currentPage);
+			        	 var curPagePlus = Number(response.currentPage+1);
+			        	 var curPageMinus = Number(response.currentPage-1);
+			        	 var endPage =  Number(response.endPageGroup);
+			        	 			        	 
+			        	 var paging = $('<ul class="pager"></ul>');
+			        	 if(curPage == 1 & endPage == 1){
+			        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
+			        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
+			        	 }else if(curPage == 1 & endPage != 1){
+			        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+			        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
+			        	 }else if(curPage == endPage & endPage != 1){
+			        		 var paging2 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
+			        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
+			        	 }else{
+			        		 var paging3 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+			        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
+			        	 }
+			        
+			        }
+			 
+			 });
+			 event.preventDefault();
+	 });
+	 
 });	
-	
+
+
+
 </script>
 		
 </body>

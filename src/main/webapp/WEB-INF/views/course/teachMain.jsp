@@ -351,7 +351,7 @@
 
                         <div class="meta-categories"><a href="#">Field</a></div> <!-- edit -->
                         <div class="content-item">
-                            <h3><a href="course-intro.action"><s:property value="coursename" /><!-- CourseTitle --></a></h3>
+                            <h3><a href="/javatree/course/CourseDetailForTeachForm.action?courseno=<s:property value="courseno"/>"><s:property value="coursename" /><!-- CourseTitle --></a></h3>
 
                         </div>
                               <div class="edit-view">
@@ -448,19 +448,19 @@
 	
 	<!-- Load jQuery -->
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/bootstrap.min.js"></script>
+		src="../resources/javatree_view/html/js/library/bootstrap.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
+		src="../resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
+		src="../resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
 	<script type="text/javascript"
-		src="resources/javatree_view/html/js/scripts.js"></script>
+		src="../resources/javatree_view/html/js/scripts.js"></script>
 
 </body>
 </html>
