@@ -36,13 +36,24 @@ public interface courseDAO {
 	public ArrayList<Course> pagingCourse(Map<String, Object> gong);
 	public ArrayList<Course> pagingStudyCourse(Map<String, Object> kong);
 	public int selectTotal(Map<String, Object> kong);
-<<<<<<< HEAD
+
 	public ArrayList<Course> selectAllCourseListForTeachforDetail(String id);
 	public ArrayList<Lecture> selectAllLectureListForTeach(String id);
 	public Course selectCourse(int courseno);
-=======
+
 	public int selectDefaultTotal(Map<String, Object> kong);
->>>>>>> 79d815a0e8496c0f068f404c90036223d13cd654
+	public void deleteLecture(int lectureno);
+	public void deleteLectureCoding(int lectureno);
+	public void selectdelete();
+	public void deleteCheckLecture(int lectureno);
+	public void deleteStudyLecture(int lectureno);
+	public void deleteSubnote(int lectureno);
+	public void updateLecture(Map<String, Object> map);
+	public void updateSubnote(Subnote subnote);
+	public ArrayList<Course> selectAllCourseListForTeach(String id);
+	public void insertTeachLecture(Map<String, Object> map);
+	public Lecture selectLecture(int lectureno);
+	public ArrayList<Lecture> selectAllLectureListForTeach(int courseno);
 	
 	
 	

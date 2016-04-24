@@ -211,9 +211,10 @@
 		
 	<!-- 내가 가르치는 강좌 리스트 - teachMain -->
 	<select id="selectAllCourseListForTeach" parameterType="String" resultType="Course">
-		<!-- select * from teachcourse where id=#{id} -->
+	<!-- 	select * from teachcourse where id=#{id}  -->
 		select * from course where courseno in 
 		(select courseno from teachcourse where id = #{id})
+		order by regdate desc
 	</select>
 	
 	<!-- 해당 강좌 안에 있는 강의 리스트 - CourseDetailForTeach -->
@@ -245,16 +246,24 @@
       		insert into teachcourse (id, courseno, coursename, startdate)
      		values (#{id}, #{courseno}, #{coursename},sysdate)
   	</insert>
-<<<<<<< HEAD
 
-=======
->>>>>>> 79d815a0e8496c0f068f404c90036223d13cd654
 	<!-- 강의 등록 - insertLecture -->
 
 	<insert id="insertLecture" parameterType="Lecture">
 		insert into lecture (courseno, lectureno, lecturename, regdate , originalfilename, uploadedfilename)
 		values (#{courseno}, lecture_seq.nextVal, #{lecturename}, sysdate, #{originalfilename} , #{uploadedfilename}) 
 	</insert>
+	
+	<!-- teachLecture -->
+	<insert id="insertTeachLecture" parameterType="map">
+		<selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
+    		select max(lectureno) from lecture 
+  		</selectKey>
+  		insert into teachlecture (id, courseno, lectureno, point, studentcount)
+		values (#{id}, #{courseno} ,#{lectureno}, #{point}, (select count(*) from studylecture where lectureno=#{lectureno}))
+	</insert>
+	
+	
 	
 	<!-- insert subnote -->
 	 <insert id="insertSubnote" parameterType="Subnote">
@@ -287,15 +296,68 @@
   	</insert> -->
 	
 	
-	<select id="selectAllLectureListForTeach" resultType="Lecture" parameterType="String">
-		select * from lecture where courseno in 
+	<!-- <select id="selectAllLectureListForTeach" resultType="Lecture" parameterType="String">
+		select * from lecture where courseno in
 		(select courseno from teachcourse where id = #{id})
+	</select> -->
+	<select id="selectAllLectureListForTeach" resultType="Lecture" parameterType="int">
+		select * from lecture where courseno =#{courseno}
 	</select>
+	
 	
 	<select id="selectCourse" resultType="Course" parameterType="int">
 		select * from Course where courseno = #{courseno}
 	</select>
 	
+	
+	<!-- 강의삭제 -->
+<!-- 	<select id="selectdelete" resultType="String">
+		select CONSTRAINT_NAME, TABLE_NAME, R_CONSTRAINT_NAME
+		from user_constraints
+		where CONSTRAINT_NAME = 'SYS_C0036932' 
+	</select> -->
+	<delete id="deleteCheckLecture" parameterType="int">
+		delete from checklecture where lectureno =#{lectureno}
+	</delete>
+	<delete id="deleteStudyLecture" parameterType="int">
+		delete from studylecture where lectureno =#{lectureno}
+	</delete>
+    <delete id="deleteSubnote" parameterType="int">
+		delete from subnote where lectureno =#{lectureno}
+	</delete>
+	<delete id="deleteTeachLecture" parameterType="int">
+		delete from teachlecture where lectureno =#{lectureno}
+	</delete>                                                     
+	<!-- deleteLectureCoding -->
+	<delete id="deleteLectureCoding" parameterType="int">
+		delete from lecturecoding where lectureno =#{lectureno}
+	</delete>
+	<!-- deleteLecture -->
+	<delete id="deleteLecture" parameterType="int">
+		delete from lecture where lectureno =#{lectureno}
+	</delete>
+	
+	<!-- 강의 비디오수정 -->
+	<update id="updateLecture" parameterType="map">
+		update lecture 
+		set originalfilename= #{originalfilename} ,
+			uploadedfilename= #{uploadedfilename}
+		where lectureno=#{lectureno}
+	</update>
+	
+	<!-- 강의 서브노트수정 -->
+	<update id="updateSubnote" parameterType="Subnote">
+		update subnote 
+		set originalfilename= #{originalfilename} ,
+			uploadedfilename= #{uploadedfilename}
+		where lectureno=#{lectureno}
+	</update>
+	
+	<!-- 강의찾기 mediaPlayerForm -->
+	<select id="selectLecture" parameterType="String" resultType="Lecture">
+		select * from lecture where lectureno=#{lectureno}
+	</select>
+
 	
 	<!-- teachcourse 리스트 의 갯수 -->
 	<select id="getTotal" resultType="int" parameterType="String">

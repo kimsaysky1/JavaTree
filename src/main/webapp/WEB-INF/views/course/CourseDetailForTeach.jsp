@@ -30,6 +30,34 @@
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
 <title>DetailCourse-teach</title>
+<script type="text/javascript">
+/* function deleteLecture(){
+	alert("정말 삭제하시겠습니까?");
+	var lectureno = document.getElementById("deletelecture1"); 
+	alert(lectureno);
+	location.href="/javatree/course/deleteLecture.action?lectureno="+lectureno;
+}
+ */
+ 
+ 
+ function updateLecture(){
+	var lectureno=$('#lectureno').val();
+	alert(lectureno);
+	window.open('/javatree/course/updateLectureForm.action?lectureno='+lectureno,'pop','resizable=no scrollbars=yes top=300 left=500 width=600 height=500'); 
+	/*  window.open('updateLecture.action?custid='+custid.value,'pop','resizable=no scrollbars=yes top=300 left=500 width=300 height=180'); */
+	 /* locatrion.href="/javatree/course/updateLecture.action?lectureno=<s:property value="lectureno"/>&courseno=<s:property value="courseno"/>"; */
+ }
+ 
+ function  updateSubnote(){
+		var lectureno=$('#lectureno').val();
+		alert(lectureno);
+		window.open('/javatree/course/updateSubnoteForm.action?lectureno='+lectureno,'pop','resizable=no scrollbars=yes top=300 left=500 width=600 height=500'); 
+	 }
+
+</script>
+
+
+
 </head>
 <body>
 	<!-- HEADER -->
@@ -38,7 +66,7 @@
 
 			<!-- LOGO -->
 			<div class="logo">
-				<a href="index.html"><img
+				<a href="index.action"><img
 					src="resources/javatree_view/html/images/logo.png" alt=""></a>
 			</div>
 			<!-- END / LOGO -->
@@ -53,7 +81,7 @@
 
 				<!-- MENU -->
 				<ul class="menu">
-					<li class="current-menu-item"><a href="index.html">HOME</a></li>
+					<li class="current-menu-item"><a href="index.action">HOME</a></li>
 					<li class="menu-item-has-children megamenu col-4"><a href="#">COURSE</a>
 						<ul class="sub-menu">
 							<li class="menu-item-has-children"><a href="#">Account 1</a>
@@ -370,87 +398,19 @@
 
 
 						<tbody>
-<s:iterator value="lectureList" status="st">						
+<s:iterator value="lectureList" status="st">	
+					
 							<tr class="new">
 								<td class="submissions"><a href="#"><s:property value="lecturename"/></a></td>
-								<td class="author"><a href="">Edit</a></td>
-								<td class="score"><a href="">Delete</a></td>
-								<td class="submit-date"><a href="">Paper</a></td>
+								<input type="hidden" id="lectureno" value='<s:property value="lectureno"/>' >
+								<td class="author"><a href="javascript:updateLecture()">Edit<%-- <s:property value="lectureno"/> --%></a></td>
+								<td class="score"><a href="/javatree/course/deleteLecture.action?lectureno=<s:property value="lectureno"/>&courseno=<s:property value="courseno"/>">Delete</a></td><!-- javascript:deleteLecture(); -->
+								<td class="submit-date"><a href="javascript:updateSubnote()">Paper</a></td>
 								<td class="submit-date"><a href="">Question</a></td>
-								<td class="submit-date"><a href="">PlayView</a></td>
+								<td class="submit-date"><a href="/javatree/course/mediaPlayerForm.action?lectureno=<s:property value="lectureno"/>&courseno=<s:property value="courseno"/>">PlayView</a></td>
 							</tr>
 
-<!-- 							<tr class="new">
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"><a href="">Edit</a></td>
-								<td class="score"><a href="">Delete</a></td>
-								<td class="submit-date"><a href="">Paper</a></td>
-								<td class="submit-date"><a href="">Question</a></td>
-								<td class="submit-date"><a href="">PlayView</a></td>
-							</tr>
 
-							<tr class="new">
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"><a href="">Edit</a></td>
-								<td class="score"><a href="">Delete</a></td>
-								<td class="submit-date"><a href="">Paper</a></td>
-								<td class="submit-date"><a href="">Question</a></td>
-								<td class="submit-date"><a href="">PlayView</a></td>
-							</tr>
-
-							<tr class="new">
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"><a href="">Edit</a></td>
-								<td class="score"><a href="">Delete</a></td>
-								<td class="submit-date"><a href="">Paper</a></td>
-								<td class="submit-date"><a href="">Question</a></td>
-								<td class="submit-date"><a href="">PlayView</a></td>
-							</tr>
-
-							<tr class="new">
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"><a href="">Edit</a></td>
-								<td class="score"><a href="">Delete</a></td>
-								<td class="submit-date"><a href="">Paper</a></td>
-								<td class="submit-date"><a href="">Question</a></td>
-								<td class="submit-date"><a href="">PlayView</a></td>
-							</tr>
-
-							<tr>
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"><a href="">Edit</a></td>
-								<td class="score"><a href="">Delete</a></td>
-								<td class="submit-date"><a href="">Paper</a></td>
-								<td class="submit-date"><a href="">Question</a></td>
-								<td class="submit-date"><a href="">PlayView</a></td>
-							</tr>
-
-							<tr>
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"><a href="">Edit</a></td>
-								<td class="score"><a href="">Delete</a></td>
-								<td class="submit-date"><a href="">Paper</a></td>
-								<td class="submit-date"><a href="">Question</a></td>
-								<td class="submit-date"><a href="">PlayView</a></td>
-							</tr>
-
-							<tr>
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"><a href="">Edit</a></td>
-								<td class="score"><a href="">Delete</a></td>
-								<td class="submit-date"><a href="">Paper</a></td>
-								<td class="submit-date"><a href="">Question</a></td>
-								<td class="submit-date"><a href="">PlayView</a></td>
-							</tr>
-
-							<tr>
-								<td class="submissions"><a href="#">Title of Lecture</a></td>
-								<td class="author"><a href="">Edit</a></td>
-								<td class="score"><a href="">Delete</a></td>
-								<td class="submit-date"><a href="">Paper</a></td>
-								<td class="submit-date"><a href="">Question</a></td>
-								<td class="submit-date"><a href="">PlayView</a></td>
-							</tr> -->
 </s:iterator>
 						</tbody>
 					</table>
@@ -469,10 +429,6 @@
 
 			</div>
 		</div>
-
-
-
-
 
 	</section>
 
