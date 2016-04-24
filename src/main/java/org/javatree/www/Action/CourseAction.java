@@ -56,7 +56,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private int lectureno;
 	private int codingno;
 	private String content;
-	
+	private String introdution;
 	private String coursename;
 	private String teacherid;
 	private boolean check;
@@ -609,7 +609,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		/*System.out.println("typenoList plus: " + typenoList);*/
 		courseList = dao.pagingStudyCourse(gong);
 		
-for (int i = 0; i < courseList.size(); i++) {
+		for (int i = 0; i < courseList.size(); i++) {
 			
 			for (int j = 0; j < courseList.get(i).getCourseTypeList().size(); j++) {
 				
@@ -683,6 +683,17 @@ for (int i = 0; i < courseList.size(); i++) {
 			recentlyCompletedLectureList.add(l);
 		}
 		
+		return SUCCESS;
+	}
+	
+	public String selectCourseDefaultDetail() {
+		
+		System.out.println("courseno>> " + courseno);
+		courseDAO dao = sqlSession.getMapper(courseDAO.class);
+		lectureList = dao.selectCourseDefaultDetail(courseno);
+		coursename = lectureList.get(0).getCoursename();
+		introdution = lectureList.get(0).getIntrodution();
+		System.out.println(lectureList);
 		return SUCCESS;
 	}
 	
@@ -1396,5 +1407,12 @@ for (int i = 0; i < courseList.size(); i++) {
 			this.endPageGroup = endPageGroup;
 		}
 
+		public String getIntrodution() {
+			return introdution;
+		}
+
+		public void setIntrodution(String introdution) {
+			this.introdution = introdution;
+		}
 	
 }

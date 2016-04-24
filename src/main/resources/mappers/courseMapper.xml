@@ -88,11 +88,15 @@
 		
 	</select>
 	
-	
-	
-	<!-- 전체 강좌 리스트 분야 별 리스트 - CourseDefualtMain -->
-	
-	<!-- 전체 강좌 리스트 정렬 방법 별 리스트 - CourseDefualtMain -->
+	<!-- CourseDefaultDetail 강좌상세보기 -->
+	<select id="selectCourseDefaultDetail" parameterType="int" resultType="Lecture">
+		SELECT s.lectureno as studying, l.lectureno as lectureno, c.courseno as courseno,
+		l.lecturename, to_char(l.regdate, 'yyyy/mm/dd') as regdate, l.uploadedfilename,
+		c.coursename as coursename, c.introdution as introdution, c.courseno as courseno
+		FROM lecture l
+		JOIN course c ON ( l.courseno = c.courseno and c.courseno = #{courseno} )
+		LEFT OUTER JOIN studylecture s ON (  s.lectureno = l.lectureno and s.courseno = #{courseno} )
+	</select>
 	
 	<!-- 전체 강좌 중 베스트 (사이드 바) <전체기간>- CourseDefualtMain -->
 	<select id="selectAllRank" resultType="Course">

@@ -1,31 +1,22 @@
-SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
-		from (select rownum as rnum, T1.* from (
-		select * from course 
-   		order by courseno desc 
-		) T1)
-		where rnum >= 8 and rnum <= 14
 
-	select courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/mm/dd') as regdate
-	from (select rownum as rnum, courseno, coursename, id, username, INTRODUTION, regdate from course
-	 where courseno in (select courseno from coursetype where typeno IN 
-		(
-			8
-			, 1
-			, 2
-			, 3
-		))
-		order by regdate desc)
-where rnum >= 1 and rnum <= 7
+select s.lectureno as studying, l.lectureno
+from studylecture s right outer join 
+(select l.lectureno as lectureno, l.lecturename, to_char(l.regdate, 'yyyy/mm/dd') as regdate, l.uploadedfilename,
+		c.coursename as coursename, c.introdution as introdution, c.courseno as courseno
+		from lecture l join course c 
+		on l.courseno = c.courseno and l.courseno = 3) as k
+		on s.courseno = k.courseno
+where s.courseno = 3
 
-SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
-		from (select rownum as rnum, T1.* from (select * from course 
-		order by courseno desc) T1)
-		where coursename like '%java%';
+SELECT s.lectureno as studying, l.lectureno as lectureno, c.courseno as courseno,
+l.lecturename, to_char(l.regdate, 'yyyy/mm/dd') as regdate, l.uploadedfilename,
+c.coursename as coursename, c.introdution as introdution, c.courseno as courseno
+FROM lecture l
+JOIN course c ON ( l.courseno = c.courseno and c.courseno = 3 )
+LEFT OUTER JOIN studylecture s ON (  s.lectureno = l.lectureno and s.courseno = 3 )
 
-SELECT id, courseno, coursename, teacherid 
-		from (select rownum as rnum, T1.* from (select * from studycourse where id = 2 
-		group by courseno, id, coursename, teacherid order by courseno desc) T1)
-		where rnum >= 1 and rnum <= 7		
+		
+		order by l.courseno asc 
 		
  CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
   
