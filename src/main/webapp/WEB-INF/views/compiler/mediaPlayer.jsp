@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -290,6 +291,16 @@ body {
 
 <!-- editor 시작 -->
 
+<s:if test="codingList != null">
+	<select class = "codingList">
+		<option>문제선택</option>
+		<s:iterator value="codingList" status="incr">
+			<option value = "<s:property value="codingno"/>">
+			<s:property value="%{#incr.index+1}"/>번 문제
+			</option>
+		</s:iterator>
+	</select>
+</s:if> 
 <textarea rows="20" cols=60" id="question" placeholder="질문란" readonly="readonly"></textarea>
 	<div id="wrapper">
 	    <ul id="tabs">
@@ -308,7 +319,24 @@ body {
 <script type="text/javascript">
 
 $(function(){
-
+	$(".codingList").change(function(){
+		var codingno =  $(".codingList option:selected").val();
+		alert(codingno);
+		$.ajax({
+			type: 'GET'
+			, url: 'callSpecificCoding'
+			, data: 'codingno='+codingno
+			, dataType : 'json'
+			, success : function(response){
+				alert('성공');
+				$('#doccontent textarea:visible').html('<pre>'+response.coding.condingtemplet+'</pre>');
+				$("#question").val(response.coding.codingquestion);
+			}
+			, error : function(response){
+				alert('실패');
+			}
+		})
+	});	
 	/* $(document).on('keyUp', function ( e ) {
 	if(e.ctrlKey && ( String.fromCharCode(e.which).toLowerCase() === 'd')){
 		e.preventDefault();

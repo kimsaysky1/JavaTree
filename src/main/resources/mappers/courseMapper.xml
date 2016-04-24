@@ -210,12 +210,6 @@
       		insert into teachcourse (id, courseno, coursename, startdate)
      		values (#{id}, #{courseno}, #{coursename},sysdate)
   	</insert>
-<<<<<<< HEAD
-	
-	
-=======
-  	
->>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
 	<!-- 강의 등록 - insertLecture -->
 
 	<insert id="insertLecture" parameterType="Lecture">

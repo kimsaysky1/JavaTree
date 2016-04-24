@@ -44,6 +44,21 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 	private File directoryPath;
 	private String resultType;
 
+	
+	public String watchLecture() throws Exception{
+		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
+		lectureno = 1;
+		codingList = dao.selectCodingList(lectureno);
+		
+		return SUCCESS;
+	}
+	
+	public String callSpecificCoding() throws Exception {
+		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
+		coding = dao.callSpecificCoding(codingno);
+		return SUCCESS;
+	}
+	
 	public String runCode() throws Exception{
 		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
 		contentList = new ArrayList<>();

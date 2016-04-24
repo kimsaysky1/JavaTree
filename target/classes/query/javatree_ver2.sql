@@ -9,15 +9,10 @@ alter table studylecture add (courseno number(6,0) NOT NULL)
 ALTER TABLE teachcourse ADD (startdate date DEFAULT sysdate NOT NULL);
 alter table course drop column typeno;
 alter table course add (regdate date default sysdate not null);
+alter table coding add (regdate date default sysdate not null); -- 20160423 ê¹€ì˜í˜¸ ì¶”ê°€
 alter table coding add (codinganswer clob not null);
 alter table coding drop column lectureno;
-
-<<<<<<< HEAD
-
-CREATE TABLE lecturecoding--20160419Ãß°¡
-=======
 CREATE TABLE lecturecoding
->>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
 (
 	lectureno number(6,0) NOT NULL,
 	codingno number(6,0) NOT NULL
@@ -32,15 +27,15 @@ ALTER TABLE lecturecoding
 
 alter table coding drop column typeno;
 
-alter table subnote modify originalfilename null--20160421Ãß°¡
-alter table subnote modify uploadedfilename null--20160421Ãß°¡
+alter table subnote modify originalfilename null--20160421ï¿½ß°ï¿½
+alter table subnote modify uploadedfilename null--20160421ï¿½ß°ï¿½
 
---notnullÁ¦°Å
---ALTER TABLE Å×ÀÌºí¸í MODIFY ÄÃ·¯¸í NULL;
---ALTER TABLE Å×ÀÌºí¸í DROP CONSTRAINT Á¦¾àÁ¶°Ç¸í
+--notnullï¿½ï¿½ï¿½ï¿½
+--ALTER TABLE ï¿½ï¿½ï¿½Ìºï¿½ï¿½ MODIFY ï¿½Ã·ï¿½ï¿½ï¿½ NULL;
+--ALTER TABLE ï¿½ï¿½ï¿½Ìºï¿½ï¿½ DROP CONSTRAINT ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½
 
 alter table lecture modity (uploadedfilename varchar2(900));
-alter table lecture modify (originalfilename varchar2(500));--20160422 ¼öÁö
+alter table lecture modify (originalfilename varchar2(500));--20160422 ï¿½ï¿½ï¿½ï¿½
 
 
 
@@ -295,7 +290,7 @@ CREATE TABLE subnote
 	PRIMARY KEY (subnoteno)
 );
 
-CREATE sequence subnote_seq start with 1 increment by 1;--20160421Ãß°¡
+CREATE sequence subnote_seq start with 1 increment by 1;--20160421ï¿½ß°ï¿½
 
 
 
