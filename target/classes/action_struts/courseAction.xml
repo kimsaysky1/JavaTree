@@ -84,6 +84,34 @@
         	<result>/WEB-INF/views/course/codingMain.jsp</result>
         </action>
         
+        <action name="mediaPlayerForm" class="org.javatree.www.Action.CourseAction" method="mediaPlayerForm">
+        	<result>/WEB-INF/views/course/mediaPlayerForCheck.jsp</result>
+        </action>
+        
+        <!-- 강의삭제 - courseDetailForteach -->
+        <action name="deleteLecture" class="org.javatree.www.Action.CourseAction" method="deleteLecture" >
+        	<result type="redirect">CourseDetailForTeachForm</result>
+        </action>
+        
+        	<!-- 강의 비디오 수정 폼-->
+         <action name="updateLectureForm" class="org.javatree.www.Action.CourseAction" method="updateLectureForm">
+        	<result>/WEB-INF/views/course/updateLecture.jsp</result>
+        </action>	
+        
+      	<!-- 강의 비디오 수정 -->
+        <action name="updateLecture" class="org.javatree.www.Action.CourseAction" method="updateLecture" >
+        	<result type="redirect">CourseDetailForTeachForm</result>
+        </action>
+        
+        <!-- 강의 서브노트 수정 폼-->
+         <action name="updateSubnoteForm" class="org.javatree.www.Action.CourseAction" method="updateSubnoteForm">
+        	<result>/WEB-INF/views/course/updateSubnote.jsp</result>
+        </action>	
+        
+        <!-- 강의 서브노트 수정 -->
+        <action name="updateSubnote" class="org.javatree.www.Action.CourseAction" method="updateSubnote" >
+        	<result type="redirect">CourseDetailForTeachForm</result>
+        </action>
         
         <!-- 문제보관함 처리 -->
         <!--  <action name="insertIntoQuestionBox" class="org.javatree.www.Action.CourseAction" method="insertIntoQuestionBox">

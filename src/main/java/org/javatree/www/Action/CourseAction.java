@@ -100,15 +100,31 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private List<File> upload = new ArrayList<File>();
 	private List<String> uploadFileName = new ArrayList<String>();
 	private List<String> uploadContentType = new ArrayList<String>();
+<<<<<<< HEAD
+	
+
+	
+
+	private ArrayList<Lecture> recentlyCompletedLectureList;
+	private ArrayList<Lecture> latelyPurchasedLectureList;
+
+=======
 	
 	private ArrayList<Lecture> recentlyCompletedLectureList;
 	private ArrayList<Lecture> latelyPurchasedLectureList;
 	
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	Map<String, Object> session;
 	
 	@Autowired
 	SqlSession sqlSession;
+<<<<<<< HEAD
+	
 
+
+=======
+
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	private courseDAO dao;
 	
 	private int start;
@@ -116,6 +132,10 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	
 	private int endPageGroup;
 	
+<<<<<<< HEAD
+
+=======
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		session=arg0;
@@ -758,8 +778,8 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			id=(String) session.get("loginId");
 			System.out.println(id);
 			courseDAO dao = sqlSession.getMapper(courseDAO.class);
-			
-			total= dao.getTotal(id);
+			courseList= dao.selectAllCourseListForTeach(id);
+			/*total= dao.getTotal(id);
 			
 			int countPerPage = 2;
 			int pagePerGroup = 5;
@@ -769,7 +789,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			RowBounds rowbounds = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
 			
 			courseList= dao.selectAllCourseListForTeach(id, rowbounds);
-			
+			*/
 			/*courseList= dao.getAllCourseListForTeach(id, navi.getStartRecord(), navi.getCountPerPage());*/
 			System.out.println(courseList+"강좌리스트2들어옴");
 			return SUCCESS;
@@ -828,6 +848,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		 * **/
 		public String getAllLectureListForTeach(String id){
 			System.out.println("강의리스트들어옴");
+			id=(String) session.get("loginId");
 			courseDAO dao = sqlSession.getMapper(courseDAO.class);
 			lectureList=dao.getAllLectureListForTeach(id);
 			return SUCCESS;
@@ -878,16 +899,18 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			File note=new File(UploadPath+uploadFileName.get(1));
 			FileUtils.copyFile(upload.get(1), note);
 			System.out.println(note+"subnote");
+			
+			
 			originalfilename="lecture,"+UploadPath+video+","+System.currentTimeMillis();/*실제파일이름*/
 			uploadedfilename=uploadFileName.get(0); /*실제파일경로*/
 			System.out.println("경로1: "+uploadedfilename);
 			lecture.setUploadedfilename(UploadPath+uploadedfilename);
 			lecture.setOriginalfilename(originalfilename);
 			dao.insertLecture(lecture);
-			
 			originalfilename="subnote,"+note+","+System.currentTimeMillis();
 			uploadedfilename=uploadFileName.get(1);
 			System.out.println("경로2: "+uploadedfilename);
+			
 			subnote = new Subnote();
 			id=(String) session.get("loginId");
 			subnote.setId(id);
@@ -898,6 +921,18 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			System.out.println(subnote+"서브노트객체");
 			dao.insertSubnote(subnote);
 
+			
+			/*insert Teachlecture*/
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			System.out.println(courseno+"티치렉쳐");
+			map.put("courseno", courseno);
+			map.put("point", 0);
+			map.put("studentcount", 0);
+			System.out.println(map+"티치렉쳐맵");
+			dao.insertTeachLecture(map);
+			
+			
 			
 			/*파일명 + System.currentTimeMillis()
 			
@@ -997,12 +1032,106 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public String CourseDetailForTeachForm(){
 			courseDAO dao = sqlSession.getMapper(courseDAO.class);
 			id=(String) session.get("loginId");
-			lectureList = dao.selectAllLectureListForTeach(id);
+			//lectureList = dao.selectAllLectureListForTeach(id);
+			lectureList = dao.selectAllLectureListForTeach(courseno);
 			System.out.println(courseno+"courseno");
 			course=dao.selectCourse(courseno);     
 			return SUCCESS;
 		}
 		
+		public String mediaPlayerForm(){
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			System.out.println("미디어플레이어폼 lectureno: "+lectureno);
+			lecture = dao.selectLecture(lectureno);
+			
+			return SUCCESS;
+		}
+		
+		public String deleteLecture(){
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			System.out.println("deletelecture 옴, lectureno : "+lectureno);
+			dao.deleteCheckLecture(lectureno);
+			dao.deleteStudyLecture(lectureno);
+			dao.deleteSubnote(lectureno);
+			dao.deleteLectureCoding(lectureno);
+			dao.deleteLecture(lectureno);
+			System.out.println("courseno : "+courseno);
+			//lectureList= dao.selectAllLectureListForTeach(id);
+			return SUCCESS;
+		}
+		
+		/*강의업데이트 -courseDetailForTeach-updateLecture*/
+		public String updateLectureForm(){
+			
+			return SUCCESS;
+		}
+		
+		public String updateSubnoteForm(){
+			
+			return SUCCESS;
+		}
+		
+		public String updateLecture() throws IOException{
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			System.out.println("updatelecture 옴 , lectureno: "+lectureno);
+			
+			
+			System.out.println(uploadContentType+"컨텐트타입");
+			System.out.println(uploadFileName+"파일네임");
+			System.out.println(getUpload()+"실제파일");
+			
+			/*강의video*/
+			File video=new File(UploadPath+uploadFileName.get(0)); /*파일네임*/
+			FileUtils.copyFile(upload.get(0), video); /*실제파일저장*/
+			System.out.println(video+"video");
+			
+			originalfilename="lecture,"+UploadPath+video+","+System.currentTimeMillis();/*실제파일이름*/
+			uploadedfilename=uploadFileName.get(0); /*실제파일경로*/
+			System.out.println("경로1: "+uploadedfilename);
+			System.out.println("lectureno: "+lectureno);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("originalfilename", originalfilename);
+			map.put("uploadedfilename", UploadPath+uploadedfilename);
+			map.put("lectureno", lectureno);
+			
+			dao.updateLecture(map);
+			
+			return SUCCESS;
+		}
+		
+		public String updateSubnote() throws IOException{
+			
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			System.out.println("updateSubnote 옴 , lectureno: "+lectureno);
+			
+			
+			System.out.println(uploadContentType+"컨텐트타입");
+			System.out.println(uploadFileName+"파일네임");
+			System.out.println(getUpload()+"실제파일");
+			
+			/*서브노트파일*/
+			File note=new File(UploadPath+uploadFileName.get(1));
+			FileUtils.copyFile(upload.get(0), note);
+			System.out.println(note+"subnote");
+			
+			originalfilename="subnote,"+note+","+System.currentTimeMillis();
+			uploadedfilename=uploadFileName.get(0);
+			System.out.println("경로: "+uploadedfilename);
+			
+			subnote = new Subnote();
+			id=(String) session.get("loginId");
+			subnote.setId(id);
+			subnote.setOriginalfilename(originalfilename);
+			subnote.setUploadedfilename(UploadPath+uploadedfilename);
+			subnote.setLectureno(lectureno);
+			System.out.println(subnote+"서브노트객체");
+			
+			dao.updateSubnote(subnote);
+			
+			return SUCCESS;
+		}
 		
 		
 		public String getCourseInfo(String id){
@@ -1451,6 +1580,10 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setEnd(int end) {
 			this.end = end;
 		}
+<<<<<<< HEAD
+
+=======
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 		public int getEndPageGroup() {
 			return endPageGroup;
 		}
@@ -1459,6 +1592,9 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.endPageGroup = endPageGroup;
 		}
 
+<<<<<<< HEAD
+		
+=======
 		public String getIntrodution() {
 			return introdution;
 		}
@@ -1466,5 +1602,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setIntrodution(String introdution) {
 			this.introdution = introdution;
 		}
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	
 }

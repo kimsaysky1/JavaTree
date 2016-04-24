@@ -36,6 +36,7 @@ alter table course add (regdate date default sysdate not null);
 alter table coding add (codinganswer clob not null);
 alter table coding drop column lectureno;
 
+alter table coding drop column regdate;--20160424 박수지 추가
 <<<<<<< HEAD
 
 CREATE TABLE lecturecoding--20160419�߰�
@@ -189,7 +190,8 @@ CREATE TABLE coding
 	lectureno number(6,0),
 	PRIMARY KEY (codingno)
 );
-
+CREATE sequence coding_seq start with 1 increment by 1;--20160424 박수지 수정
+--drop sequence coding_seq;
 
 CREATE TABLE teachcourse
 (
