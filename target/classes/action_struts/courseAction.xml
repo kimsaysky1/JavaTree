@@ -17,6 +17,10 @@
         	<result type="json"></result>
         </action>
         
+        <action name="plusSelectListbyField" class="org.javatree.www.Action.CourseAction" method="plusSelectListbyField">
+        	<result type="json"></result>
+        </action>
+        
         <action name="plusCourseDefaultMain" class="org.javatree.www.Action.CourseAction" method="plusCourseDefaultMain">
         	<result>/WEB-INF/views/course/courseDefaultMain.jsp</result>
         </action>
@@ -37,10 +41,14 @@
         	<result type="json"></result>
         </action>
         
+        <action name="selectCourseDefaultDetail" class="org.javatree.www.Action.CourseAction" method="selectCourseDefaultDetail">
+        	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>
+        </action>
+        
+        
         <action name="teachMainView">
         	<result>/WEB-INF/views/course/teachMain.jsp</result>
         </action>
-        
                
         <action name="insertCourseView">
         	<result>/WEB-INF/views/course/insertCourse.jsp</result>

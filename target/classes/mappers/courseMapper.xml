@@ -56,17 +56,17 @@
 	
 	<!-- courseDefaultMain 초기(전체) 페이징  -->
 	<select id="pagingCourse" resultType="Course" parameterType="map">
-		SELECT rownum, coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
-		from (select rownum, T1.* from (
+		SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from (select rownum as rnum, T1.* from (
 		select * from course 
-		<if test="id != null">
+   		<if test="id != null">
      	where courseno in (select courseno from coursetype where typeno IN (select typeno from interest where id = #{id} and value = 3))
    		</if>
    		<if test="id == null">
    		order by courseno desc
-   		</if>
+   		</if> 
 		) T1)
-		where rownum <![CDATA[>]]>= #{start} and rownum <![CDATA[<]]>= #{end}
+		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
 		<if test="searchText != null">
 		and coursename like #{searchText}
 		</if>
@@ -88,11 +88,15 @@
 		
 	</select>
 	
-	
-	
-	<!-- 전체 강좌 리스트 분야 별 리스트 - CourseDefualtMain -->
-	
-	<!-- 전체 강좌 리스트 정렬 방법 별 리스트 - CourseDefualtMain -->
+	<!-- CourseDefaultDetail 강좌상세보기 -->
+	<select id="selectCourseDefaultDetail" parameterType="int" resultType="Lecture">
+		SELECT s.lectureno as studying, l.lectureno as lectureno, c.courseno as courseno,
+		l.lecturename, to_char(l.regdate, 'yyyy/mm/dd') as regdate, l.uploadedfilename,
+		c.coursename as coursename, c.introdution as introdution, c.courseno as courseno
+		FROM lecture l
+		JOIN course c ON ( l.courseno = c.courseno and c.courseno = #{courseno} )
+		LEFT OUTER JOIN studylecture s ON (  s.lectureno = l.lectureno and s.courseno = #{courseno} )
+	</select>
 	
 	<!-- 전체 강좌 중 베스트 (사이드 바) <전체기간>- CourseDefualtMain -->
 	<select id="selectAllRank" resultType="Course">
@@ -123,9 +127,11 @@
 	<!-- 전체 강좌 중 강좌 검색 (사이드 바)  - CourseDefualtMain -->
 	
 	
-	<!-- 분야별 검색  - ajax 미완성 부분, 매퍼 수정 필요  -->	
+	<!-- 분야별 검색   -->	
 		<select resultType="Course" id="selectListbyField" parameterType="map">
-	select courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/mm/dd') as regdate from course
+	
+	select courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/mm/dd') as regdate
+	from (select rownum as rnum, courseno, coursename, id, username, INTRODUTION, regdate from course
 	 where courseno in (select courseno from coursetype where typeno IN 
 		(
 		<if test="interest0 != null">
@@ -143,10 +149,36 @@
 		<if test="interest4 != null">
 			, #{interest4}
 		</if>
+		))
+		order by regdate desc)
+		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
 		
+	</select>	
+	
+		<!-- 분야별 검색 total 가져오기  -->	
+		<select resultType="int" id="selectFieldTotal" parameterType="map">
+		select count(*) from course
+	 	where courseno in (select courseno from coursetype where typeno IN 
+		(
+		<if test="interest0 != null">
+			#{interest0}
+		</if>
+		<if test="interest1 != null">
+			, #{interest1}
+		</if>
+		<if test="interest2 != null">
+			, #{interest2}
+		</if>
+		<if test="interest3 != null">
+			, #{interest3}
+		</if>
+		<if test="interest4 != null">
+			, #{interest4}
+		</if>
 		))
 		order by regdate desc
 	</select>		
+		
 	<!-- 강좌타입검색 -->
 	<select id="selectTypeno" parameterType="String" resultType="String">
 		select typeno, courseno from coursetype where courseno = #{courseno}
@@ -246,7 +278,10 @@
       		insert into teachcourse (id, courseno, coursename, startdate)
      		values (#{id}, #{courseno}, #{coursename},sysdate)
   	</insert>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	<!-- 강의 등록 - insertLecture -->
 
 	<insert id="insertLecture" parameterType="Lecture">

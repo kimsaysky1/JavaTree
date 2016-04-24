@@ -56,7 +56,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private int lectureno;
 	private int codingno;
 	private String content;
-	
+	private String introdution;
 	private String coursename;
 	private String teacherid;
 	private boolean check;
@@ -100,6 +100,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private List<File> upload = new ArrayList<File>();
 	private List<String> uploadFileName = new ArrayList<String>();
 	private List<String> uploadContentType = new ArrayList<String>();
+<<<<<<< HEAD
 	
 
 	
@@ -107,13 +108,23 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private ArrayList<Lecture> recentlyCompletedLectureList;
 	private ArrayList<Lecture> latelyPurchasedLectureList;
 
+=======
+	
+	private ArrayList<Lecture> recentlyCompletedLectureList;
+	private ArrayList<Lecture> latelyPurchasedLectureList;
+	
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	Map<String, Object> session;
 	
 	@Autowired
 	SqlSession sqlSession;
+<<<<<<< HEAD
 	
 
 
+=======
+
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	private courseDAO dao;
 	
 	private int start;
@@ -121,7 +132,10 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	
 	private int endPageGroup;
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		session=arg0;
@@ -143,12 +157,41 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		while (st.hasMoreTokens()) {
 			interestList.add(st.nextToken());
 		}
-		System.out.println(interestList.get(0));
 		
 		Map<String, Object> kong = new HashMap<>();
 		for (int i = 0; i < interestList.size(); i++) {
 			kong.put("interest"+i, interestList.get(i));
 		}
+		
+		start = 1;
+		end = 7;
+		currentPage = 1;
+		
+		kong.put("start", start);
+		kong.put("end", end);
+		
+		int totalRecordsCount = dao.selectFieldTotal(kong);
+		
+		int countPerPage = 7;		//페이지당 글목록 수
+		endPageGroup = 1;
+		if(totalRecordsCount % countPerPage == 0 ){
+			endPageGroup = (int)(totalRecordsCount/countPerPage);		//총 (페이지)그룹 수
+		}else{
+			endPageGroup = (int)(totalRecordsCount/countPerPage)+1;		//총 (페이지)그룹 수
+		}
+		
+		if(currentPage == 0){
+			currentPage = 1;
+		}
+				
+		session.put("currentPage", currentPage);
+		session.put("CountPerPage", countPerPage);
+		session.put("endPageGroup", endPageGroup);
+		
+		System.out.println("total>> "+ totalRecordsCount);
+		System.out.println("currentpage>> "+ currentPage);
+		System.out.println("CountPerPage>> " + session.get("CountPerPage"));
+		System.out.println("endPageGroup>> " + session.get("endPageGroup"));
 		
 		System.out.println("kong>>" + kong);
 		
@@ -156,7 +199,61 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		
 		System.out.println("selectListbyField>> "+courseList);
 		
-		interestString = "Qsddf222df";
+		return SUCCESS;
+	}
+	
+	public String plusSelectListbyField(){
+		System.out.println("qna>>"+interestString);
+		courseDAO dao = sqlSession.getMapper(courseDAO.class);
+		
+		ArrayList<String> interestList = new ArrayList<>();
+		
+		StringTokenizer st = new StringTokenizer(interestString, ",");
+		while (st.hasMoreTokens()) {
+			interestList.add(st.nextToken());
+		}
+		
+		Map<String, Object> kong = new HashMap<>();
+		for (int i = 0; i < interestList.size(); i++) {
+			kong.put("interest"+i, interestList.get(i));
+		}
+		
+		int countPerPage = (int) session.get("CountPerPage");		//페이지당 글목록 수
+		
+		System.out.println("get.currpage>> " + currentPage);
+		
+		start = countPerPage*currentPage-(countPerPage-1);
+		end = countPerPage*currentPage;
+		
+		kong.put("start", start);
+		kong.put("end", end);
+		
+		int totalRecordsCount = dao.selectFieldTotal(kong);
+		
+		if(totalRecordsCount % countPerPage == 0 ){
+			endPageGroup = (int)(totalRecordsCount/countPerPage);		//총 (페이지)그룹 수
+		}else{
+			endPageGroup = (int)(totalRecordsCount/countPerPage)+1;		//총 (페이지)그룹 수
+		}
+		
+		if(currentPage == 0){
+			currentPage = 1;
+		}
+				
+		session.put("currentPage", currentPage);
+		session.put("CountPerPage", countPerPage);
+		session.put("endPageGroup", endPageGroup);
+		
+		System.out.println("total>> "+ totalRecordsCount);
+		System.out.println("currentpage>> "+ currentPage);
+		System.out.println("CountPerPage>> " + session.get("CountPerPage"));
+		System.out.println("endPageGroup>> " + session.get("endPageGroup"));
+		
+		System.out.println("kong>>" + kong);
+		
+		courseList= dao.selectListbyField(kong);
+		
+		System.out.println("selectListbyField>> "+courseList);
 		
 		return SUCCESS;
 	}
@@ -181,14 +278,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			Map<String, Object> kong = new HashMap<>();
 			
 			kong.put("id", storedid);
-			
-			if(searchText != null){
-				searchText = "%"+searchText+"%";
-				kong.put("searchText", searchText);
-				//session.put("searchText", searchText);
-			}else{
-				
-			}
 			
 			start = 1;
 			end = 7;
@@ -224,8 +313,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			
 			courseList = dao.pagingCourse(kong);
 			
-			System.out.println("stext>> " + searchText);
-			
 		System.out.println("selectAllCourseList>> "+courseList);
 		return SUCCESS;
 	}
@@ -239,10 +326,12 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			
 			Map<String, Object> kong = new HashMap<>();
 			
-			if(searchText != null){
+			System.out.println("stext0>> " + searchText);
+			
+			if(searchText.trim().length() > 0){
 				searchText = "%"+searchText+"%";
 				kong.put("searchText", searchText);
-				//session.put("searchText", searchText);
+				session.put("searchText", searchText);
 			}
 			
 			start = 1;
@@ -251,7 +340,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			
 			kong.put("start", start);
 			kong.put("end", end);
-			
+									
 			int totalRecordsCount = dao.selectDefaultTotal(kong);
 			
 			int countPerPage = 7;		//페이지당 글목록 수
@@ -286,23 +375,26 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	public String plusSearchCourse(){
 		
 		courseDAO dao = sqlSession.getMapper(courseDAO.class);
-		
+		System.out.println("currentPage"+currentPage);
 		//login시 활동들(임시)
 		 // 임시로 session에 아이디를 집어넣음, test완료 후 삭제 요망
 			
 			Map<String, Object> kong = new HashMap<>();
-			
-			if(searchText != null){
-				searchText = "%"+searchText+"%";
-				kong.put("searchText", searchText);
-				//session.put("searchText", searchText);
+				//searchText = "%"+searchText+"%";
+			if(session.get("searchText") != null){
+				kong.put("searchText", session.get("searchText").toString());
+			}else{
+				kong.put("searchText", null);
 			}
 			
+				//session.put("searchText", searchText);
 			start = (currentPage-1)*7 + 1; 
 			end = start+6;
 			
 			kong.put("start", start);
 			kong.put("end", end);
+			
+			System.out.println("s> " + start + " / e> " + end);
 			
 			int totalRecordsCount = dao.selectDefaultTotal(kong);
 			
@@ -330,7 +422,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			
 			System.out.println("stext>> " + searchText);
 			
-		System.out.println("searchCourse>> "+courseList);
+		System.out.println("PlussearchCourse>> "+courseList);
 		return SUCCESS;
 	}
 	
@@ -537,7 +629,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		/*System.out.println("typenoList plus: " + typenoList);*/
 		courseList = dao.pagingStudyCourse(gong);
 		
-for (int i = 0; i < courseList.size(); i++) {
+		for (int i = 0; i < courseList.size(); i++) {
 			
 			for (int j = 0; j < courseList.get(i).getCourseTypeList().size(); j++) {
 				
@@ -611,6 +703,17 @@ for (int i = 0; i < courseList.size(); i++) {
 			recentlyCompletedLectureList.add(l);
 		}
 		
+		return SUCCESS;
+	}
+	
+	public String selectCourseDefaultDetail() {
+		
+		System.out.println("courseno>> " + courseno);
+		courseDAO dao = sqlSession.getMapper(courseDAO.class);
+		lectureList = dao.selectCourseDefaultDetail(courseno);
+		coursename = lectureList.get(0).getCoursename();
+		introdution = lectureList.get(0).getIntrodution();
+		System.out.println(lectureList);
 		return SUCCESS;
 	}
 	
@@ -1425,7 +1528,10 @@ for (int i = 0; i < courseList.size(); i++) {
 		public void setEnd(int end) {
 			this.end = end;
 		}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 		public int getEndPageGroup() {
 			return endPageGroup;
 		}
@@ -1434,6 +1540,16 @@ for (int i = 0; i < courseList.size(); i++) {
 			this.endPageGroup = endPageGroup;
 		}
 
+<<<<<<< HEAD
 		
+=======
+		public String getIntrodution() {
+			return introdution;
+		}
+
+		public void setIntrodution(String introdution) {
+			this.introdution = introdution;
+		}
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	
 }

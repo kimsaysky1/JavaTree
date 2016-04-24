@@ -12,6 +12,8 @@ public class Lecture {
 	private String startdate;
 	private String enddate;
 	private String coursename;
+	private String introdution;
+	private String studying;
 	/*private ArrayList<Lecture> lectureList;*/
 
 	public Lecture() {
@@ -23,10 +25,9 @@ public class Lecture {
 		this.coursename = coursename;
 	}
 
-
-
 	public Lecture(int courseno, int lectureno, String lecturename, String regdate, String originalfilename,
-			String uploadedfilename, String startdate, String enddate, String coursename) {
+			String uploadedfilename, String startdate, String enddate, String coursename, String introdution,
+			String studying) {
 		super();
 		this.courseno = courseno;
 		this.lectureno = lectureno;
@@ -37,9 +38,9 @@ public class Lecture {
 		this.startdate = startdate;
 		this.enddate = enddate;
 		this.coursename = coursename;
+		this.introdution = introdution;
+		this.studying = studying;
 	}
-
-
 
 	public int getCourseno() {
 		return courseno;
@@ -121,15 +122,29 @@ public class Lecture {
 		this.coursename = coursename;
 	}
 
+	public String getIntrodution() {
+		return introdution;
+	}
+
+	public void setIntrodution(String introdution) {
+		this.introdution = introdution;
+	}
+
+	public String getStudying() {
+		return studying;
+	}
+
+	public void setStudying(String studying) {
+		this.studying = studying;
+	}
+
 	@Override
 	public String toString() {
 		return "Lecture [courseno=" + courseno + ", lectureno=" + lectureno + ", lecturename=" + lecturename
 				+ ", regdate=" + regdate + ", originalfilename=" + originalfilename + ", uploadedfilename="
 				+ uploadedfilename + ", startdate=" + startdate + ", enddate=" + enddate + ", coursename=" + coursename
-				+ "]";
+				+ ", introdution=" + introdution + ", studying=" + studying + "]";
 	}
-
 	
-
 	
 }
