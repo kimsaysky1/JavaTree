@@ -347,65 +347,8 @@
 		<!-- end post -->     
      </s:iterator>
      
-     	
-     
-     
          
-<!-- 
-                        POST
-                        <div class="post">
-                            POST BODY
-                            <div class="post-body">
-                                <div class="post-title">
-                                    <h3 class="md"><a href="blog-single.html">Top 10 Design courses of October 2013</a></h3>
-                                </div>
-                                <div class="post-meta">
-                                    by <a href="#">Brett Todd</a> on October 7, 2014
-                                </div>  
-                                   <div class="post-link">
-                                    <a href="blog-single.html">
-                                        <i class="fa fa-play-circle-o"></i>
-                                        Read More
-                                    </a>
-                                	</div>                           
-                            </div>
-                            END / POST BODY
-                        </div>
-                        END / POST
- -->
-                       
-                            
-           <%--   <a href = "getAllCourseList.action?currentPage=${pagenavi.currentPage - 1}&searchText=${searchText}">&lt</a> --%>
-				
-		<%-- 		<s:iterator var = "counter" begin = "pagenavi.startPageGroup" end="pagenavi.endPageGroup">
-					<s:if test="#session.currentPage == #counter">
-					 <li class="pager-current">
-					 <a href = "getAllCourseList.action?currentPage=<s:property value="#counter"/>&searchText=${searchText}">
-						<s:property value="#counter"/>
-					</a>
-					 </li>
-					
-					</s:if>
-					<s:else>
-					<li><a href = "getAllCourseList.action?currentPage=<s:property value="#counter"/>&searchText=${searchText}">
-						<s:property value="#counter"/>
-					</a></li>
-					
-					</s:else>			
-				</s:iterator> --%>
-				<%-- ...
-				<a href = "getAllCourseList.action?currentPage=${pagenavi.currentPage + 1}&&searchText=${searchText}">&gt 
-				</a> --%>
-                            
-                          <!-- <li class="pager-current">1</li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">next ›</a></li>
-                            <li><a href="#">last »</a></li>  -->
              <ul class="pager">                
-            
-            < >
             
             
             <s:if test="#session.currentPage == 1 & #session.endPageGroup == 1">
@@ -413,15 +356,18 @@
              </s:if>
             
             <s:elseif test="#session.currentPage == 1 & #session.endPageGroup != 1">
+            <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
              <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage + 1"/>">next &gt</a></li>
             </s:elseif>
 			
 			<s:elseif test="#session.currentPage == #session.endPageGroup & #session.endPageGroup != 1">
              <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>
+            <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
             </s:elseif>
 			
 			<s:else>
              <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>
+             <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
              <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage + 1"/>">next &gt</a></li>
             </s:else>
                             

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -351,12 +352,12 @@
 								<td class="submit-date"></td>
 								<td class="submit-date"><s:property value="regdate" /></td>
 								
-								
 								<s:if test="studying != null">
 									<td class="submit-date"><a href="watchLecture.action?lectureno="<s:property value="lectureno" />>Watch</a></td>
 								</s:if>
 								<s:else>
-									<td class="submit-date"><a href="watchLecture.action?lectureno="<s:property value="lectureno" />>Apply</a></td>
+									<td class="submit-date"><a href='insertLectureForStudy.action?lectureno=<s:property value="lectureno" />&courseno=<s:property value="courseno" />
+									&coursename=<s:property value="coursename" />&teacherid=<s:property value="teacherid" />'>Apply</a></td>
 								</s:else>
 								
 							</tr>
@@ -427,6 +428,17 @@
 		src="../resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
 	<script type="text/javascript"
 		src="../resources/javatree_view/html/js/scripts.js"></script>
+	
+	<script>
+	
+	<%-- window.onload = function () {
+		<%
+		String ko = request.getParameter("message").trim();
+		%>
+		var k = <%=ko%>;
+		alert(k);
+		} --%>
+	</script>
 		
 </body>
 </html>

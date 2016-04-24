@@ -1,24 +1,32 @@
-
-select s.lectureno as studying, l.lectureno
-from studylecture s right outer join 
-(select l.lectureno as lectureno, l.lecturename, to_char(l.regdate, 'yyyy/mm/dd') as regdate, l.uploadedfilename,
-		c.coursename as coursename, c.introdution as introdution, c.courseno as courseno
-		from lecture l join course c 
-		on l.courseno = c.courseno and l.courseno = 3) as k
-		on s.courseno = k.courseno
-where s.courseno = 3
-
-SELECT s.lectureno as studying, l.lectureno as lectureno, c.courseno as courseno,
-l.lecturename, to_char(l.regdate, 'yyyy/mm/dd') as regdate, l.uploadedfilename,
-c.coursename as coursename, c.introdution as introdution, c.courseno as courseno
-FROM lecture l
-JOIN course c ON ( l.courseno = c.courseno and c.courseno = 3 )
-LEFT OUTER JOIN studylecture s ON (  s.lectureno = l.lectureno and s.courseno = 3 )
-
+SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from (select rownum, T1.* from (
+		select * from course where coursename like '%spring%' 
+		) T1 where rownum >= 1 and rownum <= 14)
 		
-		order by l.courseno asc 
+
+
+
+SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from (select rownum as rnum, T1.* from (select * from course where coursename like '%spring%' order by courseno desc) T1)
+		where rnum >= 1 and rnum <= 7 
+
+SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from (select rownum as rnum, T1.* from (
+		select * from course 
+   		order by courseno desc
+		) T1)
+		where rownum >= 8 and rownum <= 14 and coursename like '%spring%' 
 		
- CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
+
+
+		select * 
+		from (SELECT rownum, coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
+		from course
+		where coursename like '%spring%')
+		where rownum >= 8 and rownum <= 14
+		order by courseno desc
+		
+CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
   
 alter table studylecture add (courseno number(6,0) NOT NULL)
 

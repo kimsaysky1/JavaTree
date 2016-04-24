@@ -11,9 +11,10 @@ public class Lecture {
 	private String uploadedfilename;
 	private String startdate;
 	private String enddate;
-	private String coursename;
-	private String introdution;
-	private String studying;
+	private String coursename; //강좌의 이름을 받아오는 변수
+	private String introdution; //강좌의 소개를 받아오는 변수
+	private String studying; //수강신청한 강의 인지 체크하는 변수
+	private String teacherid; //수강신청시 사용한 강사 아이디 변수
 	/*private ArrayList<Lecture> lectureList;*/
 
 	public Lecture() {
@@ -25,9 +26,11 @@ public class Lecture {
 		this.coursename = coursename;
 	}
 
+	
+
 	public Lecture(int courseno, int lectureno, String lecturename, String regdate, String originalfilename,
 			String uploadedfilename, String startdate, String enddate, String coursename, String introdution,
-			String studying) {
+			String studying, String teacherid) {
 		super();
 		this.courseno = courseno;
 		this.lectureno = lectureno;
@@ -40,6 +43,7 @@ public class Lecture {
 		this.coursename = coursename;
 		this.introdution = introdution;
 		this.studying = studying;
+		this.teacherid = teacherid;
 	}
 
 	public int getCourseno() {
@@ -137,14 +141,23 @@ public class Lecture {
 	public void setStudying(String studying) {
 		this.studying = studying;
 	}
+	
+	
+	public String getTeacherid() {
+		return teacherid;
+	}
+
+	public void setTeacherid(String teacherid) {
+		this.teacherid = teacherid;
+	}
 
 	@Override
 	public String toString() {
 		return "Lecture [courseno=" + courseno + ", lectureno=" + lectureno + ", lecturename=" + lecturename
 				+ ", regdate=" + regdate + ", originalfilename=" + originalfilename + ", uploadedfilename="
 				+ uploadedfilename + ", startdate=" + startdate + ", enddate=" + enddate + ", coursename=" + coursename
-				+ ", introdution=" + introdution + ", studying=" + studying + "]";
+				+ ", introdution=" + introdution + ", studying=" + studying + ", teacherid=" + teacherid + "]";
 	}
-	
+
 	
 }

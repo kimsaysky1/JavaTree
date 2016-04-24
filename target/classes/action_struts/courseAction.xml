@@ -45,6 +45,9 @@
         	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>
         </action>
         
+        <action name="insertLectureForStudy" class="org.javatree.www.Action.CourseAction" method="insertLectureForStudy">
+        	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>
+        </action>
         
         <action name="teachMainView">
         	<result>/WEB-INF/views/course/teachMain.jsp</result>

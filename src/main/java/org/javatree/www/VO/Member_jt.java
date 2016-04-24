@@ -8,7 +8,7 @@ public class Member_jt {
 	private String password;
 	private String username;
 	private String email;
-	private String point;
+	private int point;
 	private String countquestion;
 	private String countresponse;
 	private String countrecommend;
@@ -17,13 +17,16 @@ public class Member_jt {
 	private ArrayList<Course> courseList;
 	private ArrayList<Lecture> lectureList;
 	private ArrayList<Interest> interestList;
-
+	private int minusPoint; //차감된 금액
+	
 	public Member_jt() {
 	}
-
-	public Member_jt(String id, String password, String username, String email, String point, String countquestion,
+	
+	public Member_jt(String id, String password, String username, String email, int point, String countquestion,
 			String countresponse, String countrecommend, Interest interest, Ability ability,
-			ArrayList<Course> courseList, ArrayList<Lecture> lectureList, ArrayList<Interest> interestList) {
+			ArrayList<Course> courseList, ArrayList<Lecture> lectureList, ArrayList<Interest> interestList,
+			int minusPoint) {
+		super();
 		this.id = id;
 		this.password = password;
 		this.username = username;
@@ -37,7 +40,10 @@ public class Member_jt {
 		this.courseList = courseList;
 		this.lectureList = lectureList;
 		this.interestList = interestList;
+		this.minusPoint = minusPoint;
 	}
+
+
 
 	public void setId(String id) {
 		this.id = id;
@@ -71,13 +77,37 @@ public class Member_jt {
 		this.email = email;
 	}
 
-	public String getPoint() {
+
+
+	public int getPoint() {
 		return point;
 	}
 
-	public void setPoint(String point) {
+
+	public void setPoint(int point) {
 		this.point = point;
 	}
+
+
+	public ArrayList<Interest> getInterestList() {
+		return interestList;
+	}
+
+
+	public void setInterestList(ArrayList<Interest> interestList) {
+		this.interestList = interestList;
+	}
+
+
+	public int getMinusPoint() {
+		return minusPoint;
+	}
+
+
+	public void setMinusPoint(int minusPoint) {
+		this.minusPoint = minusPoint;
+	}
+
 
 	public String getCountquestion() {
 		return countquestion;
@@ -135,12 +165,15 @@ public class Member_jt {
 		this.lectureList = lectureList;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Member_jt [id=" + id + ", password=" + password + ", username=" + username + ", email=" + email
 				+ ", point=" + point + ", countquestion=" + countquestion + ", countresponse=" + countresponse
 				+ ", countrecommend=" + countrecommend + ", interest=" + interest + ", ability=" + ability
-				+ ", courseList=" + courseList + ", lectureList=" + lectureList + "]";
+				+ ", courseList=" + courseList + ", lectureList=" + lectureList + ", interestList=" + interestList
+				+ ", minusPoint=" + minusPoint + "]";
 	}
 
 }

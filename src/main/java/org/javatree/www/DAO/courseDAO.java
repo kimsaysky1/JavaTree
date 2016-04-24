@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.javatree.www.VO.Coding;
 import org.javatree.www.VO.Course;
 import org.javatree.www.VO.Lecture;
+import org.javatree.www.VO.Member_jt;
 import org.javatree.www.VO.Subnote;
 
 public interface courseDAO {
@@ -33,7 +34,7 @@ public interface courseDAO {
 	public ArrayList<String> selectLatelyPurchasedLectureList2(Map<String, Object> kong);
 	public ArrayList<String> recentlyCompletedLectureList1(Map<String, Object> kong);
 	public ArrayList<String> recentlyCompletedLectureList2(Map<String, Object> kong);
-	public ArrayList<Course> pagingCourse(Map<String, Object> gong);
+	public ArrayList<Course> pagingCourse(Map<String, Object> kong);
 	public ArrayList<Course> pagingStudyCourse(Map<String, Object> kong);
 	public int selectTotal(Map<String, Object> kong);
 	public ArrayList<Course> selectAllCourseListForTeachforDetail(String id);
@@ -41,7 +42,12 @@ public interface courseDAO {
 	public Course selectCourse(int courseno);
 	public int selectDefaultTotal(Map<String, Object> kong);
 	public int selectFieldTotal(Map<String, Object> kong);
-	public ArrayList<Lecture> selectCourseDefaultDetail(int courseno);
+	public void insertLectureForStudy(Map<String, Object> kong);
+	public void insertLectureForStudy1(Map<String, Object> kong);
+	public int updateMemberPoint(Map<String, Object> kong);
+	public ArrayList<Lecture> selectCourseDefaultDetail(Map<String, Object> kong);
+	public void updateStudentCount(int lectureno);
+	public ArrayList<Course> searchCourse(Map<String, Object> kong);
 	
 	
 }
