@@ -1,15 +1,3 @@
-select courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/mm/dd') as regdate
-	from (select rownum as rnum, courseno, coursename, id, username, INTRODUTION, regdate from course
-	 where courseno in (select courseno from coursetype where typeno IN 
-		(
-		8
-		))
-			
-		order by regdate asc)
-		where rnum >= 1 and rnum <= 7
-		
-		
-
 
 CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
   

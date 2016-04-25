@@ -45,10 +45,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private ArrayList<Coding> codingList;
 	private ArrayList<Course> teachCourseList;
 	private ArrayList<Course> courseList;
-<<<<<<< HEAD
-=======
 
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
 	private ArrayList<Lecture> lectureList;
 	private Member_jt member_jt;
 	private Question question;
@@ -94,74 +91,30 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	
 	private static final String UploadPath="C:/coding/";
 	
-	/*private List<File> upload = new ArrayList<File>();
+/*	private List<File> upload = new ArrayList<File>();
 	private List<String> uploadContentType= new ArrayList<String>();
-	private List<String> uploadFileName=new ArrayList<String>();
-	*/
+	private List<String> uploadFileName=new ArrayList<String>();*/
+	
 	private File saveFile;
 	
 	private List<File> upload = new ArrayList<File>();
 	private List<String> uploadFileName = new ArrayList<String>();
 	private List<String> uploadContentType = new ArrayList<String>();
 
-<<<<<<< HEAD
-=======
-	
-<<<<<<< HEAD
-	ArrayList<Lecture> recentlyCompletedLectureList;
-	ArrayList<Lecture> latelyPurchasedLectureList;
-=======
->>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
-
 	private ArrayList<Lecture> recentlyCompletedLectureList;
 	private ArrayList<Lecture> latelyPurchasedLectureList;
-
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
-	
-	private ArrayList<Lecture> recentlyCompletedLectureList;
-	private ArrayList<Lecture> latelyPurchasedLectureList;
-	
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
->>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 	Map<String, Object> session;
 	
 	@Autowired
 	SqlSession sqlSession;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 	
-	courseDAO dao;
-=======
-<<<<<<< HEAD
-	
-
-
-=======
-
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
->>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 	private courseDAO dao;
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
-	
 	private int start;
 	private int end;
 	
-<<<<<<< HEAD
-=======
 	private int endPageGroup;
 	
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 
-=======
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
->>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		session=arg0;
@@ -547,18 +500,15 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		ArrayList<String> tempList4 = new ArrayList<>();
 		tempList4 =  dao.recentlyCompletedLectureList2(kong);
 		
-/*		recentlyCompletedLectureList = new ArrayList<>();
+		recentlyCompletedLectureList = new ArrayList<>();
 		
 		for (int i = 0; i < tempList3.size(); i++) {
 			Lecture l = new Lecture(tempList3.get(i), tempList4.get(i));
 			recentlyCompletedLectureList.add(l);
 		}
 		
-<<<<<<< HEAD
 		System.out.println(recentlyCompletedLectureList);
-		*/
-=======
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
+		
 		//courseList = dao.studyMainView(kong);
 		courseList = dao.pagingStudyCourse(kong);
 		
@@ -760,15 +710,104 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	
 	public String selectCourseDefaultDetail() {
 		
+		start = 1;
+		end = 10;
+		currentPage = 1;
+		
 		courseDAO dao = sqlSession.getMapper(courseDAO.class);
 		Map<String, Object> kong = new HashMap<>();
 		kong.put("courseno", courseno);
 		kong.put("id", (String)session.get("loginId"));
-		lectureList = dao.selectCourseDefaultDetail(kong);
+		
+		int totalRecordsCount = dao.selectCourseDefaultDetailTotal(kong);
+		
+		int countPerPage = 10;		//페이지당 글목록 수
+		endPageGroup = 1;
+		if(totalRecordsCount % countPerPage == 0 ){
+			endPageGroup = (int)(totalRecordsCount/countPerPage);		//총 (페이지)그룹 수
+		}else{
+			endPageGroup = (int)(totalRecordsCount/countPerPage)+1;		//총 (페이지)그룹 수
+		}
+		
+		if(currentPage == 0){
+			currentPage = 1;
+		}
+				
+		session.put("currentPage", currentPage);
+		session.put("CountPerPage", countPerPage);
+		session.put("endPageGroup", endPageGroup);
+		
+		System.out.println("total>> "+ totalRecordsCount);
+		System.out.println("currentpage>> "+ currentPage);
+		System.out.println("CountPerPage>> " + session.get("CountPerPage"));
+		System.out.println("endPageGroup>> " + session.get("endPageGroup"));
+		
+		ArrayList<Lecture> tempList = new ArrayList<>();
+		tempList = dao.selectCourseDefaultDetail(kong);
+		lectureList = new ArrayList<>();
+		
+		if(end > tempList.size()){
+			end = tempList.size();			
+		}
+		
+		for (int i = start; i < end; i++) {
+			lectureList.add(tempList.get(i-1));
+		}
+		
 		coursename = lectureList.get(0).getCoursename();
 		introdution = lectureList.get(0).getIntrodution();
 		return SUCCESS;
 	}
+	
+	public String plusCourseDefaultDetail() {
+				
+		courseDAO dao = sqlSession.getMapper(courseDAO.class);
+		Map<String, Object> kong = new HashMap<>();
+		kong.put("courseno", courseno);
+		kong.put("id", (String)session.get("loginId"));
+		
+		int totalRecordsCount = dao.selectCourseDefaultDetailTotal(kong);
+		int countPerPage = 10;		//페이지당 글목록 수
+		start = countPerPage*currentPage-(countPerPage-1);
+		end = countPerPage*currentPage;
+		
+		endPageGroup = 1;
+		if(totalRecordsCount % countPerPage == 0 ){
+			endPageGroup = (int)(totalRecordsCount/countPerPage);		//총 (페이지)그룹 수
+		}else{
+			endPageGroup = (int)(totalRecordsCount/countPerPage)+1;		//총 (페이지)그룹 수
+		}
+		
+		if(currentPage == 0){
+			currentPage = 1;
+		}
+				
+		session.put("currentPage", currentPage);
+		session.put("CountPerPage", countPerPage);
+		session.put("endPageGroup", endPageGroup);
+		
+		System.out.println("total>> "+ totalRecordsCount);
+		System.out.println("currentpage>> "+ currentPage);
+		System.out.println("CountPerPage>> " + session.get("CountPerPage"));
+		System.out.println("endPageGroup>> " + session.get("endPageGroup"));
+		
+		ArrayList<Lecture> tempList = new ArrayList<>();
+		tempList = dao.selectCourseDefaultDetail(kong);
+		lectureList = new ArrayList<>();
+		
+		if(end > tempList.size()){
+			end = tempList.size();			
+		}
+		
+		for (int i = start; i < end; i++) {
+			lectureList.add(tempList.get(i-1));
+		}
+		
+		coursename = lectureList.get(0).getCoursename();
+		introdution = lectureList.get(0).getIntrodution();
+		return SUCCESS;
+	}
+	
 	
 	public String insertLectureForStudy() {
 		
@@ -1116,7 +1155,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			
 			System.out.println(uploadContentType+"컨텐트타입");
 			System.out.println(uploadFileName+"파일네임");
-			System.out.println(getUpload()+"실제파일");
+			//System.out.println(getUpload()+"실제파일");
 			
 			/*강의video*/
 			File video=new File(UploadPath+uploadFileName.get(0)); /*파일네임*/
@@ -1147,7 +1186,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			
 			System.out.println(uploadContentType+"컨텐트타입");
 			System.out.println(uploadFileName+"파일네임");
-			System.out.println(getUpload()+"실제파일");
+			//System.out.println(getUpload()+"실제파일");
 			
 			/*서브노트파일*/
 			File note=new File(UploadPath+uploadFileName.get(1));
@@ -1525,11 +1564,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setTeacherid(String teacherid) {
 			this.teacherid = teacherid;
 		}
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
 		public String getUploadedfilename() {
 			return uploadedfilename;
 		}
@@ -1581,9 +1615,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setUploadContentType(List<String> uploadContentType) {
 			this.uploadContentType = uploadContentType;
 		}
-<<<<<<< HEAD
-
-=======
 		
 		public ArrayList<Lecture> getRecentlyCompletedLectureList() {
 			return recentlyCompletedLectureList;
@@ -1592,7 +1623,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setRecentlyCompletedLectureList(ArrayList<Lecture> recentlyCompletedLectureList) {
 			this.recentlyCompletedLectureList = recentlyCompletedLectureList;
 		}
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
 
 		public ArrayList<Lecture> getLatelyPurchasedLectureList() {
 			return latelyPurchasedLectureList;
@@ -1625,14 +1655,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.endPageGroup = endPageGroup;
 		}
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-		
-=======
->>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 		public String getIntrodution() {
 			return introdution;
 		}
@@ -1640,7 +1662,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setIntrodution(String introdution) {
 			this.introdution = introdution;
 		}
-<<<<<<< HEAD
 
 		public String getOrder() {
 			return order;
@@ -1650,9 +1671,4 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.order = order;
 		}
 		
-=======
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
-	
->>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 }

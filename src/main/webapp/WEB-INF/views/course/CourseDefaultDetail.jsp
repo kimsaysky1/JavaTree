@@ -30,6 +30,7 @@
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
+    
 <title>CourseDefaultDetail</title>
 </head>
 <body>
@@ -330,8 +331,8 @@
 		<div id="courseDetail" class="courseDetail learn-section">
 			<div class="container">
 
-				<div class="table-student-submission">
-					<table class="mc-table">
+				<div class="table-student-submission" >
+					<table class="mc-table" >
 						<thead>
 							<tr>
 								<th class="submissions2">Lecture List</th>
@@ -368,14 +369,38 @@
 					</table>
 				</div>
 
+
+
 				<div class="paging" align="center">
 					<ul class="pager">
-						<li class="pager-current">1</li>
+						
+						 
+            <s:if test="#session.currentPage == 1 & #session.endPageGroup == 1">
+             <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
+             </s:if>
+            
+            <s:elseif test="#session.currentPage == 1 & #session.endPageGroup != 1">
+            <li><a href = "#"> <s:property value="#session.currentPage"/>/<s:property value="#session.endPageGroup"/> </a></li>
+             <li><a href = "plusCourseDefaultDetail.action?currentPage=<s:property value="#session.currentPage + 1"/>&courseno=<s:property value="courseno"/>">next &gt</a></li>
+            </s:elseif>
+			
+			<s:elseif test="#session.currentPage == #session.endPageGroup & #session.endPageGroup != 1">
+             <li><a href = "plusCourseDefaultDetail.action?currentPage=<s:property value="#session.currentPage - 1"/>&courseno=<s:property value="courseno"/>">&lt prev</a></li>
+            <li><a href = "#"> <s:property value="#session.currentPage"/>/<s:property value="#session.endPageGroup"/>  </a></li>
+            </s:elseif>
+			
+			<s:else>
+             <li><a href = "plusCourseDefaultDetail.action?currentPage=<s:property value="#session.currentPage - 1"/>&courseno=<s:property value="courseno"/>">&lt prev</a></li>
+             <li><a href = "#"> <s:property value="#session.currentPage"/>/<s:property value="#session.endPageGroup"/>  </a></li>
+             <li><a href = "plusCourseDefaultDetail.action?currentPage=<s:property value="#session.currentPage + 1"/>&courseno=<s:property value="courseno"/>">next &gt</a></li>
+            </s:else>
+						
+				<!-- 		<li class="pager-current">1</li>
 						<li><a href="#">2</a></li>
 						<li><a href="#">3</a></li>
 						<li><a href="#">4</a></li>
 						<li><a href="#">next ›</a></li>
-						<li><a href="#">last »</a></li>
+						<li><a href="#">last »</a></li> -->
 					</ul>
 				</div>
 

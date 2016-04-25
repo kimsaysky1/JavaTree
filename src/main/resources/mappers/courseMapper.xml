@@ -90,6 +90,7 @@
 	
 	<!-- searchCourse 페이징  -->
 	<select id="searchCourse" resultType="Course" parameterType="map">
+		
 		SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
 		from (select rownum as rnum, T1.* from (select * from course where 
 		<if test="searchText != null">
@@ -104,9 +105,16 @@
 		SELECT s.lectureno as studying, l.lectureno as lectureno, c.courseno as courseno,
 		l.lecturename, to_char(l.regdate, 'yyyy/mm/dd') as regdate, l.uploadedfilename,
 		c.coursename as coursename, c.introdution as introdution, c.courseno as courseno, c.id as teacherid
-		FROM lecture l
+		FROM lecture l 
 		JOIN course c ON ( l.courseno = c.courseno and c.courseno = #{courseno} )
 		LEFT OUTER JOIN studylecture s ON (  s.lectureno = l.lectureno and s.courseno = #{courseno} and s.id = #{id})
+		order by lectureno asc
+	</select>
+	
+	<select id="selectCourseDefaultDetailTotal" resultType="int" parameterType="map">
+		SELECT count(*)
+		FROM lecture  
+		where courseno = #{courseno} 
 	</select>
 	
 	<!-- CourseDefaultDetail 강의 신청하기 - studycourse -->
@@ -316,17 +324,6 @@
       		insert into teachcourse (id, courseno, coursename, startdate)
      		values (#{id}, #{courseno}, #{coursename},sysdate)
   	</insert>
-<<<<<<< HEAD
-
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-=======
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
->>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 	<!-- 강의 등록 - insertLecture -->
 
 	<insert id="insertLecture" parameterType="Lecture">
