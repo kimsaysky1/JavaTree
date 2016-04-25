@@ -10,3 +10,5 @@ SELECT s.lectureno as studying, l.lectureno as lectureno, c.courseno as courseno
 		JOIN course c ON ( l.courseno = c.courseno and c.courseno = 3 )
 		LEFT OUTER JOIN studylecture s ON (  s.lectureno = l.lectureno and s.courseno = 3 and s.id = 2)
 		order by lectureno asc
+		
+		select count(*) from studycourse where courseno = 6 and id = 2

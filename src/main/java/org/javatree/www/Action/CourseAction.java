@@ -799,7 +799,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			end = tempList.size();			
 		}
 		
-		for (int i = start; i < end; i++) {
+		for (int i = start; i < end+1; i++) {
 			lectureList.add(tempList.get(i-1));
 		}
 		
@@ -824,7 +824,10 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		if(confirm == 1){
 			
 			try {
-				dao.insertLectureForStudy(kong);
+				int k = dao.checkStudyCourse(kong);
+				if (k == 0) {
+					dao.insertLectureForStudy(kong);
+				}
 				dao.insertLectureForStudy1(kong);
 				dao.updateStudentCount(lectureno);
 			} catch (Exception e) {
@@ -843,9 +846,49 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	
 		private void selectCourseDefaultDetail(Map<String, Object> kong2) {
 			courseDAO dao = sqlSession.getMapper(courseDAO.class);
-			lectureList = dao.selectCourseDefaultDetail(kong2);
+			
+			start = 1;
+			end = 10;
+			currentPage = 1;
+			
+			int totalRecordsCount = dao.selectCourseDefaultDetailTotal(kong2);
+			
+			int countPerPage = 10;		//페이지당 글목록 수
+			endPageGroup = 1;
+			if(totalRecordsCount % countPerPage == 0 ){
+				endPageGroup = (int)(totalRecordsCount/countPerPage);		//총 (페이지)그룹 수
+			}else{
+				endPageGroup = (int)(totalRecordsCount/countPerPage)+1;		//총 (페이지)그룹 수
+			}
+			
+			if(currentPage == 0){
+				currentPage = 1;
+			}
+					
+			session.put("currentPage", currentPage);
+			session.put("CountPerPage", countPerPage);
+			session.put("endPageGroup", endPageGroup);
+			
+			System.out.println("total>> "+ totalRecordsCount);
+			System.out.println("currentpage>> "+ currentPage);
+			System.out.println("CountPerPage>> " + session.get("CountPerPage"));
+			System.out.println("endPageGroup>> " + session.get("endPageGroup"));
+			
+			ArrayList<Lecture> tempList = new ArrayList<>();
+			tempList = dao.selectCourseDefaultDetail(kong2);
+			lectureList = new ArrayList<>();
+			
+			if(end > tempList.size()){
+				end = tempList.size();			
+			}
+			
+			for (int i = start; i < end; i++) {
+				lectureList.add(tempList.get(i-1));
+			}
+			
 			coursename = lectureList.get(0).getCoursename();
 			introdution = lectureList.get(0).getIntrodution();
+			
 	}
 
 		/**

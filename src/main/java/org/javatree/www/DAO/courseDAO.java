@@ -64,6 +64,7 @@ public interface courseDAO {
 	public ArrayList<Course> searchCourse(Map<String, Object> kong);
 	public ArrayList<Lecture> selectCourseDefaultDetail(int courseno);
 	public int selectCourseDefaultDetailTotal(Map<String, Object> kong);
+	public int checkStudyCourse(Map<String, Object> kong);
 	
 	
 }

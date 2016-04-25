@@ -117,6 +117,11 @@
 		where courseno = #{courseno} 
 	</select>
 	
+	<!-- checkStudyCourse 강좌 수강 신청 여부 판별 -->
+	<select id="checkStudyCourse" parameterType="map" resultType="int">
+		select count(*) from studycourse where courseno = #{courseno} and id = #{id}
+	</select>
+	
 	<!-- CourseDefaultDetail 강의 신청하기 - studycourse -->
 	<insert id="insertLectureForStudy" parameterType="map">
 		insert into studycourse (id, courseno, coursename, teacherid) values (#{id}, #{courseno}, #{coursename}, #{teacherid})
