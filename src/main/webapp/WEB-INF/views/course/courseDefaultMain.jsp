@@ -327,7 +327,8 @@
      <s:iterator value="courseList" status="incr">
      	
 		<!-- start post -->
-     				<div class="post" id = "<s:property value="%{#incr.index+1}"/>"> 
+     			
+                     <div class="post" id = "<s:property value="%{#incr.index+1}"/>"> 
                             <div class="post-body">
                                 <div class="post-title">
                                     <h3 class="md"><a href="selectCourseDefaultDetail.action?courseno=<s:property value="courseno" />">
@@ -343,7 +344,8 @@
                                     </a>
                                 	</div>                           
                             </div>
-                     </div>
+                     </div> 
+                     
 		<!-- end post -->     
      </s:iterator>
      
