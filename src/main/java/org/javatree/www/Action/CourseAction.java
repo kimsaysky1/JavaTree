@@ -45,7 +45,10 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private ArrayList<Coding> codingList;
 	private ArrayList<Course> teachCourseList;
 	private ArrayList<Course> courseList;
+<<<<<<< HEAD
+=======
 
+>>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
 	private ArrayList<Lecture> lectureList;
 	private Member_jt member_jt;
 	private Question question;
@@ -101,21 +104,64 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private List<String> uploadFileName = new ArrayList<String>();
 	private List<String> uploadContentType = new ArrayList<String>();
 
+<<<<<<< HEAD
+=======
+	
+<<<<<<< HEAD
+	ArrayList<Lecture> recentlyCompletedLectureList;
+	ArrayList<Lecture> latelyPurchasedLectureList;
+=======
+>>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 
 	private ArrayList<Lecture> recentlyCompletedLectureList;
 	private ArrayList<Lecture> latelyPurchasedLectureList;
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
+	
+	private ArrayList<Lecture> recentlyCompletedLectureList;
+	private ArrayList<Lecture> latelyPurchasedLectureList;
+	
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
+>>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 	Map<String, Object> session;
 	
 	@Autowired
 	SqlSession sqlSession;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+	
+	courseDAO dao;
+=======
+<<<<<<< HEAD
+	
+
+
+=======
+
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
+>>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 	private courseDAO dao;
+>>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
 	
 	private int start;
 	private int end;
 	
+<<<<<<< HEAD
+=======
 	private int endPageGroup;
 	
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
+>>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
+>>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		session=arg0;
@@ -501,13 +547,18 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		ArrayList<String> tempList4 = new ArrayList<>();
 		tempList4 =  dao.recentlyCompletedLectureList2(kong);
 		
-		recentlyCompletedLectureList = new ArrayList<>();
+/*		recentlyCompletedLectureList = new ArrayList<>();
 		
 		for (int i = 0; i < tempList3.size(); i++) {
 			Lecture l = new Lecture(tempList3.get(i), tempList4.get(i));
 			recentlyCompletedLectureList.add(l);
 		}
 		
+<<<<<<< HEAD
+		System.out.println(recentlyCompletedLectureList);
+		*/
+=======
+>>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
 		//courseList = dao.studyMainView(kong);
 		courseList = dao.pagingStudyCourse(kong);
 		
@@ -876,7 +927,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			
 			System.out.println(uploadContentType+"컨텐트타입");
 			System.out.println(uploadFileName+"파일네임");
-			System.out.println(getUpload()+"실제파일");
+			//System.out.println(getUpload()+"실제파일");
 			
 			/*강의video*/
 			File video=new File(UploadPath+uploadFileName.get(0)); /*파일네임*/
@@ -1475,7 +1526,10 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.teacherid = teacherid;
 		}
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
 		public String getUploadedfilename() {
 			return uploadedfilename;
 		}
@@ -1512,14 +1566,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			return UploadPath;
 		}
 
-		public List<File> getUpload() {
-			return upload;
-		}
-
-		public void setUpload(List<File> upload) {
-			this.upload = upload;
-		}
-
 		public List<String> getUploadFileName() {
 			return uploadFileName;
 		}
@@ -1535,6 +1581,9 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setUploadContentType(List<String> uploadContentType) {
 			this.uploadContentType = uploadContentType;
 		}
+<<<<<<< HEAD
+
+=======
 		
 		public ArrayList<Lecture> getRecentlyCompletedLectureList() {
 			return recentlyCompletedLectureList;
@@ -1543,6 +1592,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setRecentlyCompletedLectureList(ArrayList<Lecture> recentlyCompletedLectureList) {
 			this.recentlyCompletedLectureList = recentlyCompletedLectureList;
 		}
+>>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
 
 		public ArrayList<Lecture> getLatelyPurchasedLectureList() {
 			return latelyPurchasedLectureList;
@@ -1575,6 +1625,14 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.endPageGroup = endPageGroup;
 		}
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+		
+=======
+>>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 		public String getIntrodution() {
 			return introdution;
 		}
@@ -1582,6 +1640,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setIntrodution(String introdution) {
 			this.introdution = introdution;
 		}
+<<<<<<< HEAD
 
 		public String getOrder() {
 			return order;
@@ -1591,4 +1650,9 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.order = order;
 		}
 		
+=======
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
+>>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
+	
+>>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 }

@@ -316,7 +316,17 @@
       		insert into teachcourse (id, courseno, coursename, startdate)
      		values (#{id}, #{courseno}, #{coursename},sysdate)
   	</insert>
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
+>>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
+>>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 	<!-- 강의 등록 - insertLecture -->
 
 	<insert id="insertLecture" parameterType="Lecture">

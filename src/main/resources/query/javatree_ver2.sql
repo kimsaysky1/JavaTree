@@ -18,13 +18,21 @@ alter table studylecture add (courseno number(6,0) NOT NULL)
 ALTER TABLE teachcourse ADD (startdate date DEFAULT sysdate NOT NULL);
 alter table course drop column typeno;
 alter table course add (regdate date default sysdate not null);
+alter table coding add (regdate date default sysdate not null); -- 20160423 김영호 추가
 alter table coding add (codinganswer clob not null);
 alter table coding drop column lectureno;
+<<<<<<< HEAD
+=======
 
 alter table coding drop column regdate;--20160424 박수지 추가
 
 CREATE TABLE lecturecoding--20160419�߰�
+<<<<<<< HEAD
 
+=======
+=======
+>>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
+>>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 CREATE TABLE lecturecoding
 (
 	lectureno number(6,0) NOT NULL,
