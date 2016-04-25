@@ -1,31 +1,16 @@
-SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
-		from (select rownum, T1.* from (
-		select * from course where coursename like '%spring%' 
-		) T1 where rownum >= 1 and rownum <= 14)
+select courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/mm/dd') as regdate
+	from (select rownum as rnum, courseno, coursename, id, username, INTRODUTION, regdate from course
+	 where courseno in (select courseno from coursetype where typeno IN 
+		(
+		8
+		))
+			
+		order by regdate asc)
+		where rnum >= 1 and rnum <= 7
+		
 		
 
 
-
-SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
-		from (select rownum as rnum, T1.* from (select * from course where coursename like '%spring%' order by courseno desc) T1)
-		where rnum >= 1 and rnum <= 7 
-
-SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
-		from (select rownum as rnum, T1.* from (
-		select * from course 
-   		order by courseno desc
-		) T1)
-		where rownum >= 8 and rownum <= 14 and coursename like '%spring%' 
-		
-
-
-		select * 
-		from (SELECT rownum, coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
-		from course
-		where coursename like '%spring%')
-		where rownum >= 8 and rownum <= 14
-		order by courseno desc
-		
 CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
   
 alter table studylecture add (courseno number(6,0) NOT NULL)
@@ -37,12 +22,10 @@ alter table coding add (codinganswer clob not null);
 alter table coding drop column lectureno;
 
 alter table coding drop column regdate;--20160424 박수지 추가
-<<<<<<< HEAD
 
 CREATE TABLE lecturecoding--20160419�߰�
-=======
+
 CREATE TABLE lecturecoding
->>>>>>> bd0b0090b2cd8c48f20ee1293c83b00f1979a872
 (
 	lectureno number(6,0) NOT NULL,
 	codingno number(6,0) NOT NULL
@@ -192,6 +175,8 @@ CREATE TABLE coding
 );
 CREATE sequence coding_seq start with 1 increment by 1;--20160424 박수지 수정
 --drop sequence coding_seq;
+
+CREATE sequence question_seq start with 1 increment by 1;--20160425 박수지 수정
 
 CREATE TABLE teachcourse
 (
@@ -657,6 +642,9 @@ COMMENT ON COLUMN teachlecture.studentcount IS 'studentcount';
 COMMENT ON TABLE typename IS '�� ���̺� : (19)�о� ���̺�';
 COMMENT ON COLUMN typename.type IS 'type';
 COMMENT ON COLUMN typename.typeno IS 'typeno';
+
+ALTER TABLE studylecture
+	ADD UNIQUE (lectureno)--20160425 창우 수정, 재수강신청 방지
 
 
 

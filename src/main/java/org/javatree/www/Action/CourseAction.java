@@ -66,7 +66,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private int page;
 	private int total;
 	
-	
+	private String order;
 
 	private ArrayList<Course> recentRank;
 	private ArrayList<Course> allRank;
@@ -100,31 +100,15 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private List<File> upload = new ArrayList<File>();
 	private List<String> uploadFileName = new ArrayList<String>();
 	private List<String> uploadContentType = new ArrayList<String>();
-<<<<<<< HEAD
-	
 
-	
 
 	private ArrayList<Lecture> recentlyCompletedLectureList;
 	private ArrayList<Lecture> latelyPurchasedLectureList;
 
-=======
-	
-	private ArrayList<Lecture> recentlyCompletedLectureList;
-	private ArrayList<Lecture> latelyPurchasedLectureList;
-	
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	Map<String, Object> session;
 	
 	@Autowired
 	SqlSession sqlSession;
-<<<<<<< HEAD
-	
-
-
-=======
-
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	private courseDAO dao;
 	
 	private int start;
@@ -132,10 +116,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	
 	private int endPageGroup;
 	
-<<<<<<< HEAD
-
-=======
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		session=arg0;
@@ -148,7 +128,8 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	 * **/
 	
 	public String selectListbyField(){
-		System.out.println("qna>>"+interestString);
+		System.out.println("qna>> "+interestString);
+		System.out.println("order>> "+order);
 		courseDAO dao = sqlSession.getMapper(courseDAO.class);
 		
 		ArrayList<String> interestList = new ArrayList<>();
@@ -163,6 +144,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			kong.put("interest"+i, interestList.get(i));
 		}
 		
+		kong.put("order", order);
 		start = 1;
 		end = 7;
 		currentPage = 1;
@@ -750,12 +732,17 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		int confirm = dao.updateMemberPoint(kong);
 		System.out.println("confrim>> " + confirm);
 		if(confirm == 1){
-			dao.insertLectureForStudy(kong);
-			dao.insertLectureForStudy1(kong);
-			dao.updateStudentCount(lectureno);
+			
+			try {
+				dao.insertLectureForStudy(kong);
+				dao.insertLectureForStudy1(kong);
+				dao.updateStudentCount(lectureno);
+			} catch (Exception e) {
+				return ERROR;
+			}
 			message = "수강 신청 완료!";
 		}else {
-			message = "수강 신청 실패!";
+			return ERROR;
 		}
 		
 		System.out.println("message>> " + message);
@@ -1580,10 +1567,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setEnd(int end) {
 			this.end = end;
 		}
-<<<<<<< HEAD
-
-=======
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 		public int getEndPageGroup() {
 			return endPageGroup;
 		}
@@ -1592,9 +1575,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.endPageGroup = endPageGroup;
 		}
 
-<<<<<<< HEAD
-		
-=======
 		public String getIntrodution() {
 			return introdution;
 		}
@@ -1602,6 +1582,13 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setIntrodution(String introdution) {
 			this.introdution = introdution;
 		}
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
-	
+
+		public String getOrder() {
+			return order;
+		}
+
+		public void setOrder(String order) {
+			this.order = order;
+		}
+		
 }

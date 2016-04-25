@@ -429,16 +429,12 @@
 	<script type="text/javascript"
 		src="../resources/javatree_view/html/js/scripts.js"></script>
 	
-	<script>
-	
-	<%-- window.onload = function () {
-		<%
-		String ko = request.getParameter("message").trim();
-		%>
-		var k = <%=ko%>;
-		alert(k);
-		} --%>
+	<s:if test="message != null">
+  		<script type="text/javascript">
+   		var result = "${message}";
+   		alert(result);
 	</script>
-		
-</body>
+ </s:if>
+	
+	</body>
 </html>

@@ -47,6 +47,7 @@
         
         <action name="insertLectureForStudy" class="org.javatree.www.Action.CourseAction" method="insertLectureForStudy">
         	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>
+        	<result name="error" type="redirect">selectAllCourseList.action</result>
         </action>
         
         <action name="teachMainView">

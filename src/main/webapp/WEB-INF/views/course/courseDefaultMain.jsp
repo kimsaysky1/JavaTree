@@ -312,9 +312,9 @@
        <fieldset>
        <legend>List</legend>
        <br>
-       <select name="listoption" style="width: 120px; height: 30px;">
-       <option value="new">최신순</option>
-       <option value="old">오래된 순</option>
+       <select name="listoption" id="listoption" style="width: 120px; height: 30px;" onchange="javascript:selectEvent(this)">
+       <option value="desc" selected="selected">최신순</option>
+       <option value="asc">오래된 순</option>
        </select>
       
 		 </fieldset>
@@ -608,14 +608,21 @@ function clickNextField(page) {
 }		
 	
 function selectByField(asd) {
-	 var sum = 0;
+	 
+	var order;
+	
+	var sum = 0;
 	 sum = $(":checkbox:checked").length;
 	 
 	 if(sum > 5){
 		 alert( sum + "개 이상은 선택할 수 없습니다." );	
 		 $(asd).prop("checked",false);	 
 	 }
-	 
+	
+	    $( "select option:selected" ).each(function() {
+	    	order = $( this ).val();
+	    });
+	    
 	 var str = '';	
 	 var cnt;
 	 $(":checkbox:checked").each(function(index){
@@ -631,7 +638,7 @@ function selectByField(asd) {
 	 $.ajax({
 	        type : 'get', 
 	        url : 'selectListbyField',
-	        data : "interestString="+str,
+	        data : "interestString="+str+"&order="+order,
 	        success : function(response){
 	        	$(".blog-list-content").html(' ');
         		
@@ -675,65 +682,141 @@ function selectByField(asd) {
 	
 $(function(){
 	 
-
-	 $("#searchIcon").on("click", function(){
-	 	
-		 	var text = '';
-		 	text = $("#searchText").val();
-			 
-			 $(":checkbox:checked").each(function(index){
-			        $(this).prop("checked",false);
-			    });
-		 	
-		 	$.ajax({
-			        type : 'get', 
-			        url : 'searchCourse',
-			        data : "searchText="+text,
-			        success : function(response){
-			        	
-			        	$(".blog-list-content").html(' ');
-			        		
-			        	 var list = response.courseList;
-			        	 list.forEach(function(course){
-			 				var divTag = $('<div class="post"><div class="post-body"></div></div>');
-			 				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
-			 				+course.coursename+'</a></h3></div><div class="post-meta">by'
-			 				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
-			 				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').appendTo(".blog-list-content");
-			 			
-			 			});
-			        	 
-			        	 var curPage = Number(response.currentPage);
-			        	 var curPagePlus = Number(response.currentPage+1);
-			        	 var curPageMinus = Number(response.currentPage-1);
-			        	 var endPage =  Number(response.endPageGroup);
-			        	 			        	 
-			        	 var paging = $('<ul class="pager"></ul>');
-			        	 if(curPage == 1 & endPage == 1){
-			        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
-			        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
-			        	 }else if(curPage == 1 & endPage != 1){
-			        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
-			        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
-			        	 }else if(curPage == endPage & endPage != 1){
-			        		 var paging2 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
-			        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
-			        	 }else{
-			        		 var paging3 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
-			        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
-			        	 }
-			        
-			        }
-			 
-			 });
-			 event.preventDefault();
-	 });
+	searchCourse();
 	 
 });	
 
 
+function searchCourse() {
+	$("#searchIcon").on("click", function(){
+	 	
+	 	var text = '';
+	 	text = $("#searchText").val();
+		 
+		 $(":checkbox:checked").each(function(index){
+		        $(this).prop("checked",false);
+		    });
+	 	
+	 	$.ajax({
+		        type : 'get', 
+		        url : 'searchCourse',
+		        data : "searchText="+text,
+		        success : function(response){
+		        	
+		        	$(".blog-list-content").html(' ');
+		        		
+		        	 var list = response.courseList;
+		        	 list.forEach(function(course){
+		 				var divTag = $('<div class="post"><div class="post-body"></div></div>');
+		 				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
+		 				+course.coursename+'</a></h3></div><div class="post-meta">by'
+		 				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
+		 				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').appendTo(".blog-list-content");
+		 			
+		 			});
+		        	 
+		        	 var curPage = Number(response.currentPage);
+		        	 var curPagePlus = Number(response.currentPage+1);
+		        	 var curPageMinus = Number(response.currentPage-1);
+		        	 var endPage =  Number(response.endPageGroup);
+		        	 			        	 
+		        	 var paging = $('<ul class="pager"></ul>');
+		        	 if(curPage == 1 & endPage == 1){
+		        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
+		        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
+		        	 }else if(curPage == 1 & endPage != 1){
+		        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+		        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
+		        	 }else if(curPage == endPage & endPage != 1){
+		        		 var paging2 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
+		        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
+		        	 }else{
+		        		 var paging3 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+		        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
+		        	 }
+		        
+		        }
+		 
+		 });
+		 event.preventDefault();
+ });
+}
+
+	 // combobox 클릭시 이벤트 지정
+	 function selectEvent(selectObj)
+	 {		
+		 var sum = 0;
+		 sum = $(":checkbox:checked").length;
+		 var order;
+		 if(sum == 0){
+			 alert("한 분야 이상은 선택해야 합니다.");	
+		 }else{
+			 order = selectObj.value;
+			 alert(order);
+			
+				 var str = '';	
+				 var cnt;
+				 $(":checkbox:checked").each(function(index){
+				        if(index == cnt-1){
+				        	str += $(this).val();
+				        }else{
+				        	str += $(this).val()+",";
+				        }
+				    });
+				 
+				 alert(str);
+				 
+				 $.ajax({
+				        type : 'get', 
+				        url : 'selectListbyField',
+				        data : "interestString="+str+"&order="+order,
+				        success : function(response){
+				        	$(".blog-list-content").html(' ');
+			        		
+				        	 var list = response.courseList;
+				        	 list.forEach(function(course){
+				 				var divTag = $('<div class="post"><div class="post-body"></div></div>');
+				 				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
+				 				+course.coursename+'</a></h3></div><div class="post-meta">by'
+				 				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
+				 				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').appendTo(".blog-list-content");
+				 			
+				 			});
+				        	 
+				        	 var curPage = Number(response.currentPage);
+				        	 var curPagePlus = Number(response.currentPage+1);
+				        	 var curPageMinus = Number(response.currentPage-1);
+				        	 var endPage =  Number(response.endPageGroup);
+				        	 			        	 
+				        	 var paging = $('<ul class="pager"></ul>');
+				        	 if(curPage == 1 & endPage == 1){
+				        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
+				        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
+				        	 }else if(curPage == 1 & endPage != 1){
+				        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+				        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
+				        	 }else if(curPage == endPage & endPage != 1){
+				        		 var paging2 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
+				        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
+				        	 }else{
+				        		 var paging3 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+				        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
+				        	 }
+				        
+				        }
+				 
+				 });
+				 str = '';
+				 
+			}	
+			 
+		 }
+	     
+	   
+
+
 
 </script>
-		
+	
 </body>
 </html>
