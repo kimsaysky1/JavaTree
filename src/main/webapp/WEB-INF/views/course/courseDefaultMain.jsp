@@ -373,6 +373,8 @@
                             
                             </ul>
                     </div>
+                
+                <div id="display"></div>
                 </div>
                 
                  <!-- SIDEBAR -->
@@ -679,12 +681,14 @@ function selectByField(asd) {
 	 
 }	
 	
-	
+
 $(function(){
 	 
 	searchCourse();
-	 
-});	
+	
+});
+
+
 
 
 function searchCourse() {

@@ -60,16 +60,17 @@
 		from (select rownum as rnum, T1.* from (
 		select * from course 
    		<if test="id != null">
-     	where courseno in (select courseno from coursetype where typeno IN (select typeno from interest where id = #{id} and value = 3))
+     	where courseno in (select courseno from coursetype where typeno IN (select typeno from interest where id = #{id} and value = 3)) order by courseno desc
    		</if>
    		<if test="id == null">
    		order by courseno desc
-   		</if> 
+   		</if>
 		) T1)
 		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
 		<if test="searchText != null">
 		and coursename like #{searchText}
 		</if>
+		
 	</select>
 	
 	<select id="selectDefaultTotal" resultType="int" parameterType="map">

@@ -1,3 +1,4 @@
+alter table coding add (id varchar2(20) NOT NULL);--20160425 박수지 추가
 
 CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
   
