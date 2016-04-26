@@ -60,16 +60,17 @@
 		from (select rownum as rnum, T1.* from (
 		select * from course 
    		<if test="id != null">
-     	where courseno in (select courseno from coursetype where typeno IN (select typeno from interest where id = #{id} and value = 3))
+     	where courseno in (select courseno from coursetype where typeno IN (select typeno from interest where id = #{id} and value = 3)) order by courseno desc
    		</if>
    		<if test="id == null">
    		order by courseno desc
-   		</if> 
+   		</if>
 		) T1)
 		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
 		<if test="searchText != null">
 		and coursename like #{searchText}
 		</if>
+		
 	</select>
 	
 	<select id="selectDefaultTotal" resultType="int" parameterType="map">
@@ -90,6 +91,7 @@
 	
 	<!-- searchCourse 페이징  -->
 	<select id="searchCourse" resultType="Course" parameterType="map">
+		
 		SELECT coursename, courseno, username, to_char(regdate, 'YYYY-MM-DD') as regdate, id as teacherid 
 		from (select rownum as rnum, T1.* from (select * from course where 
 		<if test="searchText != null">
@@ -104,9 +106,21 @@
 		SELECT s.lectureno as studying, l.lectureno as lectureno, c.courseno as courseno,
 		l.lecturename, to_char(l.regdate, 'yyyy/mm/dd') as regdate, l.uploadedfilename,
 		c.coursename as coursename, c.introdution as introdution, c.courseno as courseno, c.id as teacherid
-		FROM lecture l
+		FROM lecture l 
 		JOIN course c ON ( l.courseno = c.courseno and c.courseno = #{courseno} )
 		LEFT OUTER JOIN studylecture s ON (  s.lectureno = l.lectureno and s.courseno = #{courseno} and s.id = #{id})
+		order by lectureno asc
+	</select>
+	
+	<select id="selectCourseDefaultDetailTotal" resultType="int" parameterType="map">
+		SELECT count(*)
+		FROM lecture  
+		where courseno = #{courseno} 
+	</select>
+	
+	<!-- checkStudyCourse 강좌 수강 신청 여부 판별 -->
+	<select id="checkStudyCourse" parameterType="map" resultType="int">
+		select count(*) from studycourse where courseno = #{courseno} and id = #{id}
 	</select>
 	
 	<!-- CourseDefaultDetail 강의 신청하기 - studycourse -->
@@ -182,9 +196,16 @@
 			, #{interest4}
 		</if>
 		))
-		order by regdate desc)
+		order by regdate 
+		<if test="order == 'desc'">
+		desc
+		</if>
+		<if test="order == 'asc'">
+		asc
+		</if>		
+		)
 		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
-		
+	
 	</select>	
 	
 		<!-- 분야별 검색 total 가져오기  -->	

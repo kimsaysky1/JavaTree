@@ -30,6 +30,7 @@
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
+    
 <title>CourseDefaultDetail</title>
 </head>
 <body>
@@ -330,8 +331,8 @@
 		<div id="courseDetail" class="courseDetail learn-section">
 			<div class="container">
 
-				<div class="table-student-submission">
-					<table class="mc-table">
+				<div class="table-student-submission" >
+					<table class="mc-table" >
 						<thead>
 							<tr>
 								<th class="submissions2">Lecture List</th>
@@ -368,14 +369,38 @@
 					</table>
 				</div>
 
+
+
 				<div class="paging" align="center">
 					<ul class="pager">
-						<li class="pager-current">1</li>
+						
+						 
+            <s:if test="#session.currentPage == 1 & #session.endPageGroup == 1">
+             <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
+             </s:if>
+            
+            <s:elseif test="#session.currentPage == 1 & #session.endPageGroup != 1">
+            <li><a href = "#"> <s:property value="#session.currentPage"/>/<s:property value="#session.endPageGroup"/> </a></li>
+             <li><a href = "plusCourseDefaultDetail.action?currentPage=<s:property value="#session.currentPage + 1"/>&courseno=<s:property value="courseno"/>">next &gt</a></li>
+            </s:elseif>
+			
+			<s:elseif test="#session.currentPage == #session.endPageGroup & #session.endPageGroup != 1">
+             <li><a href = "plusCourseDefaultDetail.action?currentPage=<s:property value="#session.currentPage - 1"/>&courseno=<s:property value="courseno"/>">&lt prev</a></li>
+            <li><a href = "#"> <s:property value="#session.currentPage"/>/<s:property value="#session.endPageGroup"/>  </a></li>
+            </s:elseif>
+			
+			<s:else>
+             <li><a href = "plusCourseDefaultDetail.action?currentPage=<s:property value="#session.currentPage - 1"/>&courseno=<s:property value="courseno"/>">&lt prev</a></li>
+             <li><a href = "#"> <s:property value="#session.currentPage"/>/<s:property value="#session.endPageGroup"/>  </a></li>
+             <li><a href = "plusCourseDefaultDetail.action?currentPage=<s:property value="#session.currentPage + 1"/>&courseno=<s:property value="courseno"/>">next &gt</a></li>
+            </s:else>
+						
+				<!-- 		<li class="pager-current">1</li>
 						<li><a href="#">2</a></li>
 						<li><a href="#">3</a></li>
 						<li><a href="#">4</a></li>
 						<li><a href="#">next ›</a></li>
-						<li><a href="#">last »</a></li>
+						<li><a href="#">last »</a></li> -->
 					</ul>
 				</div>
 
@@ -429,16 +454,89 @@
 	<script type="text/javascript"
 		src="../resources/javatree_view/html/js/scripts.js"></script>
 	
+	<s:if test="message != null">
+  		<script type="text/javascript">
+   		var result = "${message}";
+   		alert(result);
+	</script>
+ </s:if>
+	
 	<script>
 	
-	<%-- window.onload = function () {
-		<%
-		String ko = request.getParameter("message").trim();
-		%>
-		var k = <%=ko%>;
-		alert(k);
-		} --%>
-	</script>
+	$(document).ready(function() { 
 		
-</body>
+		// BackSpace 키 방지 이벤트
+	    $(document).keydown(function(e){   
+	        if(e.target.nodeName != "INPUT" && e.target.nodeName != "TEXTAREA"){       
+	            if(e.keyCode === 8){   
+	            return false;
+	            }
+	        }
+	    });
+	 
+	    window.history.forward(0);
+	    
+	    //뒤로가기 버튼 방지
+	    history.pushState(null, null, "#noback");
+	    $(window).bind("hashchange", function(){
+	      history.pushState(null, null, "#noback");
+	    });
+	    
+	  //우클릭방지
+	    var cancel=function(e){
+	    	  if (window.event) {
+	    	   window.event.cancelBubble = true;
+	    	   window.event.returnValue = false;
+	    	  }
+	    	  if (e && e.stopPropagation && e.preventDefault) {
+	    	   e.stopPropagation();
+	    	   e.preventDefault();
+	    	  }
+	    	  return false;
+	    	 };
+	    	 var block=function(e){
+	    	  e = e || window.event;
+	    	  var t=e.srcElement || e.target;
+	    	  var tag=t.tagName;
+	    	  if (e && tag==='HTML' || tag==='INPUT' || tag==='TEXTAREA' || tag==='BUTTON' || tag==='SELECT' || tag==='OPTION' || tag==='EMBED' || tag==='OBJECT') { return; }
+	    	  if (e.type==='keydown' || e.type=='keyup') {
+	    	   // keyboard event : only block ctrl-A, ctrl-a, ctrl-C, ctrl-c, meta-A, meta-a, meta-C, meta-c
+	    	   if ((e.ctrlKey || e.metaKey) && (e.keyCode == 65 || e.keyCode == 97 || e.keyCode == 67 || e.keyCode == 99)) { return cancel(e); }
+	    	  } else if(e.type == "contextmenu"){
+	    	   alert('우클릭 금지!');
+	    	   return cancel(e);
+	    	  } else {
+	    	   return cancel(e);
+	    	  }
+	    	 }
+	    	 var addEvent = function(el, type, fn){
+	    	     if (window.addEventListener) {
+	    	         el.addEventListener(type, fn, false);
+	    	     }
+	    	     else if (window.attachEvent) {
+	    	         el.attachEvent('on' + type, fn);
+	    	     }
+	    	     else {
+	    	         el['on' + type] = fn;
+	    	     }
+	    	 }
+	    	 var addBlockEvent = function(){
+	    	  addEvent(document.body,'keydown',block);
+	    	  addEvent(document.body,'keyup',block);
+	    	  addEvent(document.body,'mouseup',block);
+	    	  addEvent(document.body,'mousedown',block);
+	    	  addEvent(document.body,'dragstart',block);
+	    	  addEvent(document.body,'selectstart',block);
+	    	  addEvent(document.body,'copy',block);
+	    	  addEvent(document.body,'contextmenu', block);
+	    	 }
+	    	 addEvent(window,'load',addBlockEvent);
+	    	})();
+	    
+	    
+	/* }); */
+	
+	</script>
+	
+	</body>
 </html>
