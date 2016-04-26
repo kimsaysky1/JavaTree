@@ -26,6 +26,7 @@ import org.javatree.www.VO.Subnote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -120,8 +121,8 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private int endPageGroup;
 
 	@Override
-	public void setSession(Map<String, Object> arg0) {
-		session=arg0;
+	public void setSession(Map<String, Object> args0) {
+		session = args0;
 	}
 	
 	private String searchText;
@@ -131,6 +132,9 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	 * **/
 	
 	public String selectListbyField(){
+<<<<<<< HEAD
+		
+=======
 		System.out.println("qna>> "+interestString);
 		System.out.println("order>> "+order);
 		courseDAO dao = sqlSession.getMapper(courseDAO.class);
@@ -192,6 +196,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	}
 	
 	public String plusSelectListbyField(){
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 		System.out.println("qna>>"+interestString);
 		courseDAO dao = sqlSession.getMapper(courseDAO.class);
 		
@@ -981,15 +986,22 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		 * 수강종료된 강의!!
 		 * -수강종료된 강좌는 없다.
 		 * **/
-		public ArrayList<Lecture> getAllExLecture(String id){
+		public String getAllExLecture(String id){
 			courseDAO dao = sqlSession.getMapper(courseDAO.class);
-			return lectureList;
+			return SUCCESS;
 		}
 		/**
 		 * 수강자-수강중인 강의
 		 * **/
+<<<<<<< HEAD
+		public String getAllIngCourseForStudy(String id){
+		
+			
+			return SUCCESS;
+=======
 		public ArrayList<Course> getAllIngCourseForStudy(String id){
 			return courseList;
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 		} 
 		
 		public String insertLectureForm(){
@@ -1155,7 +1167,28 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		}
 		 */
 		
+		/**
+		 * 문제 보관함에서 강좌 리스트 뽑기
+		 * @return
+		 */
+		public String codingFormfromMain(){
+			
+			System.out.println("문제 보관함에 아이디로 강좌 목록을 뿌리겠다");
+			
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			
+			id = (String)session.get("loginId");
+			
+			codingList =  dao.getAllCodingList(id);
+			
+			courseList = dao.getAllCourseListForCodingBox(id);
+			
 		
+<<<<<<< HEAD
+	
+			return SUCCESS;
+		}
+=======
 		/*파일명 + System.currentTimeMillis()
 		"subnote"+파일명+System.currentTimeMillis()
 		나중에 필요하면 서브스트링*/
@@ -1283,6 +1316,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			return SUCCESS;
 		}
 		
+<<<<<<< HEAD
 		public String updateCourseName(){
 			Map<String, Object> map = new HashMap<String, Object>();
 			
@@ -1306,18 +1340,146 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		
 		
 		
+=======
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
+>>>>>>> aa748f1e11e133ac6f1761f2f270fc7fa73e4270
 		
+		public String codingFormlecturelist(){
+			
+			try{
+				System.out.println("문제 보관함에 코스 넘버로 강의 목록을 뿌리겠다");
+				
+				courseDAO dao = sqlSession.getMapper(courseDAO.class);
+				System.out.println(courseno);
+				
+				lectureList = dao.getAllLectureListForCodingBox(courseno);
+				
+				System.out.println(lectureList);
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+	
+			
+			return SUCCESS;
+			
+		}
+		
+		public String insertCodingfromMainView(){
+			
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			
+			id = (String)session.get("loginId");
+			
+			codingList =  dao.getAllCodingList(id);
+			
+			return SUCCESS;
+		}
+		
+		public String insertCodingfromMain(){
+			
+			System.out.println("문제 보관함에 문제를 넣겠다");
+			
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			
+		
+			
+			id = (String)session.get("loginId");
+			coding.setId(id);
+			System.out.println("코딩 들어있니" +coding);
+			
+			dao.insertCodingfromMain(coding);
+			
+			codingList =  dao.getAllCodingList(id);
+			
+			return SUCCESS;
+		}
+		
+		public String updateCodingfromMainView(){
+			
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			
+			id = (String)session.get("loginId");
+			codingList =  dao.getAllCodingList(id);
+			
+			return SUCCESS;
+			
+		}
+		
+		public String showCodinglist(){
+			
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			
+			System.out.println("lectureno : "+lectureno);
+			
+			codingno = dao.getCodingno(lectureno);
+			
+			System.out.println("codingno : "+codingno);
+			
+			codingList = dao.getCodinginlecture(codingno);
+			
+			System.out.println(codingList);
+			
+			return SUCCESS;
+		}
+		
+		public String showcodingcontent(){
+			
+			System.out.println("문제보관함 업데이트 하기 위해 선택 코딩 내용 뿌리겠다");
+			
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			
+			System.out.println(codingno);
+			
+			coding = dao.getCodingContent(codingno);
+			
+			System.out.println(coding);
+
+			return SUCCESS;	
+		}
+		
+		public String updateCodingfromMain(){
+			
+			System.out.println("문제 보관함의 문제를 수정하겠다");
+			
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			
+			id = (String)session.get("loginId");
+			coding.setId(id);
+			
+			System.out.println("코딩 들어있니" +coding);
+			
+			dao.updateCodingfromMain(coding);
+			
+			return SUCCESS;
+		}
+		
+		public String deleteCodingfromMain(){
+			
+			
+			System.out.println("문제 보관함의 문제를 삭제하겠다");
+		
+			courseDAO dao = sqlSession.getMapper(courseDAO.class);
+			
+			dao.deleteCodingfromMain(codingno);
+			
+			return SUCCESS;
+		}
+
 		public String getCourseInfo(String id){
 			return SUCCESS;
 		}
-		public ArrayList<Lecture> getAllLectureList(String id){
-			
-			return lectureList;
-		}
 		
+		/*	public ArrayList<Lecture> getAllLectureList(String id){
 		
+				return lectureList;
+			}
+	*/
+	
 		
-		
+		//getter setter
+
+	
 		public Coding getCoding() {
 			return coding;
 		}
@@ -1461,7 +1623,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setInterestString(String interestString) {
 			this.interestString = interestString;
 		}
-		
 		
 		public String getSearchText() {
 			return searchText;
@@ -1721,6 +1882,10 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.latelyPurchasedLectureList = latelyPurchasedLectureList;
 		}
 
+<<<<<<< HEAD
+		
+	
+=======
 		public int getStart() {
 			return start;
 		}
@@ -1774,4 +1939,10 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setOrder(String order) {
 			this.order = order;
 		}
+<<<<<<< HEAD
+=======
+>>>>>>> 129d30b5f1133695e60139ad0f4b44083ba70423
+		
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
+>>>>>>> aa748f1e11e133ac6f1761f2f270fc7fa73e4270
 }

@@ -44,7 +44,7 @@
 				<li class="outline-learn"><a href="#"><i
 						class="icon md-list"></i></a>
 					<div class="list-item-body outline-learn-body">
-						<div class="section-learn-outline">
+					<div class="section-learn-outline">
 							<h5 class="section-title">MENU</h5>
 							<ul class="section-list">
 								<li>
@@ -78,7 +78,6 @@
 
 							</ul>
 						</div>
-						
 					</div>
 				</li>
 				<!-- 페이지 종료 -->
@@ -106,19 +105,19 @@
 						<table style='width: 1000px;'>
 							<tr>
 								<td style='width: 400px;'><b>ALL QUESTION</b><br /> 
-								<select multiple="multiple" id='lstBox1'style='width: 400px; height: 600px;'>
+								<select multiple="multiple" id='codinglistbox'style='width: 400px; height: 600px;'>
 										<s:iterator value="codingList" status="st">   
-											<option value="<s:property value="codingquestion"/>"><s:property value="codingquestion"/></option>
+											<option value="<s:property value="codingno"/>"><s:property value="codingquestion"/></option>
 										 </s:iterator>
 								</select>
 								</td>
 								<td style='width: 30px;'></td>
 								<td>
-								<form id = "form1" action="insertCodingfromMain">
+								<form id = "form1" action="updateCodingfromMain.action">
 									<table style='width: 550px;'>
 										<tr>
 											<td style='width: 100px; text-align: center;'><b>QUESTION</b></td>
-											<td><textarea style="height: 60px;" id="q_title"name = "coding.codingquestion"></textarea></td>
+											<td><textarea style="height: 60px;" id="q_title"name = "coding.codingquestion" placeholder=""></textarea></td>
 										</tr>
 										<tr>
 											<td style='height: 20px;'></td>
@@ -126,7 +125,7 @@
 										</tr>
 										<tr>
 											<td style='width: 100px; text-align: center;'><b>CODE</b></td>
-											<td><textarea style="height: 220px;" id = "codebox" name = "coding.codingtemplet"></textarea></td>
+											<td><textarea style="height: 220px;" id = "codebox" name = "coding.codingtemplet"  placeholder=""></textarea></td>
 										</tr>
 										<tr>
 											<td style='height: 20px;'></td>
@@ -134,15 +133,16 @@
 										</tr>
 										<tr>
 											<td style='width: 100px; text-align: center;'><b>ANSWER</b></td>
-											<td><textarea style="height: 220px;" id = "answerbox" name ="coding.codinganswer"></textarea></td>
+											<td><textarea style="height: 220px;" id = "answerbox" name ="coding.codinganswer" placeholder=""></textarea></td>
+										
 										</tr>
 										<tr>
 											<td style='height: 20px;'></td>
 											<td></td>
 										</tr>
 										<tr>
-											<td></td>
-											<td><input type="submit" id = "submit_btn"  value="등록" style="float: right;"></td>
+											<td><input type="hidden" id = "codeno" name ="coding.codingno" value ="" ></td>
+											<td><input type="submit" id = "submit_btn"  value="수정" style="float: right;"></td>
 										</tr>
 									</table>
 									</form>
@@ -172,10 +172,39 @@
 	
 	$(function(){
 		
+		$("#codinglistbox").change(function(){
+			var codingno= parseInt($(this).val());		
+			
+			alert(codingno);
+			
+			$.ajax({
+				url : 'showcodingcontent.action',
+				data : {'codingno' : codingno},
+				success : function(response){
+					alert('성공');
+					alert(response);
+					alert(response.coding.codingno);
+					
+					var codingn =  parseInt(response.coding.codingno);
+					
+					$('#q_title').attr('placeholder',response.coding.codingquestion);	
+					$('#codebox').attr('placeholder',response.coding.codingtemplet);	
+					$('#answerbox').attr('placeholder',response.coding.codinganswer);	
+					$('#codeno').attr('value',codingn);	
+				
+				},
+				error:function(){
+					alert('에러');
+				}
+			});
+			
+		});
+
 		
 		$('#submit_btn').click(function(){
 			
 		alert("1");
+		
 		var q_title = document.getElementById("q_title").value;
 		var codebox = document.getElementById("codebox").value;
 		var answerbox = document.getElementById("answerbox").value;
@@ -192,8 +221,8 @@
 		}else{
 			 document.getElementById('form1').submit();
 		}
-		
-		});
+	
+		}); 
 		
 	});
 	

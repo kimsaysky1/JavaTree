@@ -7,7 +7,7 @@
 
     <constant name="struts.devMode" value="true" />
 
-    <package name="course" namespace="/course" extends="json-default, default">
+    <package name="course" namespace="/course" extends="default, json-default">
     
         <action name="selectAllCourseList" class="org.javatree.www.Action.CourseAction" method="selectAllCourseList">
         	<result>/WEB-INF/views/course/courseDefaultMain.jsp</result>
@@ -87,6 +87,52 @@
         	<!-- <result type="redirect">insertLectureForm</result> -->
         	<result>/WEB-INF/views/course/insertLecture.jsp</result>
         </action>
+<<<<<<< HEAD
+        <!-- 문제보관함 폼(codingMain) 강의 등록 시 -->
+         <action name="codingForm" >
+        	<result>/WEB-INF/views/course/codingMain.jsp</result>     	
+        </action>
+        
+           <!-- 문제보관함 폼(codingMain) teach메인페이지에서 클릭 시 -->
+         <action name="codingFormfromMain" class="org.javatree.www.Action.CourseAction" method="codingFormfromMain">
+        	<result>/WEB-INF/views/course/codingMain_fromMain.jsp</result>     	
+        </action>
+        
+            <!-- teachMian 에서 누른 문제보관함 폼(codingMain) 코스리스트 중 하나 선택 후 강의 리스트 뽑기  -->
+         <action name="golecturelist" class="org.javatree.www.Action.CourseAction" method="codingFormlecturelist">
+        	<result type="json"></result>	
+        </action>
+        
+        <!-- 해당 강의에 있는 문제 리스트 뿌리기  -->
+        <action name="gocodinglist" class="org.javatree.www.Action.CourseAction" method="showCodinglist">
+        	<result type="json"></result>	
+        </action>
+        
+        <!-- 뷰 -->
+        <action name="insertCodingfromMainView" class="org.javatree.www.Action.CourseAction" method="insertCodingfromMainView">
+        	<result>/WEB-INF/views/course/insertCoding.jsp</result>	
+        </action>
+        
+       	 <!-- teachMian 에서 누른 문제보관함 폼(codingMain)에 코딩 insert하기   -->
+        <action name="insertCodingfromMain" class="org.javatree.www.Action.CourseAction" method="insertCodingfromMain">
+        	<result type="redirect">insertCodingfromMainView.action</result>	
+        </action>
+        
+        <action name="showcodingcontent" class="org.javatree.www.Action.CourseAction" method="showcodingcontent">
+        	<result type="json"></result>
+        </action>
+        
+        <action name="updateCodingfromMainView" class="org.javatree.www.Action.CourseAction" method="updateCodingfromMainView">
+        	<result>/WEB-INF/views/course/updateCoding.jsp</result>	
+        </action>
+        
+         <action name="updateCodingfromMain" class="org.javatree.www.Action.CourseAction" method="updateCodingfromMain">
+        	<result type="redirect">updateCodingfromMainView.action</result>	
+        </action>
+        
+        <action name="deleteCodingfromMain" class="org.javatree.www.Action.CourseAction" method="deleteCodingfromMain">
+        	<result type="json"></result>
+=======
         <!-- 문제보관함 폼(codingMain) -->
         <action name="codingForm" class="org.javatree.www.Action.CourseAction" method="codingForm">
         	<result>/WEB-INF/views/course/codingMain.jsp</result>
@@ -120,6 +166,7 @@
         <!-- 강의 서브노트 수정 -->
         <action name="updateSubnote" class="org.javatree.www.Action.CourseAction" method="updateSubnote" >
         	<result type="redirect">CourseDetailForTeachForm</result>
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
         </action>
         
        <!--  강좌 이름, Description 수정 - courseDetailForTeach --> <!-- 강좌수정은 나중에 디버깅시 ㄱㄱ --> 

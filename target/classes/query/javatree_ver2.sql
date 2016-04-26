@@ -1,6 +1,12 @@
 alter table coding add (id varchar2(20) NOT NULL);--20160425 박수지 추가
 
+<<<<<<< HEAD
+ CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
+ 
+ create sequence question_seq;
+=======
 CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
   
 alter table studylecture add (courseno number(6,0) NOT NULL)
 
@@ -11,7 +17,13 @@ alter table coding add (regdate date default sysdate not null); -- 20160423 김�
 alter table coding add (codinganswer clob not null);
 alter table coding drop column lectureno;
 <<<<<<< HEAD
+alter table coding add (id varchar2(20) NOT NULL);
+
+CREATE sequence coding_seq start with 1 increment by 1;
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 
 alter table coding drop column regdate;--20160424 박수지 추가
 

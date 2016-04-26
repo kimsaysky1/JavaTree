@@ -60,6 +60,10 @@
 
 </head>
 <body>
+<<<<<<< HEAD
+<%@include file="/resources/header.jsp" %>
+	
+=======
 	<!-- HEADER -->
 	<header id="header" class="header">
 		<div class="container">
@@ -307,6 +311,7 @@
 		</div>
 	</header>
 	<!-- END / HEADER -->
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 
 	<!-- PROFILE FEATURE 프로필!!!!-->
 	<section class="profile-feature">
