@@ -2,7 +2,9 @@ alter table coding add (id varchar2(20) NOT NULL);--20160425 박수지 추가
 
 CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
   
-alter table studylecture add (courseno number(6,0) NOT NULL)
+alter table studylecture add (courseno number(6,0) NOT NULL)--창우 studylecture
+
+alter table studycourse add (teacherid varchar2(20) not null);--창우 studycourse
 
 ALTER TABLE teachcourse ADD (startdate date DEFAULT sysdate NOT NULL);
 alter table course drop column typeno;

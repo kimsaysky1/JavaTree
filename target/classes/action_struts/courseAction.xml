@@ -48,8 +48,10 @@
         <action name="plusCourseDefaultDetail" class="org.javatree.www.Action.CourseAction" method="plusCourseDefaultDetail">
         	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>
         </action>
-        
-         
+       
+        <action name="backAction" class="org.javatree.www.Action.CourseAction" method="backAction">
+        	<result>/WEB-INF/views/course/courseDefaultMain.jsp</result>
+        </action>
         
         <action name="insertLectureForStudy" class="org.javatree.www.Action.CourseAction" method="insertLectureForStudy">
         	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>

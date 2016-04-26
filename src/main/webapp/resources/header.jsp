@@ -204,7 +204,7 @@
 							<s:if test="%{#session.loginId != null}">
 								<ul class="sub-menu">
 									<li><a href="/javatree/course/selectAllCourseListForTeach.action">Teach MYPAGE</a></li>
-									<li><a href="/javatree/course/selectAllCourseListForStudy.action">Study MYPAGE</a></li>
+									<li><a href="/javatree/course/studyMainView.action">Study MYPAGE</a></li>
 								</ul>
 							</s:if>
 						</li>

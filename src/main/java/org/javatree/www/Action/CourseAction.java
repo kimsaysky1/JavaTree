@@ -45,7 +45,8 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private ArrayList<Coding> codingList;
 	private ArrayList<Course> teachCourseList;
 	private ArrayList<Course> courseList;
-
+	private ArrayList<Course> recourseList;
+	
 	private ArrayList<Lecture> lectureList;
 	private Member_jt member_jt;
 	private Question question;
@@ -113,7 +114,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private int end;
 	
 	private int endPageGroup;
-	
+	private ArrayList<String> interestList;
 
 	@Override
 	public void setSession(Map<String, Object> arg0) {
@@ -144,6 +145,8 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		}
 		
 		kong.put("order", order);
+		session.put("order", order);
+		System.out.println(order);
 		start = 1;
 		end = 7;
 		currentPage = 1;
@@ -184,6 +187,16 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		allRank = dao.selectAllRank();
 		recentRank = dao.selectRecentRank();
 		
+		//backAction을 위한 세션값
+		session.put("pend", end);
+		session.put("pstart", start);
+		session.put("operation", "selectListbyField");
+		session.put("pcurrentPage", currentPage);
+		session.put("pCountPerPage", countPerPage);
+		session.put("pendPageGroup", endPageGroup);
+		session.put("porder", order);
+		session.put("interest", interestString);
+		
 		return SUCCESS;
 	}
 	
@@ -212,7 +225,8 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		
 		kong.put("start", start);
 		kong.put("end", end);
-		
+		kong.put("order", session.get("order").toString());
+		System.out.println(session.get("order").toString());
 		int totalRecordsCount = dao.selectFieldTotal(kong);
 		
 		if(totalRecordsCount % countPerPage == 0 ){
@@ -363,8 +377,121 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		allRank = dao.selectAllRank();
 		recentRank = dao.selectRecentRank();
 		
+		//backAction을 위한 세션값
+		session.put("pend", end);
+		session.put("pstart", start);
+		session.put("operation", "searchCourse");
+		session.put("pcurrentPage", currentPage);
+		session.put("pCountPerPage", countPerPage);
+		session.put("pendPageGroup", endPageGroup);
+		session.put("psearchText", searchText);
+		
 		return SUCCESS;
 	}
+	
+	public String backAction() {
+		courseDAO dao = sqlSession.getMapper(courseDAO.class);
+		if(((String)session.get("operation")).equals("searchCourse")){
+			
+			System.out.println("searchcouse in");
+			
+			Map<String, Object> kong = new HashMap<>();
+			kong.put("start", Integer.parseInt(session.get("pstart").toString()));
+			kong.put("end", Integer.parseInt(session.get("pend").toString()));
+			kong.put("searchText", session.get("psearchText").toString());
+			System.out.println("psearchtext>> " + session.get("psearchText").toString());
+			
+				currentPage = (int)session.get("pcurrentPage");
+										
+				int totalRecordsCount = dao.selectDefaultTotal(kong);
+				
+				int countPerPage = 7;		//페이지당 글목록 수
+
+				if(totalRecordsCount % countPerPage == 0 ){
+					endPageGroup = (int)(totalRecordsCount/countPerPage);		//총 (페이지)그룹 수
+				}else{
+					endPageGroup = (int)(totalRecordsCount/countPerPage)+1;		//총 (페이지)그룹 수
+				}
+				
+				if(currentPage == 0){
+					currentPage = 1;
+				}
+						
+				session.put("currentPage", currentPage);
+				session.put("CountPerPage", countPerPage);
+				session.put("endPageGroup", endPageGroup);
+				
+				System.out.println("total>> "+ totalRecordsCount);
+				System.out.println("currentpage>> "+ currentPage);
+				System.out.println("CountPerPage>> " + session.get("CountPerPage"));
+				System.out.println("endPageGroup>> " + session.get("endPageGroup"));
+				
+				recourseList = dao.searchCourse(kong);
+				
+			System.out.println("searchCourse>> "+recourseList);
+			
+			//베스트 강좌 (역대, 최신)
+			allRank = dao.selectAllRank();
+			recentRank = dao.selectRecentRank();
+			
+		}else if(((String)session.get("operation")).equals("selectListbyField")){
+			
+			interestList = new ArrayList<String>();
+			
+			StringTokenizer st = new StringTokenizer(session.get("interest").toString(), ",");
+			while (st.hasMoreTokens()) {
+				interestList.add(st.nextToken());
+			}
+			
+			Map<String, Object> kong = new HashMap<>();
+			for (int i = 0; i < interestList.size(); i++) {
+				kong.put("interest"+i, interestList.get(i));
+			}
+			
+			kong.put("order", session.get("porder").toString());
+			System.out.println("porder>> " + session.get("porder").toString());
+			currentPage = (int)session.get("pcurrentPage");
+			
+			kong.put("start", (int)session.get("pstart"));
+			kong.put("end", (int)session.get("pend"));
+			
+			int totalRecordsCount = dao.selectFieldTotal(kong);
+			
+			int countPerPage = 7;		//페이지당 글목록 수
+			if(totalRecordsCount % countPerPage == 0 ){
+				endPageGroup = (int)(totalRecordsCount/countPerPage);		//총 (페이지)그룹 수
+			}else{
+				endPageGroup = (int)(totalRecordsCount/countPerPage)+1;		//총 (페이지)그룹 수
+			}
+			
+			if(currentPage == 0){
+				currentPage = 1;
+			}
+					
+			session.put("currentPage", currentPage);
+			session.put("CountPerPage", countPerPage);
+			session.put("endPageGroup", endPageGroup);
+			
+			System.out.println("total>> "+ totalRecordsCount);
+			System.out.println("currentpage>> "+ currentPage);
+			System.out.println("CountPerPage>> " + session.get("CountPerPage"));
+			System.out.println("endPageGroup>> " + session.get("endPageGroup"));
+			
+			System.out.println("kong>>" + kong);
+			
+			recourseList= dao.selectListbyField(kong);
+			
+			System.out.println("selectListbyField>> "+ recourseList);
+			
+			//베스트 강좌 (역대, 최신)
+			allRank = dao.selectAllRank();
+			recentRank = dao.selectRecentRank();
+			
+		}
+		
+		return SUCCESS;
+	}
+	
 	
 	public String plusSearchCourse(){
 		
@@ -750,7 +877,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			end = tempList.size();			
 		}
 		
-		for (int i = start; i < end; i++) {
+		for (int i = start; i < end+1; i++) {
 			lectureList.add(tempList.get(i-1));
 		}
 		
@@ -1713,5 +1840,30 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setOrder(String order) {
 			this.order = order;
 		}
+
+		public ArrayList<Course> getRecourseList() {
+			return recourseList;
+		}
+
+		public void setRecourseList(ArrayList<Course> recourseList) {
+			this.recourseList = recourseList;
+		}
+
+		public List<File> getUpload() {
+			return upload;
+		}
+
+		public void setUpload(List<File> upload) {
+			this.upload = upload;
+		}
+
+		public ArrayList<String> getInterestList() {
+			return interestList;
+		}
+
+		public void setInterestList(ArrayList<String> interestList) {
+			this.interestList = interestList;
+		}
+		
 		
 }

@@ -308,6 +308,57 @@
        </fieldset>
        </div>
        
+      <s:if test="interestList != null">
+       		<script>
+       		
+       			var interests = document.getElementsByName("interest");
+       			
+       			var list = "${interestList}";
+       	   		//alert(list + typeof list);
+       	   		
+       	   		var str = list.split(',');
+       	   		var strStart = str[0].substring(1); //시작
+       	   		for(j = 0; j < interests.length; j++){
+	 				if(interests[j].value == strStart){
+	 				interests[j].checked = true;
+	 				}
+	 				      	 					
+	 				}
+       	   		
+       	   		//alert("s길이> " + strStart);
+       	   		
+       	   if(str.length-1 != 0){
+       	   			var end = str.length-1;
+       	   			Number(end);
+       	   		var strEnd = str[end].split(']');
+       	  
+       	   	var strEndk = strEnd[0].substr(1, 1);  // 끝
+       	 for(j = 0; j < interests.length; j++){
+ 				if(interests[j].value == strEndk){
+ 				interests[j].checked = true;
+ 				}
+ 				      	 					
+ 				} 
+       	   	//alert("StrEndk>> " + strEndk[0] +"/" + strEndk[0].length);
+       	   		
+       	   		var ano;
+       	   		for (i = 1; i < str.length-1; i++) {
+       	   			var tmp= str[i].substr(1, 1);
+       	   			alert(tmp[0] +"/"+tmp[0].length);
+       	 			//여기서 돌리자
+			       	  
+       	 			for(j = 0; j < interests.length; j++){
+       	 				if(interests[j].value == tmp[0]){
+       	 				interests[j].checked = true;
+       	 				}
+       	 				      	 					
+       	 				} 
+       	 			}//중간
+       	   		} 
+       	   		
+       		</script>
+       		</s:if>
+       
        <div class = "course-list-list">
        <fieldset>
        <legend>List</legend>
@@ -349,6 +400,31 @@
 		<!-- end post -->     
      </s:iterator>
      
+          <s:iterator value="recourseList" status="incr">
+     	
+		<!-- start post -->
+     			
+                     <div class="post" id = "<s:property value="%{#incr.index+1}"/>"> 
+                            <div class="post-body">
+                                <div class="post-title">
+                                    <h3 class="md"><a href="selectCourseDefaultDetail.action?courseno=<s:property value="courseno" />">
+                                    <s:property value="coursename" /></a></h3>
+                                </div>
+                                	<div class="post-meta">
+                                    	by <a href="#"><s:property value="username" /></a> on <s:property value="regdate" />
+                                	</div>  
+                                   <div class="post-link">
+                                    <a href="blog-single.jsp?courseno=<s:property value="courseno" />">
+                                        <i class="fa fa-play-circle-o"></i>
+                                        Lecture List
+                                    </a>
+                                	</div>                           
+                            </div>
+                     </div> 
+                     
+		<!-- end post -->     
+     </s:iterator>
+     
          
              <ul class="pager">                
             
@@ -358,21 +434,20 @@
              </s:if>
             
             <s:elseif test="#session.currentPage == 1 & #session.endPageGroup != 1">
-            <li><a href = "#"> <s:property value="#session.currentPage"/> /<s:property value="#session.endPageGroup"/></a></li>
+            <li><a href = "#"> <s:property value="#session.currentPage"/> / <s:property value="#session.endPageGroup"/></a></li>
              <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage + 1"/>">next &gt</a></li>
             </s:elseif>
 			
 			<s:elseif test="#session.currentPage == #session.endPageGroup & #session.endPageGroup != 1">
              <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>
-            <li><a href = "#"> <s:property value="#session.currentPage"/> /<s:property value="#session.endPageGroup"/></a></li>
+            <li><a href = "#"> <s:property value="#session.currentPage"/> / <s:property value="#session.endPageGroup"/></a></li>
             </s:elseif>
 			
 			<s:else>
              <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>
-             <li><a href = "#"> <s:property value="#session.currentPage"/>/<s:property value="#session.endPageGroup"/> </a></li>
+             <li><a href = "#"> <s:property value="#session.currentPage"/> / <s:property value="#session.endPageGroup"/> </a></li>
              <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage + 1"/>">next &gt</a></li>
             </s:else>
-                            
                             </ul>
                     </div>
                 
@@ -460,8 +535,6 @@
 		</div>
 		 
 		 </section>
-		
-
 
 	<!-- FOOTER -->
 	<footer id="footer" class="footer">
@@ -503,7 +576,7 @@
 		src="../resources/javatree_view/html/js/scripts.js"></script>
 		
 <script>
-	
+
 function clickNext(page) {
  	Number(page);
 	var temp = page;
@@ -535,13 +608,13 @@ function clickNext(page) {
 	        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
 	        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
 	        	 }else if(curPage == 1 & endPage != 1){
-	        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+	        		 var paging1 = '<li><a href="#">'+ curPage +' / '+endPage+'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
 	        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
 	        	 }else if(curPage == endPage & endPage != 1){
-	        		 var paging2 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
+	        		 var paging2 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage+' / '+endPage +'</a></li>';	
 	        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
 	        	 }else{
-	        		 var paging3 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+	        		 var paging3 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li>/'+endPage+'<li><a href="#">'+ curPage+' / '+endPage+'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
 	        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
 	        	 }
 	        
@@ -595,13 +668,13 @@ function clickNextField(page) {
 	        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
 	        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
 	        	 }else if(curPage == 1 & endPage != 1){
-	        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+	        		 var paging1 = '<li><a href="#">'+ curPage+' / '+endPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
 	        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
 	        	 }else if(curPage == endPage & endPage != 1){
-	        		 var paging2 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
+	        		 var paging2 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage+' / '+endPage +'</a></li>';	
 	        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
 	        	 }else{
-	        		 var paging3 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+	        		 var paging3 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage+' / '+endPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
 	        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
 	        	 }
 	        
@@ -653,7 +726,6 @@ function selectByField(asd) {
 	 				+course.coursename+'</a></h3></div><div class="post-meta">by'
 	 				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
 	 				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').appendTo(".blog-list-content");
-	 			
 	 			});
 	        	 
 	        	 var curPage = Number(response.currentPage);
@@ -666,13 +738,13 @@ function selectByField(asd) {
 	        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
 	        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
 	        	 }else if(curPage == 1 & endPage != 1){
-	        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+	        		 var paging1 = '<li><a href="#">'+ curPage+' / '+endPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
 	        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
 	        	 }else if(curPage == endPage & endPage != 1){
-	        		 var paging2 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
+	        		 var paging2 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage+' / '+endPage +'</a></li>';	
 	        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
 	        	 }else{
-	        		 var paging3 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+	        		 var paging3 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage+' / '+endPage+'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
 	        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
 	        	 }
 	        
@@ -689,9 +761,6 @@ $(function(){
 	searchCourse();
 	
 });
-
-
-
 
 function searchCourse() {
 	$("#searchIcon").on("click", function(){
@@ -731,13 +800,13 @@ function searchCourse() {
 		        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
 		        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
 		        	 }else if(curPage == 1 & endPage != 1){
-		        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+		        		 var paging1 = '<li><a href="#">'+ curPage+' / '+endPage+'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
 		        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
 		        	 }else if(curPage == endPage & endPage != 1){
-		        		 var paging2 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
+		        		 var paging2 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage+' / '+endPage+ '</a></li>';	
 		        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
 		        	 }else{
-		        		 var paging3 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+		        		 var paging3 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage+' / '+endPage+ '</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
 		        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
 		        	 }
 		        
@@ -796,16 +865,16 @@ function searchCourse() {
 				        	 			        	 
 				        	 var paging = $('<ul class="pager"></ul>');
 				        	 if(curPage == 1 & endPage == 1){
-				        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
+				        		 var paging0 = '<li><a href="#">'+ curPage+'</a></li>';
 				        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
 				        	 }else if(curPage == 1 & endPage != 1){
-				        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+				        		 var paging1 = '<li><a href="#">'+ curPage+' / '+endPage+ +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
 				        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
 				        	 }else if(curPage == endPage & endPage != 1){
-				        		 var paging2 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
+				        		 var paging2 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage+' / '+endPage+'</a></li>';	
 				        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
 				        	 }else{
-				        		 var paging3 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+				        		 var paging3 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage+' / '+endPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
 				        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
 				        	 }
 				        
