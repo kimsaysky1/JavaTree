@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -32,7 +33,10 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 	private List<Integer> lectureList;
 	private List<Coding> codingList;
 	private List<String> contentList;
-	private Map<String, String> classNameMap;
+	private LinkedHashMap <String, String> classNameMap;
+	private LinkedHashMap <String, String> packageNameMap;
+	private String mainClassName;
+	private String packageName = "";
 	private String startClass;
 	private String code1;
 	private String code2;
@@ -43,13 +47,13 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 	private String id;
 	private File directoryPath;
 	private String resultType;
-
+	
+	private Map<String, Object> session; 
 	
 	public String watchLecture() throws Exception{
 		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
 		lectureno = 1;
 		codingList = dao.selectCodingList(lectureno);
-		
 		return SUCCESS;
 	}
 	
@@ -63,8 +67,6 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
 		contentList = new ArrayList<>();
 		
-		System.out.println("code1: "+code1);
-		System.out.println("code2: "+code2);
 		if ((code1!=null)&&!(code1.trim().equals(""))) {
 			contentList.add(code1);
 		}
@@ -82,7 +84,8 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 		}
 
 		int checkNum = 0;
-		classNameMap = new HashMap<>();
+		classNameMap = new LinkedHashMap<>();
+		packageNameMap = new LinkedHashMap<>();
 		StringTokenizer st = null;
 		StringBuffer buf = null;
 		String file_parent = null;
@@ -96,8 +99,30 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 				makeJspFile(file_parent, file_name, contentList.get(i)); 
 				resultType = "jsp";
 				result = "http://203.233.196.88:8585/test/guest/"+id+"/"+file_name;
+				break;
 			} else {
 				for (int j = 0; j < contentList.size(); j++) {
+					if(contentList.get(j).trim().startsWith("package")){
+						st = new StringTokenizer(contentList.get(j).trim(), " ");
+						boolean check = false;
+						
+						while(st.hasMoreTokens()){
+							String temp = st.nextToken();
+							if(check){
+								packageName = temp;
+								break;
+							}
+							if(temp.equals("package")){
+								check = true;
+							}
+						}
+						st = new StringTokenizer(packageName, ";");
+						while(st.hasMoreTokens()){
+							packageName = st.nextToken();
+							break;
+						}
+					}
+					
 					if (contentList.get(j).contains("public static void main(String[]")) {
 						checkNum++;
 						if (contentList.get(j).contains("public class")) {
@@ -107,8 +132,9 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 								String str = st.nextToken();
 								buf.append(" " + str);
 								if (buf.substring(buf.length() - 12, buf.length()).equals("public class")) {
-									String mainClassName = st.nextToken();
+									mainClassName = st.nextToken();
 									classNameMap.put(mainClassName, contentList.get(j));
+									packageNameMap.put(mainClassName, packageName);
 									startClass = mainClassName + ".java";
 									break;
 								}
@@ -120,6 +146,7 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 								if (str.equals("class")) {
 									String subClassName = st.nextToken();
 									classNameMap.put(subClassName, contentList.get(j));
+									packageNameMap.put(subClassName, packageName);
 									break;
 								}
 							}
@@ -131,6 +158,7 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 							if (str.equals("class")) {
 								String subClassName = st.nextToken();
 								classNameMap.put(subClassName, contentList.get(j));
+								packageNameMap.put(subClassName, packageName);
 								break;
 							}
 						}
@@ -141,31 +169,59 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 						file_parent = "C:/compiler/" + id;
 						file_name = s + ".java";
 						try {
-							makeJavaFile(file_parent, file_name, classNameMap.get(s));
+							String packagePath = packageNameMap.get(s).replace(".", "/"); 
+							makeJavaFile(file_parent, file_name, classNameMap.get(s), packagePath);
+							makeClassFile(file_parent+"/"+packagePath);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
-					makeClassFile(file_parent);
-					System.out.println("startClass: " + startClass);
-					String[] cmd = { "java", "-cp", file_parent, startClass.substring(0, file_name.lastIndexOf(".") - 1) };
-					for (int k = 0; k < cmd.length; k++) {
-						System.out.println(cmd[k] + " ");
-					}
+					
+					String[] cmd = { "java", "-cp", file_parent, packageNameMap.get(mainClassName)+"."+startClass.substring(0, file_name.lastIndexOf(".")) };
 					runProcess(cmd);
-					deleteFile(file_parent);
+					//deleteFile(file_parent);
+					resultType = "java";
+					break;
 				} else {
 					System.out.println("메인 메소드가 한 개가 아님");
+					resultType = "java";
+					break;
 				}
-				resultType = "java";
 			}
-
 		}
-		
-
 		return SUCCESS;
 	}
 
+	private void makeJavaFile(String file_parent, String file_name, String content, String packagePath) {
+		file_parent = file_parent+"/"+packagePath;
+		directoryPath = new File(file_parent + "/");
+		File file = new File(file_parent, file_name);
+		if (!directoryPath.exists()) {
+			directoryPath.mkdirs();
+		}
+		FileOutputStream fos = null;
+		try {
+			content = content.trim();
+			byte[] contentByte = content.getBytes("utf-8");
+			fos = new FileOutputStream(file);
+			fos.write(contentByte);
+			fos.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				fos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void makeClassFile(String file_parent) {
+		runProcess("javac " + file_parent + "/*.java" + " -encoding UTF8");
+	}
+
+	
 	private void makeJspFile(String file_parent, String file_name, String content) {
 		directoryPath = new File(file_parent);
 		File file = new File(file_parent, file_name);
@@ -176,7 +232,6 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 		try {
 			content = content.trim();
 			byte[] contentByte = content.getBytes("utf-8");
-			System.out.println("file: "+file);
 			fos = new FileOutputStream(file);
 			fos.write(contentByte);
 			fos.flush();
@@ -189,36 +244,6 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 				e.printStackTrace();
 			}
 		}
-		String file_path = file_parent + "/" + file_name;
-	}
-
-	private void makeJavaFile(String file_parent, String file_name, String content) {
-		directoryPath = new File(file_parent);
-		File file = new File(file_parent, file_name);
-		if (!directoryPath.exists()) {
-			directoryPath.mkdirs();
-		}
-		FileOutputStream fos = null;
-		try {
-			content = content.trim();
-			byte[] contentByte = content.getBytes("utf-8");
-			fos = new FileOutputStream(file);
-			fos.write(contentByte);
-			fos.flush();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				fos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		String file_path = file_parent + "/" + file_name;
-	}
-
-	private void makeClassFile(String file_parent) {
-		runProcess("javac " + file_parent + "/*.java" + " -encoding UTF8");
 	}
 
 	private void printLines(InputStream ins) {
@@ -232,7 +257,6 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 				System.out.println("result:" + result);
 			}
 		} catch (Exception e) {
-			System.out.println("에러들어옴");
 			result = e.getMessage();
 			e.printStackTrace();
 		}
@@ -339,14 +363,6 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 		this.contentList = contentList;
 	}
 
-	public Map<String, String> getclassNameMap() {
-		return classNameMap;
-	}
-
-	public void setclassNameMap(Map<String, String> classNameMap) {
-		this.classNameMap = classNameMap;
-	}
-
 	public String getStartClass() {
 		return startClass;
 	}
@@ -418,11 +434,9 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 	public void setResultType(String resultType) {
 		this.resultType = resultType;
 	}
-
+	
 	@Override
-	public void setSession(Map<String, Object> arg0) {
-		// TODO Auto-generated method stub
-
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
 	}
-
 }

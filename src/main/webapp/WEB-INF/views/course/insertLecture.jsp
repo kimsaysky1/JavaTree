@@ -25,7 +25,9 @@
 function insertLectureForm(){
 	alert("강의등록폼옴>>");
 	var form = document.getElementById("insertLectureForm");
-	/* var lecturename= document.getElementById("lecturename").value;
+	var upload= document.getElementsByName("upload");
+	alert(upload);
+/* 	var lecturename= document.getElementById("lecturename").value;
 	var regdate= document.getElementById("regdate").value;
 	
 	if(lecturename==""){
@@ -35,8 +37,16 @@ function insertLectureForm(){
 	if(regdate=""){
 		alert("강의시작 날짜를 입력해 주세요.");
 		return false;
-	}
-	 */
+	} */
+	 
+	 
+	/*  var video= document.getElementById(video);
+	 var note= document.getElementById(note);
+
+	 if(video.value=""){
+		 alert("파일 선택");
+		 return;
+	 }   */
 	form.submit();
 }
 
@@ -48,6 +58,115 @@ function stgoback(){
 	alert("등록을 그만하시겠습니까");
 	location.href="/javatree/course/selectAllCourseListForTeach.action";
 }
+
+/*  function sub(){
+	 var video= document.getElementById(video);
+	 var note= document.getElementById(note);
+
+	 if(video.value=""){
+		 alert("파일 선택");
+		 return;
+	 }
+	 
+	  */
+	 /* if(f1.upload.value==""){
+	 
+	   alert("업로드 할 파일을 지정해 주세요");
+	   return;
+	  
+	 }
+	 
+	 
+	 var f2=f1.upload.value;
+	 //확장자 확인 
+	 
+	 if(uploadfile_check(f2)){
+	 
+	  f1.submit();
+	  //업로드 파일이 파일 형식에 맞으면 전송
+	 }else{
+	  return;
+	 }
+	 
+	}
+
+	function uploadfile_check(f2) {
+	    var  str_dotlocation,str_ext,str_low;
+	    str_value  = f2;
+	   
+	    str_low   = str_value.toLowerCase(str_value);
+	    str_dotlocation = str_low.lastIndexOf(".");
+	    str_ext   = str_low.substring(str_dotlocation+1);
+	    
+	    switch (str_ext) {
+	     case "gif" :
+	     case "jpg" :
+	     case "png" :
+	     case "bmp" :
+	     case "tif" :
+	     case "jpe" :
+	    
+	         return true;
+	         break;
+	     default:
+	         alert("파일 입력 양식에 맞지 않는 파일입니다.")
+	         return false;
+	    }
+	    
+	} 
+	 */
+	
+	/* function sub(frm) {   
+
+		  var file = frm.upfile.value;
+		  var fileExt = file.substring(file.lastIndexOf('.')+1); //파일의 확장자를 구합니다.
+		  var bSubmitCheck = true;
+		  
+		  if( !file ){ 
+		    alert( "파일을 선택하여 주세요!");
+		    return;
+		   }
+		   
+		   if(fileExt.toUpperCase() == "ASP" || fileExt.toUpperCase() == "PHP" || fileExt.toUpperCase() == "JSP" )
+		   {
+		                alert("ASP,PHP,JSP 파일은 업로드 하실 수 없습니다!");
+		                return;
+		   }
+		   
+		   alert("파일 업로드를 시작합니다.");
+		   frm.submit();   
+
+		}
+ */
+ 
+ /* $("#click").click( function() {
+	 $.ajax({
+	   // 요청할 URL
+	   url: "insertLecture.action",
+
+	   // 데이터를 전송한다. Query 문자열로 변환된다.
+	   data:{
+	     id: 123
+	   },
+
+	   // GET 메서드로 호출한다.
+	   type: "POST",
+	   // 응답 데이터가 json일 것으로 기대한다.
+	   dataType: "json",
+
+	   // 요청이 성공했을 경우 처리 코드
+	   success: function(json) {
+	     $("<h1 />").text(json.Name).appendTo("body");
+	     $("<div class=\"content\"/>").html(json.email).appendTo("body");
+	   }, 
+
+	   // 요청이 실패하면 경고창을 띄운다.
+	   error: function(xhr, status) {
+	     alert("Sorry, ther was a problem!");
+	   },
+	 })
+	 }); */
+	
 
 </script>
 
@@ -363,7 +482,7 @@ function stgoback(){
                             </div>
                         </div> -->
                         <!-- END / DESCRIPTION -->
-                        
+                 
                         <!-- PROMO VIDEO -->
                         <div class="promo-video create-item">
                             <div class="row">
@@ -373,7 +492,13 @@ function stgoback(){
                                 <div class="create-course-2">
                                     <div class="upload-video up-file">                                      
                                         <a href="#"><i class="icon md-upload"></i>Upload video</a>
-                                        <input type="file" name ="upload"/>
+                                        <input type="file" name ="upload" />
+                                        
+                                        <s:iterator value="uploadFileName" status="stat">   
+                                        	<s:property value="{uploadFileName[#stat.index]}"/>
+                                        </s:iterator>
+                                        <%-- <s:property value="uploadedfilename"/> --%>
+                                                                                
                                         <%-- <s:file name="uploads" /> --%>
                                     </div>
                                 </div>
@@ -390,7 +515,7 @@ function stgoback(){
                                 <div class="create-course-2">
                                     <div class="upload-video up-file">                                      
                                         <a href="#"><i class="icon md-upload"></i>Upload paper</a>
-                                        <input type="file" name ="upload"/>
+                                        <input type="file" name ="upload" />
                                         <%-- <s:file name="uploads" /> --%>
                                     </div>
                                 </div>
@@ -398,138 +523,7 @@ function stgoback(){
                         </div>
                         <!-- END / PROMO VIDEO -->
 
-                        <!-- CATEGORIES -->
-                       <!--  <div class="categories-item create-item">
-                            <div class="row">
-                                <div class="create-course-1">
-                                    <h4 class="err">Categories</h4>
-                                    <span class="text-err">choose at least one</span>
-                                </div>
-                                <div class="create-course-2">
-                                    <table class="table-categories">
-                                        <tr>
-                                            <td>
-                                                <div class="form-item form-checkbox checkbox-style">
-                                                    <input type="checkbox" id="business">
-                                                    <label for="business">
-                                                        <i class="icon-checkbox icon md-check-1"></i>
-                                                        PUREJAVA
-                                                    </label>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-item form-checkbox checkbox-style">
-                                                    <input type="checkbox" id="lifestyle">
-                                                    <label for="lifestyle">
-                                                        <i class="icon-checkbox icon md-check-1"></i>
-                                                        WEB
-                                                    </label>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-item form-checkbox checkbox-style">
-                                                    <input type="checkbox" id="game">
-                                                    <label for="game">
-                                                        <i class="icon-checkbox icon md-check-1"></i>
-                                                        MOBILE
-                                                    </label>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <div class="form-item form-checkbox checkbox-style">
-                                                    <input type="checkbox" id="design">
-                                                    <label for="design">
-                                                        <i class="icon-checkbox icon md-check-1"></i>
-                                                        IOT
-                                                    </label>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-item form-checkbox checkbox-style">
-                                                    <input type="checkbox" id="math-and-science">
-                                                    <label for="math-and-science">
-                                                        <i class="icon-checkbox icon md-check-1"></i>
-                                                       SWING
-                                                    </label>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-item form-checkbox checkbox-style">
-                                                    <input type="checkbox" id="crafts-and-hobbies">
-                                                    <label for="crafts-and-hobbies">
-                                                        <i class="icon-checkbox icon md-check-1"></i>
-                                                        JDBC
-                                                    </label>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <div class="form-item form-checkbox checkbox-style">
-                                                    <input type="checkbox" id="photography">
-                                                    <label for="photography">
-                                                        <i class="icon-checkbox icon md-check-1"></i>
-                                                        API
-                                                    </label>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-item form-checkbox checkbox-style">
-                                                    <input type="checkbox" id="education">
-                                                    <label for="education">
-                                                        <i class="icon-checkbox icon md-check-1"></i>
-                                                        SPRING
-                                                    </label>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-item form-checkbox checkbox-style">
-                                                    <input type="checkbox" id="music">
-                                                    <label for="music">
-                                                        <i class="icon-checkbox icon md-check-1"></i>
-                                                        STRUTS
-                                                    </label>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <div class="form-item form-checkbox checkbox-style">
-                                                    <input type="checkbox" id="health">
-                                                    <label for="health">
-                                                        <i class="icon-checkbox icon md-check-1"></i>
-                                                        etcFramework
-                                                    </label>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="form-item form-checkbox checkbox-style">
-                                                    <input type="checkbox" id="social-science">
-                                                    <label for="social-science">
-                                                        <i class="icon-checkbox icon md-check-1"></i>
-                                                       ETC
-                                                    </label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>                            
-                        </div> -->
-                        <!-- END / CATEGORIES -->
-                        
+                       
                         <!-- OPEN DATE -->
                         <div class="open-date create-item">
                             <div class="row">

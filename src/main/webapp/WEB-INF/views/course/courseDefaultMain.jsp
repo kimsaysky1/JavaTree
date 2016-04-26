@@ -24,6 +24,9 @@
 </head>
 <body>
 
+<<<<<<< HEAD
+	<%@include file="/resources/header.jsp" %>
+=======
 	<!-- HEADER -->
 		<header id="header" class="header">
 			<div class="container">
@@ -276,6 +279,7 @@
 		</header>
 		<!-- END / HEADER -->
 		
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 		<!-- 가운데 영역 -->
 		<section class="blog">
 		<div id="mid-course" class="mid-course">

@@ -15,7 +15,7 @@ function idCheck() {
 		alert("아이디는 3~15자리 입니다.");
 		return false;
 	} else {
-		location.href = 'Check.action?id='+id.value;	
+		location.href = 'idCheck.action?id='+id.value;	
 	} 
 	
 	

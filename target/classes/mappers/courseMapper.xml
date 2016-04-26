@@ -35,6 +35,14 @@
       	<result property="lecturename" column="lecturename"/>
 		<!-- <association property="coursename" column="courseno" javaType="int" select="selectCoursename"/> -->
    	</resultMap>
+   	
+   	<resultMap type="Coding" id="CodingMap">
+      <result property="codingno" column="codingno"/>
+      <result property="codingquestion" column="codingquestion"/>
+      <result property="codingtemplet"  column="codingtemplet"  jdbcType="CLOB" javaType="java.lang.String" typeHandler="org.apache.ibatis.type.ClobTypeHandler"/>
+      <result property="codinganswer"  column="codinganswer"  jdbcType="CLOB" javaType="java.lang.String" typeHandler="org.apache.ibatis.type.ClobTypeHandler"/>
+      <result property="id" column="id"/>
+   </resultMap>
 	
 	<select id="selectCoursename" resultType="String">
 		select coursename from course where courseno = #{courseno}
@@ -329,6 +337,7 @@
       		insert into teachcourse (id, courseno, coursename, startdate)
      		values (#{id}, #{courseno}, #{coursename},sysdate)
   	</insert>
+
 	<!-- 강의 등록 - insertLecture -->
 
 	<insert id="insertLecture" parameterType="Lecture">
@@ -361,13 +370,29 @@
 	</insert>
 	
 	<!-- lecturecoding -->
+<<<<<<< HEAD
+ 	<!-- <insert id="insertlecturecoding" parameterType="map">
+       <selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
+=======
 	<!-- <insert id="insertlecturecoding">
         <selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
     		select max(lectureno) from lecture 
   		</selectKey>
       	insert into coursetype (lectureno , codingno)
      	values (#{lectureno}, #{codingno})
   	</insert> -->
+<<<<<<< HEAD
+	
+	<!-- coding -->
+	  <!-- 	<insert id="insertCoding" parameterType="map">
+  	 	<selectKey keyProperty="courseno" resultType="int" order="BEFORE">
+    		select max(courseno) from course 
+  		</selectKey>
+      		insert into coding (codingno, courseno, coursename, startdate)
+     		values (#{id}, #{courseno}, #{coursename},sysdate )
+  	</insert> -->
+=======
   	
   	
   	<!-- Coding -->
@@ -377,6 +402,7 @@
      		values (lecture_seq.nextVal, #{codingquestion}, #{codingtemplet:VARCHAR}, #{codinganswer:VARCHAR}, regdate)
   	</insert> -->
 	
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 	
 	<!-- <select id="selectAllLectureListForTeach" resultType="Lecture" parameterType="String">
 		select * from lecture where courseno in
@@ -419,6 +445,8 @@
 		delete from lecture where lectureno =#{lectureno}
 	</delete>
 	
+	
+	
 	<!-- 강의 비디오수정 -->
 	<update id="updateLecture" parameterType="map">
 		update lecture 
@@ -435,8 +463,22 @@
 		where lectureno=#{lectureno}
 	</update>
 	
+	<!-- 강의 수정 -->
+	<update id="updateCourseName" parameterType="map">
+		update course
+		set coursename=#{coursename}
+		where courseno=#{courseno}
+	</update>
+	<update id="updateCourseIntrodution" parameterType="map">
+		update course
+		set introdution=#{introdution}
+		where courseno=#{courseno}
+	</update>
+	
+	
+	
 	<!-- 강의찾기 mediaPlayerForm -->
-	<select id="selectLecture" parameterType="String" resultType="Lecture">
+	<select id="selectLecture" parameterType="int" resultType="Lecture">
 		select * from lecture where lectureno=#{lectureno}
 	</select>
 
@@ -447,9 +489,67 @@
 	</select>
 	
 	<!-- 문제보관- 문제출력-->
-	<!-- 문제보관함 문제넣기 -->
 	
-
+	<!--  teachmain에서 누른 문제보관함 속 강좌 리스트 뿌리기 -->
+	<select id="getAllCourseListForCodingBox" parameterType="String" resultType="Course">
+		select * from Course where id = #{id}
+	</select>
+	
+ 	 <!--  teachmain에서 누른 문제보관함 속 강의 리스트 뿌리기 -->
+	<select id="getAllLectureListForCodingBox" parameterType="int" resultType="Lecture">
+		select * from Lecture where courseno = #{courseno}
+	</select>
+	
+	<!--   teachmain에서 누른 문제보관함 전체 코딩 문제 가져오기 -->
+	<select id="getAllCodingList" parameterType="String" resultMap="CodingMap">
+		select * from Coding where id = #{id}
+	</select>
+	
+	<!--  teachmain에서 누른 문제보관함 insert -->
+	
+	<insert id="insertCodingfromMain" parameterType="Coding">
+		insert into coding (codingno, codingquestion, codingtemplet, codinganswer,id)
+     		values (coding_seq.nextVal, #{codingquestion}, #{codingtemplet:VARCHAR},#{codinganswer:VARCHAR},#{id})
+	</insert>
+	
+	<select id="getCodingContent" parameterType="int"  resultMap="CodingMap">
+		select * from Coding where codingno = #{codingno}
+	</select>
+	
+	<update id="updateCodingfromMain" parameterType="Coding">
+	update coding set codingquestion = #{codingquestion}, codingtemplet = #{codingtemplet:VARCHAR}, codinganswer = #{codinganswer:VARCHAR}
+	where codingno = #{codingno} 
+	</update>
+	
+	<delete id="deleteCodingfromMain" parameterType="int">
+	delete from coding where codingno = #{codingno}
+	</delete>
+	
+	<select id="getCodingno" parameterType="int" resultType="int">
+		select codingno from lecturecoding where lectureno = #{lectureno} 
+	</select>
+	
+	<select id="getCodinginlecture" parameterType="int" resultMap="CodingMap">
+		select * from Coding where codingno = #{codingno}
+	</select>
+	
+	
+	<!-- coding -->
+	  	<!-- <insert id="insertCoding" parameterType="map">
+  	 	
+      		insert into coding (codingno, courseno, coursename, startdate)
+     		values (#{id}, #{courseno}, #{coursename},sysdate )
+  	</insert>
+	
+		lecturecoding
+ 	<insert id="insertlecturecoding" parameterType="map">
+       <selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
+    		select max(lectureno) from lecture 
+  		</selectKey>
+      	insert into coursetype (lectureno , codingno)
+     	values (#{lectureno}, #{codingno})
+  	</insert>
+ -->
 </mapper>
 
 

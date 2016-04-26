@@ -1,6 +1,12 @@
 alter table coding add (id varchar2(20) NOT NULL);--20160425 박수지 추가
 
+<<<<<<< HEAD
+ CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
+ 
+ create sequence question_seq;
+=======
 CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
   
 alter table studylecture add (courseno number(6,0) NOT NULL)--창우 studylecture
 
@@ -13,7 +19,13 @@ alter table coding add (regdate date default sysdate not null); -- 20160423 김�
 alter table coding add (codinganswer clob not null);
 alter table coding drop column lectureno;
 <<<<<<< HEAD
+alter table coding add (id varchar2(20) NOT NULL);
+
+CREATE sequence coding_seq start with 1 increment by 1;
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 
 alter table coding drop column regdate;--20160424 박수지 추가
 
@@ -49,7 +61,7 @@ alter table subnote modify uploadedfilename null--20160421�߰�
 alter table lecture modity (uploadedfilename varchar2(900));
 alter table lecture modify (originalfilename varchar2(500));--20160422 ����
 
-
+alter table coding add (id varchar2(20) NOT NULL);--20160425 박수지 추가
 
 /* Drop Tables */
 drop table lecturecoding cascade constraints;
@@ -227,7 +239,7 @@ CREATE TABLE question
 	curious number(6,0) DEFAULT 0 NOT NULL,
 	PRIMARY KEY (questionno)
 );
-
+CREATE sequence question_seq start with 1 increment by 1;--20160425 박수지 수정
 
 
 CREATE TABLE reply
@@ -370,10 +382,14 @@ ALTER TABLE checklecture
 ;
 
 
-ALTER TABLE coding
-	ADD FOREIGN KEY (lectureno)
-	REFERENCES lecture (lectureno)
-;
+--ALTER TABLE coding
+	--ADD FOREIGN KEY (lectureno)
+--	REFERENCES lecture (lectureno)
+--;
+
+--ALTER TABLE coding DROP CONSTRAINT fk_coding_lectureno;
+
+
 
 
 ALTER TABLE studylecture

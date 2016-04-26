@@ -227,12 +227,49 @@ body {
         #tabs li.current { background-color:#e1e1e1;}
         #tabs li.current a { color:#000; text-decoration:none; }
         #tabs li a.remove { color:#f00; margin-left:10px;}
-        #doccontent { background-color:#e1e1e1;}
-        #doccontent p { margin: 0; padding:20px 20px 100px 20px;}
-        #wrapper { float:left; margin:0 20px 0 0;}
+        #wrapper {float:left; margin:0 20px 0 0;}
         #documents { margin:0; padding:0;}
         #wrapper { width:700px; margin-top:20px;}
-        .editor {width: 600px; height: 300px; background-color: #eeeeee; overflow:scroll;}
+        .editor {float:left; width: 600px; height: 300px; overflow:scroll;} 
+        .line_number { 
+			float:left;
+			padding-right: 14px;
+			margin-top: 37px;
+			width:31px;
+			font: 13px Arial;
+			line-height: normal;
+			text-align: right;
+			height:300px;
+			overflow:scroll;
+			overflow-y:hidden;
+			
+		} 
+        div.numberedtextarea-wrapper { position: relative; }
+
+		div.numberedtextarea-wrapper textarea {
+		  display: block;
+		  -webkit-box-sizing: border-box;
+		  -moz-box-sizing: border-box;
+		  box-sizing: border-box;
+		}
+		
+		div.numberedtextarea-line-numbers {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  right: 0;
+		  bottom: 0;
+		  width: 50px;
+		  border-right: 1px solid rgba(0, 0, 0, 0.15);
+		  color: rgba(0, 0, 0, 0.15);
+		  overflow: hidden;
+		}
+		
+		div.numberedtextarea-number {
+		  padding-right: 6px;
+		  text-align: right;
+		}
+		
 </style>
 
 <meta charset="UTF-8">
@@ -305,6 +342,7 @@ body {
 </s:if> 
 <textarea rows="20" cols=60" id="question" placeholder="질문란" readonly="readonly"></textarea>
 	<div id="wrapper">
+	 	<div class="line_number"></div>
 	    <ul id="tabs">
 	    	<li class='current'><a class='tab' id="class1" href='#'>class1</a><a href='#' class='remove'>x</a></li>
 	    </ul>
@@ -314,6 +352,7 @@ body {
 	</div>
 	<textarea rows="20" cols="40" placeholder="결과" id = "result" readonly="readonly"></textarea>
 	<br/>
+	<input type = "button" value="초기화" id = "initialization" />
 	<input type = "button" value="실행" id = "run"/>
 	<input type = "button" value="Q&A" id = "qna"/>
 	<button id = "insertClass">클래스 추가</button>
@@ -321,17 +360,55 @@ body {
 <script type="text/javascript">
 
 $(function(){
-	$(".codingList").change(function(){
+	
+	//$('#doccontent > textarea:visible').numberedtextarea();
+	
+	$('body').on('input propertychange scroll change keyup paste','#doccontent > textarea:visible', function (key) {
+			//alert($(this).prop("nodeName"));
+        	var textarea = $(this);
+        	var width = parseFloat(textarea.css('width'));
+        	var height = parseFloat(textarea.css('height'));
+        	var lineHeight = parseFloat(textarea.css('line-height'));
+        	var textAreaValue = $('#doccontent textarea:visible').val();
+        	var splitedArray = textAreaValue.split('\n');
+        	var splitedArrayLength = splitedArray.length;
+        	$('.line_number').html('');
+        	for(var i = 1; i <= splitedArrayLength; i++){
+	        	$('<div>'+i+'</div>').appendTo('.line_number');
+        	}
+        	$(".line_number").scrollTop(textarea.scrollTop());
+    });
+	
+	$('#doccontent > textarea:visible').scroll(function () {
+		var lines = $(".line_number");
+		lines.scrollTop($(this).scrollTop());
+	});
+	
+	$("#initialization").on("click", function(){
 		var codingno =  $(".codingList option:selected").val();
-		alert(codingno);
 		$.ajax({
 			type: 'GET'
 			, url: 'callSpecificCoding'
 			, data: 'codingno='+codingno
 			, dataType : 'json'
 			, success : function(response){
-				alert('성공');
-				$('#doccontent textarea:visible').html('<pre>'+response.coding.condingtemplet+'</pre>');
+				$('#doccontent > textarea:visible').val("<pre>"+response.coding.codingtemplet+"</pre>");
+			}
+			, error : function(response){
+				alert('실패');
+			}
+		})
+	}); 
+	
+	$(".codingList").change(function(){
+		var codingno =  $(".codingList option:selected").val();
+		$.ajax({
+			type: 'GET'
+			, url: 'callSpecificCoding'
+			, data: 'codingno='+codingno
+			, dataType : 'json'
+			, success : function(response){
+				$('#doccontent > textarea:visible').val("<pre>"+response.coding.codingtemplet+"</pre>");
 				$("#question").val(response.coding.codingquestion);
 			}
 			, error : function(response){
@@ -339,15 +416,15 @@ $(function(){
 			}
 		})
 	});	
+	
 	/* $(document).on('keyUp', function ( e ) {
 	if(e.ctrlKey && ( String.fromCharCode(e.which).toLowerCase() === 'd')){
 		e.preventDefault();
 		alert(1);
     }
 	}); */
+	
 	$(document).on('keydown', function ( e ) {
-	    // You may replace `c` with whatever key you want
-	    
 	    if ( e.ctrlKey && e.keyCode === 32 ) {
 	    	var textAreaValue = $('#doccontent textarea:visible').val();
 	    	var splitedValue = textAreaValue.split(/\t/);
@@ -428,9 +505,7 @@ $(function(){
 		if(code1.trim().length == 0){
 			alert('코드가 써있지 않습니다.');
 			return;
-		}
-		
-		alert(code1);
+		};
 		
 		$.ajax({
 				 type: 'POST'
@@ -500,7 +575,6 @@ function addTab(classnum) {
     $("#tabs").append("<li class='current'><a class='tab' id='class" +
     		classnum + "' href='#'>" + ('class'+classnum) + 
         "</a><a href='#' class='remove'>x</a></li>");
-    
     $("#doccontent").append("<textarea id=class"+classnum+"_content"+" class="+"editor></textarea>");t
     $("#" + $(link).attr("rel") + "_content").show();
 }

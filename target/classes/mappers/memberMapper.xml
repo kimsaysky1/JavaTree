@@ -13,12 +13,11 @@
       values (#{id} , #{password} , #{username} , #{email})
    </insert>
    
-    <insert id="insertInterest" parameterType="list">
+   <insert id="insertInterest" parameterType="list">
     <foreach collection="list" item="vo" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
        INTO interest (id , typeno , value)
        VALUES (#{vo.id} , #{vo.typeno} , #{vo.value})
      </foreach>
-   
    </insert>   
    
    <insert id="insertAbility" parameterType="list">
