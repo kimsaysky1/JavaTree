@@ -293,7 +293,7 @@
 			<div class="container">
 				<div class="contact">
 					<div class="email">
-						<i class="icon md-email"></i> <a href="#">course@megadrupal.com</a>
+						<i class="icon md-email"></i> <a href="/javatree/compiler/Compiler.action">course@megadrupal.com</a>
 					</div>
 					<div class="phone">
 						<i class="fa fa-mobile"></i> <span>+84 989 999 888</span>

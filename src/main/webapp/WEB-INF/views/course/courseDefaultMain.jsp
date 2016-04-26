@@ -312,9 +312,9 @@
        <fieldset>
        <legend>List</legend>
        <br>
-       <select name="listoption" style="width: 120px; height: 30px;">
-       <option value="new">최신순</option>
-       <option value="old">오래된 순</option>
+       <select name="listoption" id="listoption" style="width: 120px; height: 30px;" onchange="javascript:selectEvent(this)">
+       <option value="desc" selected="selected">최신순</option>
+       <option value="asc">오래된 순</option>
        </select>
       
 		 </fieldset>
@@ -327,7 +327,8 @@
      <s:iterator value="courseList" status="incr">
      	
 		<!-- start post -->
-     				<div class="post" id = "<s:property value="%{#incr.index+1}"/>"> 
+     			
+                     <div class="post" id = "<s:property value="%{#incr.index+1}"/>"> 
                             <div class="post-body">
                                 <div class="post-title">
                                     <h3 class="md"><a href="selectCourseDefaultDetail.action?courseno=<s:property value="courseno" />">
@@ -343,69 +344,13 @@
                                     </a>
                                 	</div>                           
                             </div>
-                     </div>
+                     </div> 
+                     
 		<!-- end post -->     
      </s:iterator>
      
-     	
-     
-     
          
-<!-- 
-                        POST
-                        <div class="post">
-                            POST BODY
-                            <div class="post-body">
-                                <div class="post-title">
-                                    <h3 class="md"><a href="blog-single.html">Top 10 Design courses of October 2013</a></h3>
-                                </div>
-                                <div class="post-meta">
-                                    by <a href="#">Brett Todd</a> on October 7, 2014
-                                </div>  
-                                   <div class="post-link">
-                                    <a href="blog-single.html">
-                                        <i class="fa fa-play-circle-o"></i>
-                                        Read More
-                                    </a>
-                                	</div>                           
-                            </div>
-                            END / POST BODY
-                        </div>
-                        END / POST
- -->
-                       
-                            
-           <%--   <a href = "getAllCourseList.action?currentPage=${pagenavi.currentPage - 1}&searchText=${searchText}">&lt</a> --%>
-				
-		<%-- 		<s:iterator var = "counter" begin = "pagenavi.startPageGroup" end="pagenavi.endPageGroup">
-					<s:if test="#session.currentPage == #counter">
-					 <li class="pager-current">
-					 <a href = "getAllCourseList.action?currentPage=<s:property value="#counter"/>&searchText=${searchText}">
-						<s:property value="#counter"/>
-					</a>
-					 </li>
-					
-					</s:if>
-					<s:else>
-					<li><a href = "getAllCourseList.action?currentPage=<s:property value="#counter"/>&searchText=${searchText}">
-						<s:property value="#counter"/>
-					</a></li>
-					
-					</s:else>			
-				</s:iterator> --%>
-				<%-- ...
-				<a href = "getAllCourseList.action?currentPage=${pagenavi.currentPage + 1}&&searchText=${searchText}">&gt 
-				</a> --%>
-                            
-                          <!-- <li class="pager-current">1</li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">next ›</a></li>
-                            <li><a href="#">last »</a></li>  -->
              <ul class="pager">                
-            
-            < >
             
             
             <s:if test="#session.currentPage == 1 & #session.endPageGroup == 1">
@@ -413,20 +358,25 @@
              </s:if>
             
             <s:elseif test="#session.currentPage == 1 & #session.endPageGroup != 1">
+            <li><a href = "#"> <s:property value="#session.currentPage"/> /<s:property value="#session.endPageGroup"/></a></li>
              <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage + 1"/>">next &gt</a></li>
             </s:elseif>
 			
 			<s:elseif test="#session.currentPage == #session.endPageGroup & #session.endPageGroup != 1">
              <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>
+            <li><a href = "#"> <s:property value="#session.currentPage"/> /<s:property value="#session.endPageGroup"/></a></li>
             </s:elseif>
 			
 			<s:else>
              <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>
+             <li><a href = "#"> <s:property value="#session.currentPage"/>/<s:property value="#session.endPageGroup"/> </a></li>
              <li><a href = "plusCourseDefaultMain.action?currentPage=<s:property value="#session.currentPage + 1"/>">next &gt</a></li>
             </s:else>
                             
                             </ul>
                     </div>
+                
+                <div id="display"></div>
                 </div>
                 
                  <!-- SIDEBAR -->
@@ -662,14 +612,21 @@ function clickNextField(page) {
 }		
 	
 function selectByField(asd) {
-	 var sum = 0;
+	 
+	var order;
+	
+	var sum = 0;
 	 sum = $(":checkbox:checked").length;
 	 
 	 if(sum > 5){
 		 alert( sum + "개 이상은 선택할 수 없습니다." );	
 		 $(asd).prop("checked",false);	 
 	 }
-	 
+	
+	    $( "select option:selected" ).each(function() {
+	    	order = $( this ).val();
+	    });
+	    
 	 var str = '';	
 	 var cnt;
 	 $(":checkbox:checked").each(function(index){
@@ -685,7 +642,7 @@ function selectByField(asd) {
 	 $.ajax({
 	        type : 'get', 
 	        url : 'selectListbyField',
-	        data : "interestString="+str,
+	        data : "interestString="+str+"&order="+order,
 	        success : function(response){
 	        	$(".blog-list-content").html(' ');
         		
@@ -726,68 +683,146 @@ function selectByField(asd) {
 	 
 }	
 	
-	
+
 $(function(){
 	 
+	searchCourse();
+	
+});
 
-	 $("#searchIcon").on("click", function(){
+
+
+
+function searchCourse() {
+	$("#searchIcon").on("click", function(){
 	 	
-		 	var text = '';
-		 	text = $("#searchText").val();
-			 
-			 $(":checkbox:checked").each(function(index){
-			        $(this).prop("checked",false);
-			    });
-		 	
-		 	$.ajax({
-			        type : 'get', 
-			        url : 'searchCourse',
-			        data : "searchText="+text,
-			        success : function(response){
-			        	
-			        	$(".blog-list-content").html(' ');
+	 	var text = '';
+	 	text = $("#searchText").val();
+		 
+		 $(":checkbox:checked").each(function(index){
+		        $(this).prop("checked",false);
+		    });
+	 	
+	 	$.ajax({
+		        type : 'get', 
+		        url : 'searchCourse',
+		        data : "searchText="+text,
+		        success : function(response){
+		        	
+		        	$(".blog-list-content").html(' ');
+		        		
+		        	 var list = response.courseList;
+		        	 list.forEach(function(course){
+		 				var divTag = $('<div class="post"><div class="post-body"></div></div>');
+		 				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
+		 				+course.coursename+'</a></h3></div><div class="post-meta">by'
+		 				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
+		 				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').appendTo(".blog-list-content");
+		 			
+		 			});
+		        	 
+		        	 var curPage = Number(response.currentPage);
+		        	 var curPagePlus = Number(response.currentPage+1);
+		        	 var curPageMinus = Number(response.currentPage-1);
+		        	 var endPage =  Number(response.endPageGroup);
+		        	 			        	 
+		        	 var paging = $('<ul class="pager"></ul>');
+		        	 if(curPage == 1 & endPage == 1){
+		        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
+		        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
+		        	 }else if(curPage == 1 & endPage != 1){
+		        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+		        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
+		        	 }else if(curPage == endPage & endPage != 1){
+		        		 var paging2 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
+		        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
+		        	 }else{
+		        		 var paging3 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
+		        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
+		        	 }
+		        
+		        }
+		 
+		 });
+		 event.preventDefault();
+ });
+}
+
+	 // combobox 클릭시 이벤트 지정
+	 function selectEvent(selectObj)
+	 {		
+		 var sum = 0;
+		 sum = $(":checkbox:checked").length;
+		 var order;
+		 if(sum == 0){
+			 alert("한 분야 이상은 선택해야 합니다.");	
+		 }else{
+			 order = selectObj.value;
+			 alert(order);
+			
+				 var str = '';	
+				 var cnt;
+				 $(":checkbox:checked").each(function(index){
+				        if(index == cnt-1){
+				        	str += $(this).val();
+				        }else{
+				        	str += $(this).val()+",";
+				        }
+				    });
+				 
+				 alert(str);
+				 
+				 $.ajax({
+				        type : 'get', 
+				        url : 'selectListbyField',
+				        data : "interestString="+str+"&order="+order,
+				        success : function(response){
+				        	$(".blog-list-content").html(' ');
 			        		
-			        	 var list = response.courseList;
-			        	 list.forEach(function(course){
-			 				var divTag = $('<div class="post"><div class="post-body"></div></div>');
-			 				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
-			 				+course.coursename+'</a></h3></div><div class="post-meta">by'
-			 				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
-			 				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').appendTo(".blog-list-content");
-			 			
-			 			});
-			        	 
-			        	 var curPage = Number(response.currentPage);
-			        	 var curPagePlus = Number(response.currentPage+1);
-			        	 var curPageMinus = Number(response.currentPage-1);
-			        	 var endPage =  Number(response.endPageGroup);
-			        	 			        	 
-			        	 var paging = $('<ul class="pager"></ul>');
-			        	 if(curPage == 1 & endPage == 1){
-			        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
-			        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
-			        	 }else if(curPage == 1 & endPage != 1){
-			        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
-			        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
-			        	 }else if(curPage == endPage & endPage != 1){
-			        		 var paging2 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
-			        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
-			        	 }else{
-			        		 var paging3 = '<li><a href="javascript:clickNext('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNext('+curPagePlus+')">next &gt</a></li>';
-			        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
-			        	 }
-			        
-			        }
+				        	 var list = response.courseList;
+				        	 list.forEach(function(course){
+				 				var divTag = $('<div class="post"><div class="post-body"></div></div>');
+				 				divTag.html('<div class="post-title"><h3 class="md"><a href="selectCourseDefaultDetail.action?courseno='+course.courseno+'">'
+				 				+course.coursename+'</a></h3></div><div class="post-meta">by'
+				 				+course.username+' on '+course.regdate+'</div><div class="post-link"><a href="blog-single.jsp?courseno='+course.courseno
+				 				+'"><i class="fa fa-play-circle-o"></i>Lecture List</a></div>').appendTo(".blog-list-content");
+				 			
+				 			});
+				        	 
+				        	 var curPage = Number(response.currentPage);
+				        	 var curPagePlus = Number(response.currentPage+1);
+				        	 var curPageMinus = Number(response.currentPage-1);
+				        	 var endPage =  Number(response.endPageGroup);
+				        	 			        	 
+				        	 var paging = $('<ul class="pager"></ul>');
+				        	 if(curPage == 1 & endPage == 1){
+				        		 var paging0 = '<li><a href="#">'+ curPage +'</a></li>';
+				        		 paging.html(paging0).insertAfter(".blog-list-content > div:last");
+				        	 }else if(curPage == 1 & endPage != 1){
+				        		 var paging1 = '<li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+				        		 paging.html(paging1).insertAfter(".blog-list-content > div:last");
+				        	 }else if(curPage == endPage & endPage != 1){
+				        		 var paging2 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li>';	
+				        		 paging.html(paging2).insertAfter(".blog-list-content > div:last");
+				        	 }else{
+				        		 var paging3 = '<li><a href="javascript:clickNextField('+curPageMinus+')">&lt prev</a></li><li><a href="#">'+ curPage +'</a></li><li><a href="javascript:clickNextField('+curPagePlus+')">next &gt</a></li>';
+				        		 paging.html(paging3).insertAfter(".blog-list-content > div:last");
+				        	 }
+				        
+				        }
+				 
+				 });
+				 str = '';
+				 
+			}	
 			 
-			 });
-			 event.preventDefault();
-	 });
-	 
-});	
+		 }
+	     
+	   
 
 
 
 </script>
-		
+	
 </body>
 </html>

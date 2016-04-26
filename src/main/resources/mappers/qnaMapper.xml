@@ -28,6 +28,31 @@
 		<collection property="rereplyList" javaType="java.util.ArrayList" column="replyno" ofType="Rereply" select="selectAllRereply"/>
 	</resultMap>
 	
+	<resultMap type="Member_jt" id="MemberMap">
+		<result property="id" column="id"/>
+		<result property="password" column="password"/>
+		<result property="username" column="username"/>
+		<result property="email" column="email"/>
+		<result property="point" column="point"/>
+		<result property="countquestion" column="countquestion" />
+		<result property="countresponse" column="countresponse" />
+		<result property="countrecommend" column="countrecommend" />
+		<collection property="abilityList" javaType="java.util.ArrayList" column="id" ofType="Ability" select="selectAllAbility"/>
+		<collection property="interestList" javaType="java.util.ArrayList" column="id" ofType="Interest" select="selectAllInterest"/>
+	</resultMap>
+	
+	<select id="selectOneMember" parameterType="String" resultMap="MemberMap">
+		select * from member_jt where id = #{id}
+	</select>
+	
+	<select id="selectAllAbility" parameterType="String" resultType="Ability">
+		select * from ability where id = #{id}
+	</select>
+	
+	<select id="selectAllInterest" parameterType="String" resultType="Interest">
+		select * from interest where id = #{id}
+	</select>
+	
 	<insert id="insertQuestion" parameterType="Question">
 		insert into question
 		(questionno, typeno
