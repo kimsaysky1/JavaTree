@@ -7,17 +7,14 @@ public class Coding {
 	private String codinganswer;
 	private String regdate;
 	private String id;
-<<<<<<< HEAD
 	
 	
 	public Coding() {
-		super();
 	}
 
 
 	public Coding(int codingno, String codingquestion, String codingtemplet, String codinganswer, String regdate,
 			String id) {
-		super();
 		this.codingno = codingno;
 		this.codingquestion = codingquestion;
 		this.codingtemplet = codingtemplet;
@@ -27,9 +24,6 @@ public class Coding {
 	}
 	
 	
-=======
-	
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 	public int getCodingno() {
 		return codingno;
 	}
@@ -69,48 +63,22 @@ public class Coding {
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
-<<<<<<< HEAD
-	public String getId() {
-		return id;
-	}
-=======
+	
 
 	public String getId() {
 		return id;
 	}
 
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 	public void setId(String id) {
 		this.id = id;
 	}
 
-<<<<<<< HEAD
-=======
-	public Coding() {
-	}
 
-	public Coding(int codingno, String codingquestion, String codingtemplet, String codinganswer, String regdate,
-			String id) {
-		super();
-		this.codingno = codingno;
-		this.codingquestion = codingquestion;
-		this.codingtemplet = codingtemplet;
-		this.codinganswer = codinganswer;
-		this.regdate = regdate;
-		this.id = id;
-	}
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 
 	@Override
 	public String toString() {
 		return "Coding [codingno=" + codingno + ", codingquestion=" + codingquestion + ", codingtemplet="
 				+ codingtemplet + ", codinganswer=" + codinganswer + ", regdate=" + regdate + ", id=" + id + "]";
 	}
-
-<<<<<<< HEAD
-	
-=======
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
-	
 
 }

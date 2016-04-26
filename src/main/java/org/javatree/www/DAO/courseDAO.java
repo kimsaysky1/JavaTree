@@ -51,13 +51,10 @@ public interface courseDAO {
 	public Lecture selectLecture(int lectureno);
 	public ArrayList<Lecture> selectAllLectureListForTeach(int courseno);
 	
-<<<<<<< HEAD
-=======
 	public ArrayList<Course> selectAllCourseListForTeachforDetail(String id);
 	public ArrayList<Lecture> selectAllLectureListForTeach(String id);
 	public Course selectCourse(int courseno);
 	public int selectDefaultTotal(Map<String, Object> kong);
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 	public int selectFieldTotal(Map<String, Object> kong);
 	public void insertLectureForStudy(Map<String, Object> kong);
 	public void insertLectureForStudy1(Map<String, Object> kong);
@@ -66,13 +63,13 @@ public interface courseDAO {
 	public void updateStudentCount(int lectureno);
 	public ArrayList<Course> searchCourse(Map<String, Object> kong);
 	public ArrayList<Lecture> selectCourseDefaultDetail(int courseno);
-<<<<<<< HEAD
 	public void updateCourse(Map<String, Object> map);
 	public void updateCourseName(Map<String, Object> map);
 	public void updateCourseIntrodution(Map<String, Object> map);
 	public void deleteTeachLecture(int lectureno);
-=======
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
+	
+	public int selectCourseDefaultDetailTotal(Map<String, Object> kong2);
+	public int checkStudyCourse(Map<String, Object> kong);
 	
 	
 }
