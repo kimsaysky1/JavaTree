@@ -361,7 +361,7 @@ $(function(){
 	
 	//$('#doccontent > textarea:visible').numberedtextarea();
 	
-	$('body').on('input propertychange change keyup paste','#doccontent > textarea:visible', function (key) {
+	$('body').on('input propertychange scroll change keyup paste','#doccontent > textarea:visible', function (key) {
 			//alert($(this).prop("nodeName"));
         	var textarea = $(this);
         	var width = parseFloat(textarea.css('width'));
@@ -374,6 +374,7 @@ $(function(){
         	for(var i = 1; i <= splitedArrayLength; i++){
 	        	$('<div>'+i+'</div>').appendTo('.line_number');
         	}
+        	$(".line_number").scrollTop(textarea.scrollTop());
     });
 	
 	$('#doccontent > textarea:visible').scroll(function () {
@@ -502,9 +503,7 @@ $(function(){
 		if(code1.trim().length == 0){
 			alert('코드가 써있지 않습니다.');
 			return;
-		}
-		
-		alert(code1);
+		};
 		
 		$.ajax({
 				 type: 'POST'
