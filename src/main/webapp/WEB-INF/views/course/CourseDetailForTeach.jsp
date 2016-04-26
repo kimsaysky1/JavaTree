@@ -9,10 +9,10 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="format-detection" content="telephone=no">
 <!-- Google font -->
-<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700'
+<link href='/http://fonts.googleapis.com/css?family=Lato:300,400,700'
 	rel='stylesheet' type='text/css'>
 <link
-	href='http://fonts.googleapis.com/css?family=Raleway:300,400,700,900'
+	href='/http://fonts.googleapis.com/css?family=Raleway:300,400,700,900'
 	rel='stylesheet' type='text/css'>
 <!-- Css -->
 <link rel="stylesheet" type="text/css"
@@ -60,6 +60,10 @@
 
 </head>
 <body>
+<<<<<<< HEAD
+<%@include file="/resources/header.jsp" %>
+	
+=======
 	<!-- HEADER -->
 	<header id="header" class="header">
 		<div class="container">
@@ -307,6 +311,7 @@
 		</div>
 	</header>
 	<!-- END / HEADER -->
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 
 	<!-- PROFILE FEATURE 프로필!!!!-->
 	<section class="profile-feature">
@@ -343,17 +348,19 @@
 							<div class="create-course-1">
 								<h4>Title</h4>
 							</div>
+<!-- <form action="updateCourseName" method="post" id="updateCourseName"> 	 -->						
 <s:iterator value="course" status="st">							
 							<div class="create-course-3">
 								<div class="form-item">
-									<input type="text" placeholder="title" value='<s:property value="coursename"/>'>
+									<input type="text" placeholder="title" value='<s:property value="coursename"/>' name="coursename">
 								</div>
 							</div>
 </s:iterator>							
+
 							<div class="form-action2">
-								<input type="submit" value="Edit" class="submit mc-btn-3 btn-style-1">
+								<input type="submit" value="Edit" class="submit mc-btn-3 btn-style-1" />
 							</div>
-						
+<!-- </form>		 -->				
 					</div>
 					<!-- END / PROMO VIDEO -->
 
@@ -363,16 +370,19 @@
 							<div class="create-course-1">
 								<h4>Description</h4>
 							</div>
+<!-- <form action="updateCourseIntrodution" method="post" id="updateCourseIntrodution"> --> 							
 <s:iterator value="course" status="st">								
 							<div class="create-course-2">
 								<div class="description-editor text-form-editor">
-									<textarea placeholder="Discription"><s:property value="introdution"/></textarea>
+									<textarea name="introdution" placeholder="Discription"><s:property value="introdution" /></textarea>
 								</div>
 							</div>
-</s:iterator>							
+</s:iterator>	
+					
 							<div class="form-action">
-								<input type="submit" value="Edit" class="submit mc-btn-3 btn-style-1">
+								<input type="submit" value="Edit" class="submit mc-btn-3 btn-style-1" />
 							</div>
+<!-- </form>	 -->							
 
 						</div>
 					</div>

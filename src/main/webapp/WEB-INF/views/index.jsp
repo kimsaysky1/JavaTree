@@ -23,6 +23,9 @@
 <title>Mega Course - Learning and Courses HTML5 Template</title>
 </head>
 <body>
+<<<<<<< HEAD
+<%@include file="/resources/header.jsp" %>
+=======
 	<!-- HEADER -->
 		<header id="header" class="header">
 			<div class="container">
@@ -213,6 +216,7 @@
 			</div>
 		</header>
 		<!-- END / HEADER -->
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 		<!-- HOME SLIDER -->
 		
 		<section class="slide" style="background-image: url(resources/javatree_view/html/images/homeslider/spring.jpg)">
@@ -272,20 +276,13 @@
 		<!-- END / FOOTER -->
 		
 			<!-- Load jQuery -->
-	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/bootstrap.min.js"></script>
-	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
-	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
-	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
-	<script type="text/javascript"
-		src="resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
-	<script type="text/javascript"
-		src="resources/javatree_view/html/js/scripts.js"></script>
+	<script type="text/javascript" src="resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="resources/javatree_view/html/js/library/bootstrap.min.js"></script>
+	<script type="text/javascript" src="resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
+	<script type="text/javascript" src="resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
+	<script type="text/javascript" src="resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
+	<script type="text/javascript" src="resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
+	<script type="text/javascript" src="resources/javatree_view/html/js/scripts.js"></script>
 
 		
 </body>

@@ -13,6 +13,8 @@ import org.javatree.www.VO.Subnote;
 public interface courseDAO {
 
 	public ArrayList<Lecture> getAllLectureListForTeach(String id);
+	public ArrayList<Course> getAllCourseListForCodingBox(String id);
+	public ArrayList<Lecture> getAllLectureListForCodingBox(int courseno);
 	public ArrayList<Course> getAllCourseList();
 	public ArrayList<Course> selectListbyField(Map<String, Object> kong);
 	public ArrayList<Course> selectAllCourseList(Map<String, Object> kong);
@@ -63,8 +65,26 @@ public interface courseDAO {
 	public void updateStudentCount(int lectureno);
 	public ArrayList<Course> searchCourse(Map<String, Object> kong);
 	public ArrayList<Lecture> selectCourseDefaultDetail(int courseno);
+<<<<<<< HEAD
 	public int checkStudyCourse(Map<String, Object> kong);
 	public int selectCourseDefaultDetailTotal(Map<String, Object> kong);
+=======
+	public void updateCourse(Map<String, Object> map);
+	public void updateCourseName(Map<String, Object> map);
+	public void updateCourseIntrodution(Map<String, Object> map);
+	public void deleteTeachLecture(int lectureno);
+>>>>>>> 99590b82fd0e445256b69d4d1baf04d19cb86417
 	
+	public int selectCourseDefaultDetailTotal(Map<String, Object> kong2);
+	public int checkStudyCourse(Map<String, Object> kong);
+	
+	
+	public ArrayList<Coding> getAllCodingList(String id);
+	public void updateCodingfromMain(Coding coding);
+	public void insertCodingfromMain(Coding coding);
+	public Coding getCodingContent(int codingno);
+	public void deleteCodingfromMain(int codingno);
+	public int getCodingno(int lectureno);
+	public ArrayList<Coding> getCodinginlecture(int codingno);
 	
 }

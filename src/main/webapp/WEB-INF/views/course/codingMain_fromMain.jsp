@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,106 +21,8 @@
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
 <title>Mega Course - Learning and Courses HTML5 Template</title>
-<!-- <script src="/views/js/jquery-2.2.1.min.js"></script>
-<script type="text/javascript">
-$(function(){
-		
-	$('#myFriends').on('click', function(){
-		$.ajax({
-			method : 'GET'
-			, url:'Friends'
-			, dataType : "json"
-			, success: function(response){
-		
-				var a="";
-				
-				$.each(response.list, function(index, item){
-					var name= item.name;
-					var age= item.age;
-					var phone= item.phone;
-					a=a+"<p>name: "+name+",age: "+age+"phone: "+phone+"</p>";
-				});
-				$('.result_all').html(a);
-			}
-			, error: function(){
-				
-			}
-		});
-		
-	});
-	
-	//
-	
-	$('#insert').on('click', function(){
-		alert("옴");
-		var temp = $('.result_insert').text();
-		alert(temp[0].value);
-	//	var insertArray = [temp];
-		
-		jQuery.ajaxSettings.traditional = true;
-		
-		$.ajax({
-			method : 'POST'
-			, url:'insert'
-			, data : /* temp : $.param({temp:temp}, true) */
-					JSON.stringify({temp:temp})	
-			, dataType : "json"
-			, success: function(response){
-				$('#result').html(response.messege);
-			}
-			, error: function(){
-				
-			}
-		});
-		
-	});
-	
-	/*  $('#insert').on('click', function(){
-			alert("옴");
-			$("<p>"+$(this).text()+"</p>").appendTo('.result_insert');
-			
-		});  */
-	/* $('.result_all').unbind('click'); */
-	$('.result_all').undelegate( $(this), "click");
-	$('.result_all').delegate('p','click', function(){
-		 
-		//$(this).after("<p>"+$(this).text()+"</p>");
-		//alert($(this).text());
-	
-		
-		$("<p>"+$(this).text()+"</p>").appendTo('.result_insert');
-		if($('#example').is(":visible")){  
-			$('.result_insert').css('display','block');
-		}
-		
-	});
-       /*  $("#show-example").click(function () {
-           if ($('#example').is(":visible")) {
-               $(this).html($(this).html().replace(/Hide/, 'Show'));
-           } else {
-               $(this).html($(this).html().replace(/Show/, 'Hide'));
-           }
-           // Do it afterwards as the operation is async
-           $("#example").slideToggle("slow");
-        });
-	 */
-	
-	/*  $("#element").unbind("click").bind("click",function(){
-		        alert("click!!");
-		    });
-		 
-		 $(this).find(".wbannerarrow.left").unbind().bind("click", function(){ */
-	
-			 
-	$('.result_insert').delegate('p','click', function(){
-		alert($(this).text());
-		$(this).remove();
-	});
-	
-});
-</script> -->
 
-</head>
+
 <body id="page-top">
 
 	<!-- PAGE WRAP -->
@@ -138,7 +41,7 @@ $(function(){
 							<ul class="section-list">
 								<li>
 									<div class="o-view">
-										<a href="#">
+										<a href="/javatree/course/codingFormfromMain.action">
 											<h6>MAIN</h6>
 										</a>
 									</div>
@@ -148,7 +51,7 @@ $(function(){
 
 								<li>
 									<div class="list-body">
-										<a href="#">
+										<a href="/javatree/course/insertCodingfromMainView.action">
 											<h6>INSERT</h6>
 										</a>
 									</div>
@@ -158,8 +61,17 @@ $(function(){
 
 								<li>
 									<div class="list-body">
-										<a href="#">
+										<a href="/javatree/course/updateCodingfromMainView.action">
 											<h6>UPDATE</h6>
+										</a>
+									</div>
+
+								</li>
+								
+									<li>
+									<div class="list-body">
+										<a href="/javatree/course/deleteCodingfromMainView.action">
+											<h6>DELETE</h6>
 										</a>
 									</div>
 
@@ -197,12 +109,9 @@ $(function(){
 							<tr>
 								<td style='width: 400px;'><b>ALL QUESTION</b><br /> 
 									<select multiple="multiple" id='lstBox1' style='width: 400px; height: 600px;' >
-										<option value="ajax">Ajax</option>
-										<option value="jquery">jQuery</option>
-										<option value="javascript">JavaScript</option>
-										<option value="mootool">MooTools</option>
-										<option value="prototype">Prototype</option>
-										<option value="dojo">Dojo</option>
+										 <s:iterator value="codingList" status="st">   
+											<option value="<s:property value="codingquestion"/>"><s:property value="codingquestion"/></option>
+										 </s:iterator>
 									</select>
 								</td>
 								<td style='width: 50px; text-align: center; vertical-align: middle;'>
@@ -210,13 +119,24 @@ $(function(){
 									<input type='button' id='btnLeft' value='  <  ' />
 								</td>
 								<td style='width: 400px;'><b>SELECTED QUESTION </b><br /> 
-									<select multiple="multiple" id='lstBox2' style='width: 400px; height: 600px;'>
-										<option value="asp">ASP.NET</option>
-										<option value="c#">C#</option>
-										<option value="vb">VB.NET</option>
-										<option value="java">Java</option>
-										<option value="php">PHP</option>
-										<option value="python">Python</option>
+									<select class="courselistbox" id ="courselistbox" style='width: 400px; height:30px;'>
+												<option>강좌 목록</option>
+									  <s:iterator value="courseList" status="st">   
+	                   					     <option value="<s:property value="courseno"/>"><s:property value="coursename"/></option>                
+	                   				  </s:iterator>
+	                   				  <!-- <s:property value="lectureno"/> -->
+									</select>
+									<br><br>
+								 <select class="lecturlistbox" id ="lecturelistbox" style='width: 400px; height:30px;'>
+	                   					    <s:iterator  value="lectureList" status="st">   
+	                   					     <option value="<s:property value="lectureno"/>"><s:property value="lecturename"/></option>                
+	                   				  </s:iterator>                
+								</select>  
+									<br><br>
+									<select multiple="multiple" id='lstBox2' style='width: 400px; height: 502px;'>
+										<s:iterator value="codingList" status="st"> 
+											<option value="<s:property value="codingquestion"/>"><s:property value="codingquestion"/></option>
+										</s:iterator>
 									</select></td>
 							</tr>
 						</table>
@@ -241,6 +161,67 @@ $(function(){
 	
 	<script type="text/javascript">
 $(document).ready(function() {
+	
+/* 	function courselistget(){
+		alert("코스리스트겟들어옴");
+
+		 var selectcourse =  $('#courselistbox option:selected').val();
+		 alert(selectcourse);
+		 
+	} */
+	
+	$("#courselistbox").change(function(){
+		var courseno=$(this).val()		
+		
+		$.ajax({
+			url : 'golecturelist.action',
+			data : {'courseno' : courseno},
+			success : function(response){
+				alert("성공");
+				$(response.lectureList).each(function(index, item) {
+					$('#lecturelistbox').append( '<option value='+item.lectureno+' class="lecturelistbox1">'+item.lecturename+'</option>');
+				});		
+			},
+			error:function(){
+				alert('에러');
+			}
+		});
+		
+	});
+	
+	
+	$("#lecturelistbox").change(function(){
+		var lectureno = $(this).val()
+		
+		$.ajax({
+			url:'gocodinglist.action',
+			data: {'lectureno' : lectureno},
+			success: function(response){
+				alert(response.codingList);
+				$(response.codingList).each(function(index, item) {
+					$('#lstBox2').append( '<option value='+item.codingno+' class="lstBox2_1">'+item.codingquestion+'</option>');
+				});		
+				
+			},
+			error:function(){
+				alert('에러');
+			}
+		});
+		
+		
+	});
+	
+	
+	$('#lstBox1').change(function(){
+		
+		$.ajax({
+			url : 'deleteCodingfromMain.action',
+			data : {'codingno' : codingno},
+			success : function(response){
+			}
+		});
+		
+	});
 
     $('#btnRight').click(function(e) {
         var selectedOpts = $('#lstBox1 option:selected');
@@ -250,7 +231,6 @@ $(document).ready(function() {
         }
 
         $('#lstBox2').append($(selectedOpts).clone());
-        $(selectedOpts).remove();
         e.preventDefault();
     });
 
@@ -261,10 +241,12 @@ $(document).ready(function() {
             e.preventDefault();
         }
 
-        $('#lstBox1').append($(selectedOpts).clone());
+   /*      $('#lstBox1').append($(selectedOpts).clone()); */
         $(selectedOpts).remove();
         e.preventDefault();
     });
+    
+ 
 });
 </script>
 	
