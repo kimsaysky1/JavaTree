@@ -409,7 +409,7 @@ function idCheck() {
 						<td>&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_purejava.value" value="3"> <label>상</label>
 						</td>
 
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_purejava.value" value="2"> <label>중</label>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_purejava.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_purejava.value" value="1"> <label>하</label>
@@ -421,7 +421,7 @@ function idCheck() {
 						<td>&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_web.value" value="3"> <label>상</label>
 						</td>
 
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_web.value" value="2"> <label>중</label>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_web.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_web.value" value="1"> <label>하</label>
@@ -433,7 +433,7 @@ function idCheck() {
 						<td>&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_mobile.value" value="3"> <label>상</label>
 						</td>
 
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_mobile.value" value="2"> <label>중</label>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_mobile.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_mobile.value" value="1"> <label>하</label>
@@ -445,7 +445,7 @@ function idCheck() {
 						<td>&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_iot.value" value="3"> <label>상</label>
 						</td>
 
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_iot.value" value="2"> <label>중</label>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_iot.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_iot.value" value="1"> <label>하</label>
@@ -457,7 +457,7 @@ function idCheck() {
 						<td>&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_swing.value" value="3"> <label>상</label>
 						</td>
 
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_swing.value" value="2"> <label>중</label>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_swing.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_swing.value" value="1"> <label>하</label>
@@ -469,7 +469,7 @@ function idCheck() {
 						<td>&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_jdbc.value" value="3"> <label>상</label>
 						</td>
 
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_jdbc.value" value="2"> <label>중</label>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_jdbc.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_jdbc.value" value="1"> <label>하</label>
@@ -481,7 +481,7 @@ function idCheck() {
 						<td>&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_api.value" value="3"> <label>상</label>
 						</td>
 
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_api.value" value="2"> <label>중</label>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_api.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_api.value" value="1"> <label>하</label>
@@ -493,7 +493,7 @@ function idCheck() {
 						<td>&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_spring.value" value="3"> <label>상</label>
 						</td>
 
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_spring.value" value="2"> <label>중</label>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_spring.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"name="interest_spring.value" value="1"> <label>하</label>
@@ -505,7 +505,7 @@ function idCheck() {
 						<td>&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_struts.value" value="3"> <label>상</label>
 						</td>
 
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_struts.value" value="2"> <label>중</label>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_struts.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_struts.value" value="1"> <label>하</label>
@@ -517,7 +517,7 @@ function idCheck() {
 						<td>&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_etcframework.value" value="3"> <label>상</label>
 						</td>
 
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_etcframework.value" value="2"> <label>중</label>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_etcframework.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_etcframework.value" value="1"> <label>하</label>
@@ -529,7 +529,7 @@ function idCheck() {
 						<td>&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_etc.value" value="3"> <label>상</label>
 						</td>
 
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_etc.value" value="2"> <label>중</label>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_etc.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="interest_etc.value" value="1"> <label>하</label>
@@ -558,7 +558,7 @@ function idCheck() {
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="radio" name="ability_purejava.value" value="2"> <label>중</label>
+						<input type="radio" name="ability_purejava.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -573,7 +573,7 @@ function idCheck() {
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="radio"name="ability_web.value" value="2"> <label>중</label>
+						<input type="radio"name="ability_web.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -588,7 +588,7 @@ function idCheck() {
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="radio"name="ability_mobile.value" value="2"> <label>중</label>
+						<input type="radio"name="ability_mobile.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -603,7 +603,7 @@ function idCheck() {
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="radio"name="ability_iot.value" value="2"> <label>중</label>
+						<input type="radio"name="ability_iot.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -618,7 +618,7 @@ function idCheck() {
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="radio"name="ability_swing.value" value="2"> <label>중</label>
+						<input type="radio"name="ability_swing.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -633,7 +633,7 @@ function idCheck() {
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="radio"name="ability_jdbc.value" value="2"> <label>중</label>
+						<input type="radio"name="ability_jdbc.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -648,7 +648,7 @@ function idCheck() {
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="radio"name="ability_api.value" value="2"> <label>중</label>
+						<input type="radio"name="ability_api.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -663,7 +663,7 @@ function idCheck() {
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="radio"name="ability_spring.value" value="2"> <label>중</label>
+						<input type="radio"name="ability_spring.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -678,7 +678,7 @@ function idCheck() {
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="radio"name="ability_struts.value" value="2"> <label>중</label>
+						<input type="radio"name="ability_struts.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -693,7 +693,7 @@ function idCheck() {
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="radio"name="ability_etcframework.value" value="2"> <label>중</label>
+						<input type="radio"name="ability_etcframework.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -708,7 +708,7 @@ function idCheck() {
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="radio"name="ability_etc.value" value="2"> <label>중</label>
+						<input type="radio"name="ability_etc.value" value="2" checked="checked"> <label>중</label>
 						</td>
 
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 

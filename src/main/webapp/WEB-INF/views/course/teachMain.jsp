@@ -73,7 +73,7 @@
 		<section class="blog">
 			<div id="mid-course" class="mid-course">
 				<div class="container">				
-				 <h2>MY COURSE - teach</h2>
+				 <h2>MY COURSE - teach </h2>
 				<br>
 				<div class = "form-study">
 				
@@ -91,18 +91,19 @@
                     </div>
                 </div> -->
 <s:iterator value="courseList" status="st"> 
+<!-- <input type="hidden" name="courseno" value="courseList.courseno">  -->
                 <div class = "form-study-course">
 				         <div class="study-course-bg mc-item3">
 
                         <div class="meta-categories"><a href="#">Field</a></div> <!-- edit -->
                         <div class="content-item">
-                            <h3><a href="course-intro.action"><s:property value="coursename" /><!-- CourseTitle --></a></h3>
+                            <h3><a href="/javatree/course/CourseDetailForTeachForm.action?courseno=<s:property value="courseno"/>"><s:property value="coursename" /><!-- CourseTitle --></a></h3>
 
                         </div>
-                                                  
                               <div class="edit-view">
 	                            <a href="#" class="edit">Edit</a>
-	                            <a href="/javatree/course/insertLectureForm.action" class="view">ADD LECTURE</a>
+	                            <a href="/javatree/course/insertLectureForm.action?courseno=<s:property value="courseno"/>" class="view">ADD LECTURE</a> <!-- 여기서 courseno를 가지고들어옴 -->
+                        	
                         	</div>
                     </div>
                 </div>

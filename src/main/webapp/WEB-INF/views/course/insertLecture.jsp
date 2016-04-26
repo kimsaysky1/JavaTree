@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,22 +23,30 @@
 <title>insertLecture</title>
 <script>
 function insertLectureForm(){
+	alert("강의등록폼옴>>");
 	var form = document.getElementById("insertLectureForm");
-	var lecturename= document.getElementById("lecturename").value;
+	/* var lecturename= document.getElementById("lecturename").value;
+	var regdate= document.getElementById("regdate").value;
 	
-	var check = false;	
-	var chk = document.getElementsByName("courseTypeList");
-	
-	if(coursename==""){
+	if(lecturename==""){
 		alert("강의명을 입력해 주세요.");
 		return false;
 	}
-	
+	if(regdate=""){
+		alert("강의시작 날짜를 입력해 주세요.");
+		return false;
+	}
+	 */
 	form.submit();
 }
 
-function questionBox(){
+/* function questionBox(){
 	window.open('codingForm.action','pop','resizable=no scrollbars=yes top=300 left=500 width=300 height=180');	
+} */
+
+function stgoback(){
+	alert("등록을 그만하시겠습니까");
+	location.href="/javatree/course/selectAllCourseListForTeach.action";
 }
 
 </script>
@@ -321,7 +330,8 @@ function questionBox(){
 		 <div class="mid-insert-lecture">
 		 
 		    <h2>insert LECTURE</h2>
-<form action="insertLectureForm" method="post" id="insertLectureForm"> 		    
+<form action="insertLecture" method="post" id="insertLectureForm" enctype="multipart/form-data"> 	
+<input type="hidden" name="courseno" value='<s:property value="courseno"/>'>	
                     <div class="create-course-content">
 
                         <!-- PROMO VIDEO -->
@@ -332,7 +342,7 @@ function questionBox(){
                                 </div>
                                 <div class="create-course-2">
                                     <div class="form-item" >
-                                        <input type="text" placeholder="title" id="lecturename">
+                                        <input type="text" placeholder="title" name="lecture.lecturename" />
                                     </div>
                                 </div>
                             </div>
@@ -358,12 +368,13 @@ function questionBox(){
                         <div class="promo-video create-item">
                             <div class="row">
                                 <div class="create-course-1">
-                                    <h4>Upload Video</h4>
+                                    <h4>Upload Video</h4><%-- <s:property value="courseno"/> --%>
                                 </div>
                                 <div class="create-course-2">
                                     <div class="upload-video up-file">                                      
                                         <a href="#"><i class="icon md-upload"></i>Upload video</a>
-                                        <input type="file">
+                                        <input type="file" name ="upload"/>
+                                        <%-- <s:file name="uploads" /> --%>
                                     </div>
                                 </div>
                             </div>
@@ -379,7 +390,8 @@ function questionBox(){
                                 <div class="create-course-2">
                                     <div class="upload-video up-file">                                      
                                         <a href="#"><i class="icon md-upload"></i>Upload paper</a>
-                                        <input type="file">
+                                        <input type="file" name ="upload"/>
+                                        <%-- <s:file name="uploads" /> --%>
                                     </div>
                                 </div>
                             </div>
@@ -527,7 +539,7 @@ function questionBox(){
                                 <div class="create-course-2">
                                     <div class='input-group date' id='datetimepicker'>
                                         <div class="form-item">
-                                            <input type="date" placeholder="Select date" id="regdate">
+                                            <input type="date" placeholder="Select date" name="lecture.regdate" />
                                         </div>
                                         <i class="fa fa-calendar"></i>
                                     </div>
@@ -538,29 +550,29 @@ function questionBox(){
                         <!-- END / OPEN DATE -->
                         
                            <!-- OPEN DATE -->
-                        <div class="open-date create-item">
+<!--                         <div class="open-date create-item">
                             <div class="row">
                                 <div class="create-course-1">
                                     <h4>Upload Question</h4>
                                 </div>
                                 <div class="create-course-2">
-                                  <!--  <a href="/javatree/course/codingForm.action"><input type="button" value="Qesstion BOX" class="submit mc-btn-4 btn-style-1"></a> -->
+                                   <a href="/javatree/course/codingForm.action"><input type="button" value="Qesstion BOX" class="submit mc-btn-4 btn-style-1"></a>
                                 	<a href="javascript:questionBox();"><input type="button" value="Qesstion BOX" class="submit mc-btn-4 btn-style-1"></a>
                                 </div>
                             </div>
                             
-                        </div>
+                        </div> -->
                         <!-- END / OPEN DATE -->
                         
                        
   						<div class="form-action">
-                            <input type="submit" value="Save and Next" onclick="javascript:insertCourForm()" class="submit mc-btn-3 btn-style-1">
-                             <input type="submit" value="Cancle" class="submit mc-btn-3 btn-style-1">
+                            <input type="submit" value="Save and Next" onclick="javascript:insertLectureForm()" class="submit mc-btn-3 btn-style-1">
+                             <input type="submit" value="Cancel" onclick="javascript:stgoback()" class="submit mc-btn-3 btn-style-1">
                         </div>
 
                      
                     </div>
-                    </form>
+</form>
                 </div>			  
             </div>
 

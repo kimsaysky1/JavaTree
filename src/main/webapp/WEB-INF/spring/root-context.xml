@@ -9,6 +9,7 @@
 	<bean id="CourseAction" class="org.javatree.www.Action.CourseAction" scope="prototype"></bean> 
 	<bean id="CompilerAction" class="org.javatree.www.Action.CompilerAction" scope="prototype"></bean>
 	<bean id="QnaAction" class="org.javatree.www.Action.QnaAction" scope="prototype"></bean>
+	
 	<bean id="Member_jt" class="org.javatree.www.VO.Member_jt"></bean> 
 	<bean id="Interest" class="org.javatree.www.VO.Interest"></bean> 
 	<bean id="Ability" class="org.javatree.www.VO.Ability"></bean>  
@@ -20,6 +21,8 @@
 	<bean id="Reply" class="org.javatree.www.VO.Reply"></bean>  
 	<bean id="Rereply" class="org.javatree.www.VO.Rereply"></bean>  
 	<bean id="PageNavigator" class="org.javatree.www.Util.PageNavigator"></bean>
+	<bean id="Subnote" class="org.javatree.www.VO.Subnote"></bean>
+	
 	
 	<!-- db.properties 읽어오기 -->
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -55,7 +58,18 @@
 	
 	<!-- 파일설정을위한 		빈설정-->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="10485760"></property>
+		<!-- <property name="maxUploadSize" value="10485760"></property> -->
+		<property name="maxUploadSize" value="524288000" />
 	</bean>
+	
+	<!-- <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="spring.RegularCommonsMultipartResolver">
+		<property name="maxUploadSize" value="5242880000" /> 업로드 용량 설정
+		<property name="uploadTempDir" ref="uploadDirResource" />
+	</bean> -->
+	
+	
+	<bean id="fileBean" class="java.io.File">
+    	<constructor-arg type="java.lang.String" value="$prop{file.path.property}" />    
+ 	</bean>
 	
 </beans>

@@ -3,6 +3,7 @@ package org.javatree.www.DAO;
 import java.util.List;
 import java.util.Map;
 
+import org.javatree.www.VO.Member_jt;
 import org.javatree.www.VO.Question;
 import org.javatree.www.VO.Reply;
 import org.javatree.www.VO.Rereply;
@@ -20,5 +21,7 @@ public interface QnaDAO {
 	public List<Question> gunggumRecentQuestionList();
 	public List<Reply> bestAllQuestionList();
 	public List<Reply> bestRecentQuestionList();
+	public void insertRereply(Rereply rereply);
+	public Member_jt selectOneMember(String string);
 	
 }

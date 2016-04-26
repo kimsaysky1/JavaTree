@@ -43,7 +43,22 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 	private String id;
 	private File directoryPath;
 	private String resultType;
-
+	private Map<String, Object> session; 
+	
+	public String watchLecture() throws Exception{
+		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
+		lectureno = 1;
+		codingList = dao.selectCodingList(lectureno);
+		return SUCCESS;
+	}
+	
+	public String callSpecificCoding() throws Exception {
+		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
+		coding = dao.callSpecificCoding(codingno);
+		System.out.println("coding: "+coding);
+		return SUCCESS;
+	}
+	
 	public String runCode() throws Exception{
 		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
 		contentList = new ArrayList<>();
@@ -216,9 +231,9 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 				result += (line + "\n");
 				System.out.println("result:" + result);
 			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
+			System.out.println("에러들어옴");
+			result = e.getMessage();
 			e.printStackTrace();
 		}
 	}
@@ -405,9 +420,7 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 	}
 
 	@Override
-	public void setSession(Map<String, Object> arg0) {
-		// TODO Auto-generated method stub
-
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
 	}
-
 }

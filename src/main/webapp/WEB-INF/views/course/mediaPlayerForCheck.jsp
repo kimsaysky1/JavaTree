@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags" %> 
+    <%@ taglib prefix="s" uri="/struts-tags" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -220,68 +221,22 @@ body {
 	font-weight: bold;
 	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif,AppleGothic;
 }
-        #tabs { margin:0; padding:0; list-style:none; overflow:hidden; }
-        #tabs li { float:left; display:block; padding:5px; background-color:#bbb; margin-right:5px;}
-        #tabs li a { color:#fff; text-decoration:none; }
-        #tabs li.current { background-color:#e1e1e1;}
-        #tabs li.current a { color:#000; text-decoration:none; }
-        #tabs li a.remove { color:#f00; margin-left:10px;}
-        #wrapper {float:left; margin:0 20px 0 0;}
-        #documents { margin:0; padding:0;}
-        #wrapper { width:700px; margin-top:20px;}
-        .editor {float:left; width: 600px; height: 300px; overflow:scroll;} 
-        .line_number { 
-			float:left;
-			padding-right: 14px;
-			margin-top: 37px;
-			width:31px;
-			font: 13px Arial;
-			line-height: normal;
-			text-align: right;
-			height:300px;
-			overflow:scroll;
-			overflow-y:hidden;
-			
-		} 
-        div.numberedtextarea-wrapper { position: relative; }
-
-		div.numberedtextarea-wrapper textarea {
-		  display: block;
-		  -webkit-box-sizing: border-box;
-		  -moz-box-sizing: border-box;
-		  box-sizing: border-box;
-		}
-		
-		div.numberedtextarea-line-numbers {
-		  position: absolute;
-		  top: 0;
-		  left: 0;
-		  right: 0;
-		  bottom: 0;
-		  width: 50px;
-		  border-right: 1px solid rgba(0, 0, 0, 0.15);
-		  color: rgba(0, 0, 0, 0.15);
-		  overflow: hidden;
-		}
-		
-		div.numberedtextarea-number {
-		  padding-right: 6px;
-		  text-align: right;
-		}
-		
 </style>
+<script src="script/jquery-2.2.3.min.js"></script>
+<script src="script/jquery-ui.min.js"></script>
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="../resources/jquery-2.2.3.min.js"></script>
-<script type="text/javascript" src="../resources/jquery-ui.min.js"></script>
 </head>
 <body>
 
 <div id="player">
+<s:iterator value="lecture" status="st">
 	<video width="960" height="540" preload="auto" id="video" autoplay="autoplay">
-		<source src="" type="video/mp4" />
+		<%-- <source src="C:/coding/Wildlife.wmv" type="video/wmv" /> --%>
+		<source src='<s:property value="uploadedfilename"/>' type="video/wmv" />
 	</video>
+</s:iterator>	
 <div id="seek">
 <input type="range" class="time-slider" id="seek-bar" value="0" step="any" max="100" min="0" step="any" />
 <span id="now"></span>
@@ -289,6 +244,7 @@ body {
 
 <br />
 	<div id="video-controls">	
+
 <br />
 <button title="Stop" class="pl" >＝</button>
 <button title="Rewind button" class="rew" >&lt;&lt;</button>
@@ -327,259 +283,6 @@ body {
 
 
 <!-- editor 시작 -->
-
-<s:if test="codingList != null">
-	<select class = "codingList">
-		<option>문제선택</option>
-		<s:iterator value="codingList" status="incr">
-			<option value = "<s:property value="codingno"/>">
-			<s:property value="%{#incr.index+1}"/>번 문제
-			</option>
-		</s:iterator>
-	</select>
-</s:if> 
-<textarea rows="20" cols=60" id="question" placeholder="질문란" readonly="readonly"></textarea>
-	<div id="wrapper">
-	 	<div class="line_number"></div>
-	    <ul id="tabs">
-	    	<li class='current'><a class='tab' id="class1" href='#'>class1</a><a href='#' class='remove'>x</a></li>
-	    </ul>
-	    <div id="doccontent">
-	   		<textarea id="class1_content" class="editor"></textarea>
-	    </div>
-	</div>
-	<textarea rows="20" cols="40" placeholder="결과" id = "result" readonly="readonly"></textarea>
-	<br/>
-	<input type = "button" value="초기화" id = "initialization" />
-	<input type = "button" value="실행" id = "run"/>
-	<input type = "button" value="Q&A" id = "qna"/>
-	<button id = "insertClass">클래스 추가</button>
-
-<script type="text/javascript">
-
-$(function(){
-	
-	//$('#doccontent > textarea:visible').numberedtextarea();
-	
-	$('body').on('input propertychange change keyup paste','#doccontent > textarea:visible', function (key) {
-			//alert($(this).prop("nodeName"));
-        	var textarea = $(this);
-        	var width = parseFloat(textarea.css('width'));
-        	var height = parseFloat(textarea.css('height'));
-        	var lineHeight = parseFloat(textarea.css('line-height'));
-        	var textAreaValue = $('#doccontent textarea:visible').val();
-        	var splitedArray = textAreaValue.split('\n');
-        	var splitedArrayLength = splitedArray.length;
-        	$('.line_number').html('');
-        	for(var i = 1; i <= splitedArrayLength; i++){
-	        	$('<div>'+i+'</div>').appendTo('.line_number');
-        	}
-    });
-	
-	$('#doccontent > textarea:visible').scroll(function () {
-		var lines = $(".line_number");
-		lines.scrollTop($(this).scrollTop());
-	});
-	
-	$("#initialization").on("click", function(){
-		var codingno =  $(".codingList option:selected").val();
-		$.ajax({
-			type: 'GET'
-			, url: 'callSpecificCoding'
-			, data: 'codingno='+codingno
-			, dataType : 'json'
-			, success : function(response){
-				$('#doccontent > textarea:visible').val("<pre>"+response.coding.codingtemplet+"</pre>");
-			}
-			, error : function(response){
-				alert('실패');
-			}
-		})
-	}); 
-	
-	$(".codingList").change(function(){
-		var codingno =  $(".codingList option:selected").val();
-		$.ajax({
-			type: 'GET'
-			, url: 'callSpecificCoding'
-			, data: 'codingno='+codingno
-			, dataType : 'json'
-			, success : function(response){
-				$('#doccontent > textarea:visible').val("<pre>"+response.coding.codingtemplet+"</pre>");
-				$("#question").val(response.coding.codingquestion);
-			}
-			, error : function(response){
-				alert('실패');
-			}
-		})
-	});	
-	
-	/* $(document).on('keyUp', function ( e ) {
-	if(e.ctrlKey && ( String.fromCharCode(e.which).toLowerCase() === 'd')){
-		e.preventDefault();
-		alert(1);
-    }
-	}); */
-	
-	$(document).on('keydown', function ( e ) {
-	    if ( e.ctrlKey && e.keyCode === 32 ) {
-	    	var textAreaValue = $('#doccontent textarea:visible').val();
-	    	var splitedValue = textAreaValue.split(/\t/);
-	    	alert(splitedValue);
-	    	alert(splitedValue.length);
-	    	var temp = splitedValue[splitedValue.length];
-	    	if(temp == 'sysout'){
-	    		splitedValue[splitedValue.length] = 'sysout.result'; 
-	    	}
-	    	alert(splitedValue);
-	    }
-	    
-	    
-	    if ( e.ctrlKey && ( String.fromCharCode(e.which).toLowerCase() === 'd') ) {
-	    	alert('in');
-	    	//var val = $(".editor").val();
-	    	//var a= $("#doccontent textarea").val();
-	    	
-	    	var textAreaValue = $('#doccontent textarea:visible').val();
-	    	alert(textAreaValue);
-	    	var splitedValue = textAreaValue.split('\n');
-	    	alert(splitedValue);
-	    	alert(splitedValue[0]);
-	    	var a = $('#doccontent textarea:visible').caret(position)
-	    	alert(a);
-	    	
-	    	
-	    	//alert($("#doccontent #class1_content").selectionEnd);
-	    	/*alert(val);
-	    	var number = val.substr(0, $(".editor").selectionStart).split("\n").length;
-	    	alert(number); */
-	    }
-	});
-	
-	/* function setSelectionRange(input, selectionStart, selectionEnd) {
-		  if (input.setSelectionRange) {
-		    input.focus();
-		    input.setSelectionRange(selectionStart, selectionEnd);
-		  }
-		  else if (input.createTextRange) {
-		    var range = input.createTextRange();
-		    range.collapse(true);
-		    range.moveEnd('character', selectionEnd);
-		    range.moveStart('character', selectionStart);
-		    range.select();
-		  }
-		}
-
-		function setCaretToPos (input, pos) {
-		  setSelectionRange(input, pos, pos);
-		} */
-	
-	$("#doccontent").on('keydown', '.editor', function(e) {
-	    if(e.keyCode === 9) { 
-	        var start = this.selectionStart;
-	        var end = this.selectionEnd;
-	        var $this = $(this);
-	        var value = $this.val();
-	        $this.val(value.substring(0, start)
-	                    + "\t"
-	                    + value.substring(end));
-	        this.selectionStart = this.selectionEnd = start + 1;
-	        e.preventDefault();
-	    }
-	});
-	
-	$("#run").on("click", function(){
-		$('pre').each(function(){
-		    $(this.firstChild).unwrap();
-		});
-		var classnum =  $('body a.tab').length;
-		var code1 = $("#doccontent .editor").eq(0).val();
-		var code2 = $("#doccontent .editor").eq(1).val();
-		var code3 = $("#doccontent .editor").eq(2).val();
-		var code4 = $("#doccontent .editor").eq(3).val();
-		var code5 = $("#doccontent .editor").eq(4).val();
-		
-		if(code1.trim().length == 0){
-			alert('코드가 써있지 않습니다.');
-			return;
-		}
-		
-		alert(code1);
-		
-		$.ajax({
-				 type: 'POST'
-				, url: 'runCode'
-				, data :
-				{
-					'code1' : code1
-					,'code2' : code2
-					,'code3' : code3
-					,'code4' : code4
-					,'code5' : code5
-				}
-				, dataType : 'json'
-				, success : function(response){
-					var type = response.resultType;
-					if(type == 'jsp'){
-						window.open(response.result);						
-					}else{
-						$("#result").val(response.result);
-					}
-				}
-				, error : function(response){
-					alert('실패');
-				}
-		});
-	});	
-	
-    $('body').on('click','#tabs a.tab',function() {
-        var contentname = $(this).attr("id") + "_content";
-        $("#doccontent textarea").hide();
-        $("#tabs li").removeClass("current");
-        $("#" + contentname).show();
-        $(this).parent().addClass("current"); 
-    });
-
-   $('body').on('click', '#insertClass', function(){
-	   var classnum =  $('body a.tab').length;
-	   if(classnum < 5){
-		   classnum = classnum + 1;
-		   addTab(classnum);
-	   }else{
-		   return;
-	   }
-   });
-   
-   $('body').on('click', '#tabs a.remove', function() {
-        var tabid = $(this).parent().find(".tab").attr("id");
-        if(tabid == 'class1'){
-        	alert('기본 클래스는 삭제할 수 없습니다.');
-        	return;
-        }
-        var contentname = tabid + "_content";
-        $("#" + contentname).remove();
-        $(this).parent().remove();
-        if ($("#tabs li.current").length == 0 && $("#tabs li").length > 0) {
-            var firsttab = $("#tabs li:first-child");
-            firsttab.addClass("current");
-            var firsttabid = $(firsttab).find("a.tab").attr("id");
-            $("#" + firsttabid + "_content").show();
-        }
-    }); 
-});
-
-function addTab(classnum) {
-    $("#tabs li").removeClass("current");
-    $("#doccontent textarea").hide();
-    $("#tabs").append("<li class='current'><a class='tab' id='class" +
-    		classnum + "' href='#'>" + ('class'+classnum) + 
-        "</a><a href='#' class='remove'>x</a></li>");
-    $("#doccontent").append("<textarea id=class"+classnum+"_content"+" class="+"editor></textarea>");t
-    $("#" + $(link).attr("rel") + "_content").show();
-}
-</script>
-
-
 
 <!-- editor 마침 -->
 <script type="text/javascript">

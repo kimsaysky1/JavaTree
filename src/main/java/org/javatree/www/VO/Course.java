@@ -15,8 +15,6 @@ public class Course {
 	public Course() {
 	}
 	
-	
-	
 	public int getCourseno() {
 		return courseno;
 	}

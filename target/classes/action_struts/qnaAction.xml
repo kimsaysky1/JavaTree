@@ -25,11 +25,12 @@
      	</action>
      	
      	<action name="insertRereply" class="org.javatree.www.Action.QnaAction" method="insertRereply">
-     		<result>/WEB-INF/views/qna/qnaDetail.jsp</result>
+     		<result type="json"></result>
      	</action>
      	
      	<action name="qnaDefaultMain" class="org.javatree.www.Action.QnaAction" method="qnaDefaultMain">
-     		<result>/WEB-INF/views/qna/qnaDefaultMain.jsp</result>
+     		<result name="success">/WEB-INF/views/qna/qnaDefaultMain.jsp</result>
+     		<result name="error" type="redirect">/member/loginFrom.action</result>
      	</action>
      	
      	<action name="qnaDetail" class="org.javatree.www.Action.QnaAction" method="qnaDetail">
@@ -43,7 +44,6 @@
      	<action name="searchListByInterest" class="org.javatree.www.Action.QnaAction" method="searchListByInterest">
      		<result type="json"></result>
      	</action>
-     	
     </package>
 
 </struts>

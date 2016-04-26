@@ -1,23 +1,39 @@
-  		select c.coursename
-     	from course c, studylecture sl
-     	where c.courseno = sl.courseno and sl.id = 2 and sl.startdate < sysdate and rownum < 4 
-     	order by sl.startdate desc
+alter table coding add (id varchar2(20) NOT NULL);--20160425 박수지 추가
 
+<<<<<<< HEAD
  CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
  
  create sequence question_seq;
+=======
+CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
   
 alter table studylecture add (courseno number(6,0) NOT NULL)
 
 ALTER TABLE teachcourse ADD (startdate date DEFAULT sysdate NOT NULL);
 alter table course drop column typeno;
 alter table course add (regdate date default sysdate not null);
+alter table coding add (regdate date default sysdate not null); -- 20160423 김영호 추가
 alter table coding add (codinganswer clob not null);
 alter table coding drop column lectureno;
+<<<<<<< HEAD
 alter table coding add (id varchar2(20) NOT NULL);
 
 CREATE sequence coding_seq start with 1 increment by 1;
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 
+alter table coding drop column regdate;--20160424 박수지 추가
+
+CREATE TABLE lecturecoding--20160419�߰�
+<<<<<<< HEAD
+
+=======
+=======
+>>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
+>>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 CREATE TABLE lecturecoding
 (
 	lectureno number(6,0) NOT NULL,
@@ -32,6 +48,17 @@ ALTER TABLE lecturecoding
 ;
 
 alter table coding drop column typeno;
+
+alter table subnote modify originalfilename null--20160421�߰�
+alter table subnote modify uploadedfilename null--20160421�߰�
+
+--notnull����
+--ALTER TABLE ���̺�� MODIFY �÷��� NULL;
+--ALTER TABLE ���̺�� DROP CONSTRAINT �������Ǹ�
+
+alter table lecture modity (uploadedfilename varchar2(900));
+alter table lecture modify (originalfilename varchar2(500));--20160422 ����
+
 
 
 /* Drop Tables */
@@ -155,7 +182,10 @@ CREATE TABLE coding
 	lectureno number(6,0),
 	PRIMARY KEY (codingno)
 );
+CREATE sequence coding_seq start with 1 increment by 1;--20160424 박수지 수정
+--drop sequence coding_seq;
 
+CREATE sequence question_seq start with 1 increment by 1;--20160425 박수지 수정
 
 CREATE TABLE teachcourse
 (
@@ -285,6 +315,7 @@ CREATE TABLE subnote
 	PRIMARY KEY (subnoteno)
 );
 
+CREATE sequence subnote_seq start with 1 increment by 1;--20160421�߰�
 
 
 
@@ -620,6 +651,9 @@ COMMENT ON COLUMN teachlecture.studentcount IS 'studentcount';
 COMMENT ON TABLE typename IS '�� ���̺� : (19)�о� ���̺�';
 COMMENT ON COLUMN typename.type IS 'type';
 COMMENT ON COLUMN typename.typeno IS 'typeno';
+
+ALTER TABLE studylecture
+	ADD UNIQUE (lectureno)--20160425 창우 수정, 재수강신청 방지
 
 
 

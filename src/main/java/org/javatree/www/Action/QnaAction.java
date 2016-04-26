@@ -8,8 +8,12 @@ import java.util.StringTokenizer;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.struts2.interceptor.SessionAware;
 import org.javatree.www.DAO.QnaDAO;
 import org.javatree.www.Util.PageNavigator;
+import org.javatree.www.VO.Ability;
+import org.javatree.www.VO.Interest;
+import org.javatree.www.VO.Member_jt;
 import org.javatree.www.VO.Question;
 import org.javatree.www.VO.Reply;
 import org.javatree.www.VO.Rereply;
@@ -17,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class QnaAction extends ActionSupport {
+public class QnaAction extends ActionSupport implements SessionAware{
 	@Autowired
 	private SqlSession sqlsession;
 
@@ -31,6 +35,7 @@ public class QnaAction extends ActionSupport {
 	private List<Reply> bestAllQuestionList;
 	private List<Question> gunggumAllQuestionList;
 	private List<Question> gunggumRecentQuestionList;
+	private List<Rereply> rereplyList;
 	private List<Integer> typenoList;
 	private String stringForTokenizer;
 	private List<Reply> replyList;
@@ -41,7 +46,8 @@ public class QnaAction extends ActionSupport {
 	private String keyword;
 	private int start;
 	private int end;
-
+	private Map<String, Object> session; 
+	
 	public String insertQuestion() throws Exception {
 		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
 		question.setId("1");
@@ -49,7 +55,11 @@ public class QnaAction extends ActionSupport {
 		question.setTypeno(Integer.parseInt(typeno));
 		question.setCodingno(1);
 		dao.insertQuestion(question);
-		makeQnaDefaultMain();
+		String loginId = (String) session.get("loginId");
+		if(loginId == null){
+			return ERROR;
+		}
+		makeQnaDefaultMain(loginId);
 		return SUCCESS;
 	}
 
@@ -66,15 +76,56 @@ public class QnaAction extends ActionSupport {
 		dao.insertReply(reply);
 		question = dao.selectOneQuestion(reply.getQuestionno());
 		replyList = dao.selectAllReply(reply.getQuestionno());
+		System.out.println("replyList: " + replyList);
 		return SUCCESS;
 	}
 
-	public void makeQnaDefaultMain() {
+	public void makeQnaDefaultMain(String loginId) {
 		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
+		Member_jt member = dao.selectOneMember(loginId);
+		System.out.println("member: "+member);
+		typenoList = new ArrayList<>();
+		
+		int questionnum = member.getCountquestion();
+		int responsenum = member.getCountresponse();
+		int recommendnum = member.getCountrecommend();
+		ArrayList<Interest> interestList = member.getInterestList();
+		ArrayList<Ability> abilityList = member.getAbilityList();
+		for(int i = 0; i < abilityList.size(); i++){
+			if(abilityList.get(i).getValue() == 3){
+				if(!(typenoList.contains(abilityList.get(i).getTypeno()))){
+					typenoList.add(abilityList.get(i).getTypeno());
+				}
+			}
+		}
+		for(int i = 0; i < interestList.size(); i++){
+			if(interestList.get(i).getValue() == 3){
+				if(!(typenoList.contains(interestList.get(i).getTypeno()))){
+					typenoList.add(interestList.get(i).getTypeno());
+				}
+			}
+		}
+		if(questionnum >= responsenum){
+			for(int i = 0; i < abilityList.size(); i++){
+				if(abilityList.get(i).getValue() == 2){
+					if(!(typenoList.contains(abilityList.get(i).getTypeno()))){
+						typenoList.add(abilityList.get(i).getTypeno());
+					}
+				}
+			}
+		}else if(questionnum < responsenum){
+			for(int i = 0; i < interestList.size(); i++){
+				if(interestList.get(i).getValue() == 2){
+					if(!(typenoList.contains(interestList.get(i).getTypeno()))){
+						typenoList.add(interestList.get(i).getTypeno());
+					}
+				}
+			}
+		}
 		Map map = new HashMap();
 		map.put("start", 1);
 		map.put("end", 5);
-		map.put("typeno", typenoList);
+		map.put("typenoList", typenoList);
 		questionList = dao.selectAllQuestion(map);
 		gunggumAllQuestionList = dao.gunggumAllQuestionList();
 		gunggumRecentQuestionList = dao.gunggumRecentQuestionList();
@@ -83,22 +134,12 @@ public class QnaAction extends ActionSupport {
 	}
 
 	public String qnaDefaultMain() throws Exception {
-
-		makeQnaDefaultMain();
-		/*
-		 * int totalCount = dao.getTotal(); System.out.println("totalCount: "
-		 * +totalCount); int countPerPage = 4; int pagePerGroup = 3;
-		 * System.out.println("currentPage: "+currentPage); pagenavi=new
-		 * PageNavigator(countPerPage, pagePerGroup, currentPage, totalCount);
-		 * RowBounds rowbound = new RowBounds(pagenavi.getStartRecord(),
-		 * pagenavi.getCountPerPage()); questionList = sqlsession.selectList(
-		 * "org.javatree.www.DAO.QnaDAO.selectAllQuestion", rowbound);
-		 * questionList = dao.selectAllQuestion(pagenavi.getStartRecord(),
-		 * pagenavi.getCountPerPage()); System.out.println("questionList: "
-		 * +questionList); System.out.println("start: "
-		 * +pagenavi.getStartPageGroup()); System.out.println("end: "
-		 * +pagenavi.getEndPageGroup());
-		 */
+		String loginId = (String) session.get("loginId");
+		System.out.println("loginId: "+loginId);
+		if(loginId == null){
+			return ERROR;
+		}
+		makeQnaDefaultMain(loginId);
 		return SUCCESS;
 	}
 
@@ -144,8 +185,14 @@ public class QnaAction extends ActionSupport {
 	}
 
 	public String insertRereply() throws Exception {
+		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
+		rereply.setId("1");
+		rereply.setUsername("1");
+		rereply.setRegdate("2016-04-19");
 		System.out.println("rereply: " + rereply);
-
+		dao.insertRereply(rereply);
+		rereplyList = dao.selectAllRereply(replyno);
+		System.out.println("rereplyList: "+rereplyList);
 		return SUCCESS;
 	}
 
@@ -309,4 +356,17 @@ public class QnaAction extends ActionSupport {
 		this.bestAllQuestionList = bestAllQuestionList;
 	}
 
+	public List<Rereply> getRereplyList() {
+		return rereplyList;
+	}
+
+	public void setRereplyList(List<Rereply> rereplyList) {
+		this.rereplyList = rereplyList;
+	}
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+	}
+	
 }
