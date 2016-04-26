@@ -278,10 +278,7 @@
       		insert into teachcourse (id, courseno, coursename, startdate)
      		values (#{id}, #{courseno}, #{coursename},sysdate)
   	</insert>
-<<<<<<< HEAD
 
-=======
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	<!-- 강의 등록 - insertLecture -->
 
 	<insert id="insertLecture" parameterType="Lecture">
@@ -372,6 +369,8 @@
 		delete from lecture where lectureno =#{lectureno}
 	</delete>
 	
+	
+	
 	<!-- 강의 비디오수정 -->
 	<update id="updateLecture" parameterType="map">
 		update lecture 
@@ -388,8 +387,22 @@
 		where lectureno=#{lectureno}
 	</update>
 	
+	<!-- 강의 수정 -->
+	<update id="updateCourseName" parameterType="map">
+		update course
+		set coursename=#{coursename}
+		where courseno=#{courseno}
+	</update>
+	<update id="updateCourseIntrodution" parameterType="map">
+		update course
+		set introdution=#{introdution}
+		where courseno=#{courseno}
+	</update>
+	
+	
+	
 	<!-- 강의찾기 mediaPlayerForm -->
-	<select id="selectLecture" parameterType="String" resultType="Lecture">
+	<select id="selectLecture" parameterType="int" resultType="Lecture">
 		select * from lecture where lectureno=#{lectureno}
 	</select>
 

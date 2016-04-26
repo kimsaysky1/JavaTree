@@ -38,6 +38,23 @@
 
 		
 <script type="text/javascript">
+var idck=0;
+function idCheck() { 
+	
+	var id = document.getElementById("id");
+
+	if(id.value == "") {
+		id.setAttribute("placeholder", "아이디를 입력해주세요!");
+		return false;
+	} else if(id.value.length < 3 || id.value.length > 15) {
+		alert("아이디는 3~15자리 입니다.");
+		return false;
+	} else {
+		idck=1;
+		window.open('idCheck.action?id='+id.value,'pop','resizable=no scrollbars=yes top=300 left=500 width=300 height=180');	
+	}	
+}
+
 
 $(function(){
 	
@@ -71,586 +88,43 @@ $(function(){
 		
 		alert(id+password+username+email);
 		
-		/*  if(idck == 0){
+		if(idck == 0){
 				custid.value="";
-				custid.setAttribute("placeholder", "아이디 중복확인 필수!");
+				//custid.setAttribute("placeholder", "아이디 중복확인 필수!");
+				alert("아이디 중복확인 필수!");
 				return false;
 			
-			}else  */
+		}
 		
-		/* if(pwd.value =="") {
-			pwd.setAttribute('placeholder', '비밀번호를 입력하세요!');
+		if(password.value =="") {
+			password.setAttribute('placeholder', '비밀번호를 입력하세요!');
 			return false;
-		} else if(pwd.value.length <3 || pwd.value.length > 15) {
+		} else if(password.value.length <3 || password.value.length > 15) {
 			alert("비밀번호는 3~15자리 입니다.");
 			return false;
-		}else if (name.value == ""){
-			name.setAttribute('placeholder', '이름을 입력하세요!');
+		} else if (username.value == ""){
+			username.setAttribute('placeholder', '이름을 입력하세요!');
 			return false;
-		}else if (email.value == ""){
+		} else if (email.value == ""){
 			email.setAttribute('placeholder', '이메일을 입력하세요!');
 			return false;
 		} 
-		  */
-		/* 
-		var rd = document.getElementsByName("interest_purejava");
-		
-		 
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked==""){
-		 	alert("흥미도를 선택해주세요");
-		 	break;																	
-		 	}
-		 }
-		
-		var rd = document.getElementsByName("interest_web");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	var interest_web=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		var rd = document.getElementsByName("interest_mobile");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	var interest_mobile=rd[i].value;
-		 	break;
-		 	}
-		 }
-		
-		 var rd = document.getElementsByName("interest_iot");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_iot=rd[i].value;
-		 	break;
-		 	}
-		 }
-		
-		 var rd = document.getElementsByName("interest_swing");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_swing=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("interest_jdbc");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_jdbc=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("interest_api");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_api=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("interest_spring");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_spring=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("interest_struts");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_struts=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("interest_etcframework");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_etcframework=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("interest_etc");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_etc=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-	
-		var rd = document.getElementsByName("ability_purejava");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_purejava=rd[i].value;
-		 	break;
-		 	}
-		 }
-		
-		var rd = document.getElementsByName("ability_web");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_web=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_mobile");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_mobile=rd[i].value;
-		 	break;
-		 	}
-		 }
-		
-		 var rd = document.getElementsByName("ability_iot");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_iot=rd[i].value;
-		 	break;
-		 	}
-		 }
-		
-		 var rd = document.getElementsByName("ability_swing");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_swing=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_jdbc");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_jdbc=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_api");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_api=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_spring");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_spring=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_struts");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_struts=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_etcframework");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_etcframework=rd[i].value;
-		 	alert(ability_etcframework+"프레임워크");
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_etc");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_etc=rd[i].value;
-		 	alert(ability_etc+"어빌리티");
-		 	break;
-		 	}
-		 }  */
-		 
-		/*  if (i == rd.length){
-		 	alert("선택하세요!");
-		 	return;
-		 } */
-		
-		 /* member_jt
-		 interest ability_purejava
-		 ability */
+		var regex=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;   
+		  
+		if(regex.test(email.value) === false) {  
+		    alert("잘못된 이메일 형식입니다.");  
+		    return false;  
+		} 
 		 
 		 document.getElementById('joinForm').submit();
-		/*  $('#join').attr('action', 'join').submit(); */
-		
 		
 	});
 		
-
 });
 
 </script>
 
-<script type="text/javascript">
-function idCheck() { 
-	
-	var id = document.getElementById("id");
 
-	if(id.value == "") {
-		id.setAttribute("placeholder", "아이디를 입력해주세요!");
-		return false;
-	} else if(id.value.length < 3 || id.value.length > 15) {
-		alert("아이디는 3~15자리 입니다.");
-		return false;
-	} else {
-		idck=1;
-		window.open('idCheck.action?id='+id.value,'pop','resizable=no scrollbars=yes top=300 left=500 width=300 height=180');	
-	}	
-}
-
-</script>
-<%-- <script type="text/javascript">
-
-	var idck = 0;  
-	
-	// 아이디 중복 체크
-	function idCheck() { 
-		
-		var id = document.getElementById("id");
-	
-		if(id.value == "") {
-			id.setAttribute("placeholder", "아이디를 입력해주세요!");
-			return false;
-		} else if(id.value.length < 3 || id.value.length > 15) {
-			alert("아이디는 3~15자리 입니다.");
-			return false;
-		} else {
-			idck=1;
-			window.open('idCheck.action?id='+id.value,'pop','resizable=no scrollbars=yes top=300 left=500 width=300 height=180');	
-		}	
-	}
-
-
-	function joinForm(){
-		
-		alert("조인 폼 시작 ! ");
-		
-		var form = document.getElementById("join");
-		var id= document.getElementById("id");
-		var password= document.getElementById("password");
-		var username= document.getElementById("username");
-		var email= document.getElementById("email");
-		
-		alert(id+password+username+email);
-		
-		
-		/* if(idck == 0){
-			custid.value="";
-			custid.setAttribute("placeholder", "아이디 중복확인 필수!");
-			return false;
-		
-		}else if(pwd.value =="") {
-			pwd.setAttribute('placeholder', '비밀번호를 입력하세요!');
-			return false;
-		} else if(pwd.value.length <3 || pwd.value.length > 15) {
-			alert("비밀번호는 3~15자리 입니다.");
-			return false;
-		}else if (name.value == ""){
-			name.setAttribute('placeholder', '이름을 입력하세요!');
-			return false;
-		}else if (email.value == ""){
-			email.setAttribute('placeholder', '이메일을 입력하세요!');
-			return false;
-		} 
-		 */
-		
-		/* var rd = document.getElementsByName("interest_purejava");
-		
-		 
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked==""){
-		 	alert("흥미도를 선택해주세요");
-		 	break;																	
-		 	}
-		 }
-		
-		var rd = document.getElementsByName("interest_web");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	var interest_web=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		var rd = document.getElementsByName("interest_mobile");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	var interest_mobile=rd[i].value;
-		 	break;
-		 	}
-		 }
-		
-		 var rd = document.getElementsByName("interest_iot");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_iot=rd[i].value;
-		 	break;
-		 	}
-		 }
-		
-		 var rd = document.getElementsByName("interest_swing");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_swing=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("interest_jdbc");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_jdbc=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("interest_api");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_api=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("interest_spring");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_spring=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("interest_struts");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_struts=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("interest_etcframework");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_etcframework=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("interest_etc");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	interest_etc=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-	
-		var rd = document.getElementsByName("ability_purejava");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_purejava=rd[i].value;
-		 	break;
-		 	}
-		 }
-		
-		var rd = document.getElementsByName("ability_web");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_web=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_mobile");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_mobile=rd[i].value;
-		 	break;
-		 	}
-		 }
-		
-		 var rd = document.getElementsByName("ability_iot");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_iot=rd[i].value;
-		 	break;
-		 	}
-		 }
-		
-		 var rd = document.getElementsByName("ability_swing");
-		
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_swing=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_jdbc");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_jdbc=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_api");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_api=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_spring");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_spring=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_struts");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_struts=rd[i].value;
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_etcframework");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_etcframework=rd[i].value;
-		 	alert(ability_etcframework+"프레임워크");
-		 	break;
-		 	}
-		 }
-		 
-		 var rd = document.getElementsByName("ability_etc");
-			
-		 for(var i=0;i<rd.length;i++){
-		 	if (rd[i].checked){
-		 	alert("선택한 값:" + rd[i].value);
-		 	ability_etc=rd[i].value;
-		 	alert(ability_etc+"어빌리티");
-		 	break;
-		 	}
-		 } */
-		 
-		/*  if (i == rd.length){
-		 	alert("선택하세요!");
-		 	return;
-		 } */
-		
-		 /* member_jt
-		 interest ability_purejava
-		 ability */
-		 
-		 document.getElementById('joinForm').submit();
-		/*  $('#join').attr('action', 'join').submit(); */
-		
-	}
-	
-
-
-	
-</script> 
- --%>
 </head>
 <body>
 	<header id="header" class="header">

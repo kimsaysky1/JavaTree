@@ -74,7 +74,8 @@
         <action name="insertLecture" class="org.javatree.www.Action.CourseAction" method="insertLecture">
         	<!-- <result type="redirect">file/multiFileUpload</result> -->
         	<!-- <param name="maximumSize">20971520</param> -->
-        	<result type="redirect">insertLectureForm</result>
+        	<!-- <result type="redirect">insertLectureForm</result> -->
+        	<result>/WEB-INF/views/course/insertLecture.jsp</result>
         </action>
         <!-- 문제보관함 폼(codingMain) -->
         <action name="codingForm" class="org.javatree.www.Action.CourseAction" method="codingForm">
@@ -87,7 +88,8 @@
         
         <!-- 강의삭제 - courseDetailForteach -->
         <action name="deleteLecture" class="org.javatree.www.Action.CourseAction" method="deleteLecture" >
-        	<result type="redirect">CourseDetailForTeachForm</result>
+        	<!-- <result type="redirect">CourseDetailForTeachForm</result> -->
+        	<result>/WEB-INF/views/course/CourseDetailForTeach.jsp</result>
         </action>
         
         	<!-- 강의 비디오 수정 폼-->
@@ -109,6 +111,15 @@
         <action name="updateSubnote" class="org.javatree.www.Action.CourseAction" method="updateSubnote" >
         	<result type="redirect">CourseDetailForTeachForm</result>
         </action>
+        
+       <!--  강좌 이름, Description 수정 - courseDetailForTeach --> <!-- 강좌수정은 나중에 디버깅시 ㄱㄱ --> 
+       <action name="updateCourseName" class="org.javatree.www.Action.CourseAction" method="updateCourseName" >
+      		<result>/WEB-INF/views/course/CourseDetailForTeach.jsp</result>
+       </action>
+         <action name="updateCourseIntrodution" class="org.javatree.www.Action.CourseAction" method="updateCourseIntrodution" >
+      		<result>/WEB-INF/views/course/CourseDetailForTeach.jsp</result>
+       </action>
+       
         
         <!-- 문제보관함 처리 -->
         <!--  <action name="insertIntoQuestionBox" class="org.javatree.www.Action.CourseAction" method="insertIntoQuestionBox">

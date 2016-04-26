@@ -4,8 +4,9 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-
+	<constant name="struts.multipart.maxSize" value="104857600" />
     <constant name="struts.devMode" value="true" />
+	
 
     <package name="default" namespace="/" extends="struts-default">
 		
@@ -14,7 +15,8 @@
         <action name="index">
            <result>/WEB-INF/views/index.jsp</result>
         </action>
-        
+     	
+     	  
 
 <!-- 비밀번호, 아이디 찾는 폼 -->
 

@@ -3,78 +3,35 @@ package org.javatree.www.Util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-//¾÷·ÎµåÇÑ ÆÄÀÏ ÀúÀå & ÀúÀåµÈ ÆÄÀÏ »èÁ¦
-public class FileService {
+//ì—…ë¡œë“œí•œ íŒŒì¼ ì €ì¥ & ì €ì¥ëœ íŒŒì¼ ì‚­ì œ
+public class FileService implements FilenameFilter {
 	/**
-	 * File°´Ã¼, ÀúÀåÇÒ °æ·Î, ÆÄÀÏ¸íÀ» Àü´Ş¹Ş¾Æ ¼­¹ö¿¡ ÆÄÀÏ ÀúÀå
-	 * @param file	¼­¹ö¿¡ ÀÓ½Ã·Î ¾÷·ÎµåµÈ ÆÄÀÏ °´Ã¼
-	 * @param basePath	ÀúÀåÇÒ °æ·Î
-	 * @param filename	¼­¹ö¿¡ ÀÓ½Ã·Î ¾÷·ÎµåµÈ ÆÄÀÏÀÇ ÀÌ¸§
-	 * @return	º¯°æ ÀúÀåµÈ ÆÄÀÏÀÇ ÀÌ¸§
+	 * Fileê°ì²´, ì €ì¥í•  ê²½ë¡œ, íŒŒì¼ëª…ì„ ì „ë‹¬ë°›ì•„ ì„œë²„ì— íŒŒì¼ ì €ì¥
+	 * @param file	ì„œë²„ì— ì„ì‹œë¡œ ì—…ë¡œë“œëœ íŒŒì¼ ê°ì²´
+	 * @param basePath	ì €ì¥í•  ê²½ë¡œ
+	 * @param filename	ì„œë²„ì— ì„ì‹œë¡œ ì—…ë¡œë“œëœ íŒŒì¼ì˜ ì´ë¦„
+	 * @return	ë³€ê²½ ì €ì¥ëœ íŒŒì¼ì˜ ì´ë¦„
 	 * @throws IOException
 	 */
-	public String saveFile(File file, String basePath, String filename) throws IOException {
-		//ÆÄÀÏÀÌ ¾ø°Å³ª Å©±â°¡ 0ÀÌ¸é ÀúÀåÇÏÁö ¾Ê°í nullÀ» ¸®ÅÏ
-		if (file == null || file.length() <= 0) {
-			return null; 
-		}
-		
-		//ÀúÀå µğ·ºÅä¸®°¡ ¾ø´Â °æ¿ì »ı¼º
-		File dir = new File(basePath);
-		if (!dir.isDirectory()) dir.mkdirs();
-		
-		//ÀúÀåÇÒ ÆÄÀÏ¸íÀ» ³â¿ùÀÏ·Î »ı¼º
-		String savedFilename;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		savedFilename = sdf.format(new Date());
-		
-		//¿øº» ÆÄÀÏÀÇ È®ÀåÀÚ
-		String ext;
-		int lastIndex = filename.lastIndexOf('.');
-		if (lastIndex == -1)
-			ext = "";
-		else 
-			ext = "." + filename.substring(lastIndex + 1);
-
-		//ÀúÀåÇÒ ÀüÃ¼ °æ·Î
-		String serverFullPath = null;
-		File serverFile = null;
-		
-		//°°Àº ÀÌ¸§ÀÇ ÆÄÀÏÀÌ ÀÖ´Â °æ¿ìÀÇ Ã³¸® (µÚ¿¡ ½Ã°£Á¤º¸ ºÙÀÓ)
-		while (true) {
-			//serverFilename = strDate + ext;
-			serverFullPath = basePath + "/" + savedFilename + ext;
-			serverFile = new File(serverFullPath);
-			if ( !serverFile.isFile()) break;	//°°Àº ÀÌ¸§ÀÇ ÆÄÀÏÀÌ ¾øÀ¸¸é ³ª°¨.
-			savedFilename = savedFilename + new Date().getTime();
-		}
-		
-		//ÆÄÀÏ ÀúÀå
-		FileInputStream in = new FileInputStream(file);
-		FileOutputStream out = new FileOutputStream(serverFile);
-		
-		int bytesRead = 0;
-		byte[] buffer = new byte[1024];
-		while ((bytesRead = in.read(buffer, 0, 1024)) != -1) {
-			out.write(buffer, 0, bytesRead);
-		}
-		
-		out.close();
-		in.close();
-		
-		//½ÇÁ¦ ÀúÀåµÈ ÆÄÀÏÀÇ ÀÌ¸§À» ¸®ÅÏ 
-		return savedFilename + ext;
+	
+	@Override
+	public boolean accept(File dir, String name) {
+		// TODO Auto-generated method stub
+		return name.toLowerCase().endsWith(".wmv");
 	}
 	
 	
+	
+	
 	/**
-	 * ¼­¹ö¿¡ ÀúÀåµÈ ÆÄÀÏÀ» »èÁ¦
-	 * @param fullpath ÀúÀåµÈ ÆÄÀÏÀÇ ÀüÃ¼ °æ·Î
-	 * @return »èÁ¦ ¼º°ø ¿©ºÎ
+	 * ì„œë²„ì— ì €ì¥ëœ íŒŒì¼ì„ ì‚­ì œ
+	 * @param fullpath ì €ì¥ëœ íŒŒì¼ì˜ ì „ì²´ ê²½ë¡œ
+	 * @return ì‚­ì œ ì„±ê³µ ì—¬ë¶€
 	 */
 	public boolean fileDelete(String fullpath) {
 		boolean check = false;
@@ -91,4 +48,7 @@ public class FileService {
 		}
 		return check;
 	}
+
+
+	
 }

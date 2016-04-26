@@ -6,18 +6,26 @@ public class Coding {
 	private String codingtemplet;
 	private String codinganswer;
 	private String regdate;
+	private String id;
+	
 	
 	public Coding() {
 		super();
 	}
-	public Coding(int codingno, String codingquestion, String codingtemplet, String codinganswer, String regdate) {
+
+
+	public Coding(int codingno, String codingquestion, String codingtemplet, String codinganswer, String regdate,
+			String id) {
 		super();
 		this.codingno = codingno;
 		this.codingquestion = codingquestion;
 		this.codingtemplet = codingtemplet;
 		this.codinganswer = codinganswer;
 		this.regdate = regdate;
+		this.id = id;
 	}
+	
+	
 	public int getCodingno() {
 		return codingno;
 	}
@@ -48,11 +56,21 @@ public class Coding {
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Coding [codingno=" + codingno + ", codingquestion=" + codingquestion + ", codingtemplet="
-				+ codingtemplet + ", codinganswer=" + codinganswer + ", regdate=" + regdate + "]";
+				+ codingtemplet + ", codinganswer=" + codinganswer + ", regdate=" + regdate + ", id=" + id + "]";
 	}
+
+	
 	
 	
 	
