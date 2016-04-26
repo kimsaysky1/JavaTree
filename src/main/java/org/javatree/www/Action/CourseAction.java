@@ -45,10 +45,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private ArrayList<Coding> codingList;
 	private ArrayList<Course> teachCourseList;
 	private ArrayList<Course> courseList;
-<<<<<<< HEAD
-=======
-
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
 	private ArrayList<Lecture> lectureList;
 	private Member_jt member_jt;
 	private Question question;
@@ -69,8 +65,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private int page;
 	private int total;
 	
-	
-
 	private ArrayList<Course> recentRank;
 	private ArrayList<Course> allRank;
 	private String interestString;
@@ -103,55 +97,18 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private List<File> upload = new ArrayList<File>();
 	private List<String> uploadFileName = new ArrayList<String>();
 	private List<String> uploadContentType = new ArrayList<String>();
-<<<<<<< HEAD
-	
-
-	
-<<<<<<< HEAD
-	ArrayList<Lecture> recentlyCompletedLectureList;
-	ArrayList<Lecture> latelyPurchasedLectureList;
-=======
-
 	private ArrayList<Lecture> recentlyCompletedLectureList;
 	private ArrayList<Lecture> latelyPurchasedLectureList;
 
-=======
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
-	
-	private ArrayList<Lecture> recentlyCompletedLectureList;
-	private ArrayList<Lecture> latelyPurchasedLectureList;
-	
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	Map<String, Object> session;
 	
 	@Autowired
 	SqlSession sqlSession;
-<<<<<<< HEAD
-	
-	courseDAO dao;
-=======
-<<<<<<< HEAD
-	
-
-
-=======
-
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 	private courseDAO dao;
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
-	
 	private int start;
 	private int end;
-	
-<<<<<<< HEAD
-=======
 	private int endPageGroup;
-	
-<<<<<<< HEAD
 
-=======
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		session=arg0;
@@ -545,9 +502,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 <<<<<<< HEAD
 		System.out.println(recentlyCompletedLectureList);
 		*/
-=======
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
-		//courseList = dao.studyMainView(kong);
+		
 		courseList = dao.pagingStudyCourse(kong);
 		
 		for (int i = 0; i < courseList.size(); i++) {
@@ -1509,10 +1464,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.teacherid = teacherid;
 		}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
 		public String getUploadedfilename() {
 			return uploadedfilename;
 		}
@@ -1564,18 +1515,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setUploadContentType(List<String> uploadContentType) {
 			this.uploadContentType = uploadContentType;
 		}
-<<<<<<< HEAD
-
-=======
-		
-		public ArrayList<Lecture> getRecentlyCompletedLectureList() {
-			return recentlyCompletedLectureList;
-		}
-
-		public void setRecentlyCompletedLectureList(ArrayList<Lecture> recentlyCompletedLectureList) {
-			this.recentlyCompletedLectureList = recentlyCompletedLectureList;
-		}
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
 
 		public ArrayList<Lecture> getLatelyPurchasedLectureList() {
 			return latelyPurchasedLectureList;
@@ -1600,10 +1539,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setEnd(int end) {
 			this.end = end;
 		}
-<<<<<<< HEAD
-
-=======
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
 		public int getEndPageGroup() {
 			return endPageGroup;
 		}
@@ -1612,11 +1547,6 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			this.endPageGroup = endPageGroup;
 		}
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-		
-=======
 		public String getIntrodution() {
 			return introdution;
 		}
@@ -1624,7 +1554,22 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setIntrodution(String introdution) {
 			this.introdution = introdution;
 		}
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
-	
+
+		public List<File> getUpload() {
+			return upload;
+		}
+
+		public void setUpload(List<File> upload) {
+			this.upload = upload;
+		}
+
+		public ArrayList<Lecture> getRecentlyCompletedLectureList() {
+			return recentlyCompletedLectureList;
+		}
+
+		public void setRecentlyCompletedLectureList(ArrayList<Lecture> recentlyCompletedLectureList) {
+			this.recentlyCompletedLectureList = recentlyCompletedLectureList;
+		}
+		
+		
 }

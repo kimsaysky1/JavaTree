@@ -37,13 +37,7 @@ public interface courseDAO {
 	public ArrayList<Course> pagingCourse(Map<String, Object> kong);
 	public ArrayList<Course> pagingStudyCourse(Map<String, Object> kong);
 	public int selectTotal(Map<String, Object> kong);
-<<<<<<< HEAD
 
-	public ArrayList<Course> selectAllCourseListForTeachforDetail(String id);
-	public ArrayList<Lecture> selectAllLectureListForTeach(String id);
-	public Course selectCourse(int courseno);
-
-	public int selectDefaultTotal(Map<String, Object> kong);
 	public void deleteLecture(int lectureno);
 	public void deleteLectureCoding(int lectureno);
 	public void selectdelete();
@@ -57,23 +51,18 @@ public interface courseDAO {
 	public Lecture selectLecture(int lectureno);
 	public ArrayList<Lecture> selectAllLectureListForTeach(int courseno);
 	
-=======
 	public ArrayList<Course> selectAllCourseListForTeachforDetail(String id);
 	public ArrayList<Lecture> selectAllLectureListForTeach(String id);
 	public Course selectCourse(int courseno);
 	public int selectDefaultTotal(Map<String, Object> kong);
 	public int selectFieldTotal(Map<String, Object> kong);
-<<<<<<< HEAD
 	public void insertLectureForStudy(Map<String, Object> kong);
 	public void insertLectureForStudy1(Map<String, Object> kong);
 	public int updateMemberPoint(Map<String, Object> kong);
 	public ArrayList<Lecture> selectCourseDefaultDetail(Map<String, Object> kong);
 	public void updateStudentCount(int lectureno);
 	public ArrayList<Course> searchCourse(Map<String, Object> kong);
-=======
 	public ArrayList<Lecture> selectCourseDefaultDetail(int courseno);
->>>>>>> 979bdfd3ee03f987877ac6aed5d16105165a5de1
->>>>>>> f50fd4add7419ade4fb0885e37f7e9677cbaa8ae
 	
 	
 }
