@@ -91,6 +91,23 @@
                     </div>
                 </div>
                </s:iterator>
+               
+               <s:if test="courseList == null">
+               		<div class = "form-study-course" >
+				    <div class="study-course-bg mc-item3">
+                        
+                        <div class="meta-categories">
+                        	
+                        </div>
+                        
+                        <div class="content-item">
+                            <h3><a href="#" />- 정보 없음 -</a></h3>
+                            <div class="name-author">
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+               </s:if>
 
         
                 
@@ -110,6 +127,10 @@
              <li><a href = "plusStudyMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>
             <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
             </s:elseif>
+			
+			<s:if test="#session.currentPage == 0">
+             <li><a href = "#"> <s:property value="#session.currentPage"/> </a></li>
+             </s:if>
 			
 			<s:else>
              <li><a href = "plusStudyMain.action?currentPage=<s:property value="#session.currentPage - 1"/>">&lt prev</a></li>

@@ -31,4 +31,11 @@ SELECT s.lectureno as studying, l.lectureno as lectureno, c.courseno as courseno
 		)
 		)where rnum >= 8 and rnum <= 10
 		
+		SELECT l.lectureno as lectureno, c.courseno as courseno,
+		l.lecturename, to_char(l.regdate, 'yyyy/mm/dd') as regdate, l.uploadedfilename,
+		c.coursename as coursename, c.introdution as introdution, c.courseno as courseno, c.id as teacherid
+		FROM lecture l 
+		JOIN course c ON ( l.courseno = c.courseno and c.courseno = 3 )
+		order by lectureno asc
+		
 		

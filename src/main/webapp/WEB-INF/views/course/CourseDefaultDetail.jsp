@@ -16,13 +16,12 @@
 	href='http://fonts.googleapis.com/css?family=Raleway:300,400,700,900'
 	rel='stylesheet' type='text/css'>
 <!-- Css -->
-<<<<<<< HEAD
-<link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/library/bootstrap.min.css">
+<!-- <link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/library/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/library/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/library/owl.carousel.css">
 <link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/md-font.css">
-<link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/style.css">
-=======
+<link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/style.css"> -->
+
 <link rel="stylesheet" type="text/css"
 	href="../resources/javatree_view/html/css/library/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
@@ -33,7 +32,6 @@
 	href="../resources/javatree_view/html/css/md-font.css">
 <link rel="stylesheet" type="text/css"
 	href="../resources/javatree_view/html/css/style.css">
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
@@ -200,9 +198,7 @@
 	</footer>
 	<!-- END / FOOTER -->
 
-<<<<<<< HEAD
 </body>
-=======
 	<!-- Load jQuery -->
 	<script src="../resources/jquery-2.2.3.min.js"></script>
 	<script src="../resources/jquery-ui.min.js"></script>
@@ -290,5 +286,4 @@
 	</script>
 	
 	</body>
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 </html>
