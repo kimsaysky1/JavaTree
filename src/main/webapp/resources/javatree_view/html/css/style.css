@@ -6603,6 +6603,7 @@ footer#footer.footer-style-2 {
   position: fixed;
   top: 0;
   right: 0;
+  max-width:150px;
   background-color: #fff;
   margin: 60px 0;
   font-size: 14px;

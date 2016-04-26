@@ -4,6 +4,8 @@
      	order by sl.startdate desc
 
  CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
+ 
+ create sequence question_seq;
   
 alter table studylecture add (courseno number(6,0) NOT NULL)
 
@@ -12,6 +14,9 @@ alter table course drop column typeno;
 alter table course add (regdate date default sysdate not null);
 alter table coding add (codinganswer clob not null);
 alter table coding drop column lectureno;
+alter table coding add (id varchar2(20) NOT NULL);
+
+CREATE sequence coding_seq start with 1 increment by 1;
 
 CREATE TABLE lecturecoding
 (
