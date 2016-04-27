@@ -71,10 +71,6 @@ public interface courseDAO {
 	public void updateCourseName(Map<String, Object> map);
 	public void updateCourseIntrodution(Map<String, Object> map);
 	public void deleteTeachLecture(int lectureno);
-<<<<<<< HEAD
-=======
-	
->>>>>>> cd5f7b35f114ee819e8bac3ce04e474981ddf341
 	public ArrayList<Coding> getAllCodingList(String id);
 	public void updateCodingfromMain(Coding coding);
 	public void insertCodingfromMain(Coding coding);

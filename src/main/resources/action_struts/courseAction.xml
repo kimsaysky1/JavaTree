@@ -48,13 +48,10 @@
         <action name="plusCourseDefaultDetail" class="org.javatree.www.Action.CourseAction" method="plusCourseDefaultDetail">
         	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>
         </action>
-<<<<<<< HEAD
-=======
        
         <action name="backAction" class="org.javatree.www.Action.CourseAction" method="backAction">
         	<result>/WEB-INF/views/course/courseDefaultMain.jsp</result>
         </action>
->>>>>>> cd5f7b35f114ee819e8bac3ce04e474981ddf341
         
         <action name="insertLectureForStudy" class="org.javatree.www.Action.CourseAction" method="insertLectureForStudy">
         	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>
@@ -94,10 +91,6 @@
         	<!-- <result type="redirect">insertLectureForm</result> -->
         	<result>/WEB-INF/views/course/insertLecture.jsp</result>
         </action>
-<<<<<<< HEAD
-=======
-
->>>>>>> cd5f7b35f114ee819e8bac3ce04e474981ddf341
         <!-- 문제보관함 폼(codingMain) 강의 등록 시 -->
          <action name="codingForm" >
         	<result>/WEB-INF/views/course/codingMain.jsp</result>     	
@@ -143,12 +136,8 @@
         
         <action name="deleteCodingfromMain" class="org.javatree.www.Action.CourseAction" method="deleteCodingfromMain">
         	<result type="json"></result>
-<<<<<<< HEAD
-        </action>
-=======
 		</action>
 		
->>>>>>> cd5f7b35f114ee819e8bac3ce04e474981ddf341
         <!-- 문제보관함 폼(codingMain) -->
         <action name="codingForm" class="org.javatree.www.Action.CourseAction" method="codingForm">
         	<result>/WEB-INF/views/course/codingMain.jsp</result>

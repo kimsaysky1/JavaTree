@@ -407,10 +407,6 @@
      		values (lecture_seq.nextVal, #{codingquestion}, #{codingtemplet:VARCHAR}, #{codinganswer:VARCHAR}, regdate)
   	</insert> -->
 	
-<<<<<<< HEAD
-=======
-	
->>>>>>> cd5f7b35f114ee819e8bac3ce04e474981ddf341
 	<!-- <select id="selectAllLectureListForTeach" resultType="Lecture" parameterType="String">
 		select * from lecture where courseno in
 		(select courseno from teachcourse where id = #{id})
