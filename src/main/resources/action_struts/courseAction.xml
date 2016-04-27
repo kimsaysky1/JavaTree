@@ -48,10 +48,17 @@
         <action name="plusCourseDefaultDetail" class="org.javatree.www.Action.CourseAction" method="plusCourseDefaultDetail">
         	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>
         </action>
+<<<<<<< HEAD
+=======
+       
+        <action name="backAction" class="org.javatree.www.Action.CourseAction" method="backAction">
+        	<result>/WEB-INF/views/course/courseDefaultMain.jsp</result>
+        </action>
+>>>>>>> cd5f7b35f114ee819e8bac3ce04e474981ddf341
         
         <action name="insertLectureForStudy" class="org.javatree.www.Action.CourseAction" method="insertLectureForStudy">
         	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>
-        	<result name="error" type="redirect">selectAllCourseList.action</result>
+        	<result name="error" type="redirect">backAction.action</result>
         </action>
         
         <action name="teachMainView">
@@ -74,10 +81,12 @@
         <action name="insertCourse" class="org.javatree.www.Action.CourseAction" method="insertCourse">
         	<result type="redirect">selectAllCourseListForTeach</result>
         </action>
+        
         <!-- 강의등록 폼 -->
         <action name="insertLectureForm" class="org.javatree.www.Action.CourseAction" method="insertLectureForm">
         	<result>/WEB-INF/views/course/insertLecture.jsp</result>
         </action>
+        
          <!-- 강의등록 처리 -->
         <action name="insertLecture" class="org.javatree.www.Action.CourseAction" method="insertLecture">
         	<!-- <result type="redirect">file/multiFileUpload</result> -->
@@ -85,6 +94,10 @@
         	<!-- <result type="redirect">insertLectureForm</result> -->
         	<result>/WEB-INF/views/course/insertLecture.jsp</result>
         </action>
+<<<<<<< HEAD
+=======
+
+>>>>>>> cd5f7b35f114ee819e8bac3ce04e474981ddf341
         <!-- 문제보관함 폼(codingMain) 강의 등록 시 -->
          <action name="codingForm" >
         	<result>/WEB-INF/views/course/codingMain.jsp</result>     	
@@ -130,7 +143,12 @@
         
         <action name="deleteCodingfromMain" class="org.javatree.www.Action.CourseAction" method="deleteCodingfromMain">
         	<result type="json"></result>
+<<<<<<< HEAD
         </action>
+=======
+		</action>
+		
+>>>>>>> cd5f7b35f114ee819e8bac3ce04e474981ddf341
         <!-- 문제보관함 폼(codingMain) -->
         <action name="codingForm" class="org.javatree.www.Action.CourseAction" method="codingForm">
         	<result>/WEB-INF/views/course/codingMain.jsp</result>
@@ -170,7 +188,8 @@
        <action name="updateCourseName" class="org.javatree.www.Action.CourseAction" method="updateCourseName" >
       		<result>/WEB-INF/views/course/CourseDetailForTeach.jsp</result>
        </action>
-         <action name="updateCourseIntrodution" class="org.javatree.www.Action.CourseAction" method="updateCourseIntrodution" >
+        
+        <action name="updateCourseIntrodution" class="org.javatree.www.Action.CourseAction" method="updateCourseIntrodution" >
       		<result>/WEB-INF/views/course/CourseDetailForTeach.jsp</result>
        </action>
         

@@ -16,13 +16,12 @@
 	href='http://fonts.googleapis.com/css?family=Raleway:300,400,700,900'
 	rel='stylesheet' type='text/css'>
 <!-- Css -->
-<<<<<<< HEAD
-<link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/library/bootstrap.min.css">
+<!-- <link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/library/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/library/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/library/owl.carousel.css">
 <link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/md-font.css">
-<link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/style.css">
-=======
+<link rel="stylesheet" type="text/css" href="resources/javatree_view/html/css/style.css"> -->
+
 <link rel="stylesheet" type="text/css"
 	href="../resources/javatree_view/html/css/library/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
@@ -33,7 +32,6 @@
 	href="../resources/javatree_view/html/css/md-font.css">
 <link rel="stylesheet" type="text/css"
 	href="../resources/javatree_view/html/css/style.css">
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
@@ -170,7 +168,9 @@
 		</div>
 
 
-
+	<form method="get" id="frm" name="frm">
+	
+	</form>
 
 
 	</section>
@@ -198,9 +198,7 @@
 	</footer>
 	<!-- END / FOOTER -->
 
-<<<<<<< HEAD
 </body>
-=======
 	<!-- Load jQuery -->
 	<script src="../resources/jquery-2.2.3.min.js"></script>
 	<script src="../resources/jquery-ui.min.js"></script>
@@ -230,79 +228,62 @@
 	
 	$(document).ready(function() { 
 		
+		//backspace 제어
+		 try{
+             /*
+             * [페이지 자동 이벤트 처리기]
+             * 기능 : 검색어 입력 후 BackSpace를 눌렀을때, 404에러나는 것 방지 처리
+             * 처리 : Backspace Code 입력시 '목록' 버튼을 누르게 하고, 실제 backSapce Code를 막는다
+             */
+             <%-- var $HOME_PATH ='<%=request.getContextPath()%>'; --%>
+             function backSpaceKey() {
+                 if(event.keyCode==8){                    
+                       var f1 = document.frm;
+                      
+                       /* f1.action=$HOME_PATH+"/board/dispatch_document.jsp?cur_page=1"; */
+                       f1.action = "backAction.action"
+                       f1.target="_self";
+                       f1.submit();
+                       event.preventDefault(); 
+                        }
+              if(event.keyCode == 8){
+                        return event.keyCode = 17;
+                        }
+              }
+              document.onkeydown = backSpaceKey;
+              
+   }catch(err){
+              //alert('An error has occurred ');
+   }
+		
 		// BackSpace 키 방지 이벤트
-	    $(document).keydown(function(e){   
+	   /*  $(document).keydown(function(e){   
 	        if(e.target.nodeName != "INPUT" && e.target.nodeName != "TEXTAREA"){       
 	            if(e.keyCode === 8){   
-	            return false;
+	            	
+	            	return false;
 	            }
 	        }
-	    });
+	    }); */
 	 
-	    window.history.forward(0);
+	    //window.history.forward(0);
 	    
 	    //뒤로가기 버튼 방지
-	    history.pushState(null, null, "#noback");
-	    $(window).bind("hashchange", function(){
-	      history.pushState(null, null, "#noback");
-	    });
+	     //history.replaceState(null, null, "backAction.action");
+	   /*  $(window).bind("hashchange", function(){
+	   		history.pushState(null, null, "backAction.action");
+	    }); */
+	
+	    //브라우저 뒤로가기 제어!
+	history.pushState(null, null, location.href);
+  	window.onpopstate = function(event) {
+	    	
+	    	location.replace("backAction.action");
+   };
 	    
-	  //우클릭방지
-	    var cancel=function(e){
-	    	  if (window.event) {
-	    	   window.event.cancelBubble = true;
-	    	   window.event.returnValue = false;
-	    	  }
-	    	  if (e && e.stopPropagation && e.preventDefault) {
-	    	   e.stopPropagation();
-	    	   e.preventDefault();
-	    	  }
-	    	  return false;
-	    	 };
-	    	 var block=function(e){
-	    	  e = e || window.event;
-	    	  var t=e.srcElement || e.target;
-	    	  var tag=t.tagName;
-	    	  if (e && tag==='HTML' || tag==='INPUT' || tag==='TEXTAREA' || tag==='BUTTON' || tag==='SELECT' || tag==='OPTION' || tag==='EMBED' || tag==='OBJECT') { return; }
-	    	  if (e.type==='keydown' || e.type=='keyup') {
-	    	   // keyboard event : only block ctrl-A, ctrl-a, ctrl-C, ctrl-c, meta-A, meta-a, meta-C, meta-c
-	    	   if ((e.ctrlKey || e.metaKey) && (e.keyCode == 65 || e.keyCode == 97 || e.keyCode == 67 || e.keyCode == 99)) { return cancel(e); }
-	    	  } else if(e.type == "contextmenu"){
-	    	   alert('우클릭 금지!');
-	    	   return cancel(e);
-	    	  } else {
-	    	   return cancel(e);
-	    	  }
-	    	 }
-	    	 var addEvent = function(el, type, fn){
-	    	     if (window.addEventListener) {
-	    	         el.addEventListener(type, fn, false);
-	    	     }
-	    	     else if (window.attachEvent) {
-	    	         el.attachEvent('on' + type, fn);
-	    	     }
-	    	     else {
-	    	         el['on' + type] = fn;
-	    	     }
-	    	 }
-	    	 var addBlockEvent = function(){
-	    	  addEvent(document.body,'keydown',block);
-	    	  addEvent(document.body,'keyup',block);
-	    	  addEvent(document.body,'mouseup',block);
-	    	  addEvent(document.body,'mousedown',block);
-	    	  addEvent(document.body,'dragstart',block);
-	    	  addEvent(document.body,'selectstart',block);
-	    	  addEvent(document.body,'copy',block);
-	    	  addEvent(document.body,'contextmenu', block);
-	    	 }
-	    	 addEvent(window,'load',addBlockEvent);
-	    	})();
-	    
-	    
-	/* }); */
+	});
 	
 	</script>
 	
 	</body>
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 </html>

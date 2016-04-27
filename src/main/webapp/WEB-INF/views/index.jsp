@@ -23,8 +23,12 @@
 <title>Mega Course - Learning and Courses HTML5 Template</title>
 </head>
 <body>
+<<<<<<< HEAD
 <s:include value="/resources/header.jsp"></s:include>
 <%-- <%@include file="/resources/header.jsp" %> --%>
+=======
+<%@include file="/resources/header.jsp" %>
+>>>>>>> cd5f7b35f114ee819e8bac3ce04e474981ddf341
 
 		<!-- HOME SLIDER -->
 		

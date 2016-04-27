@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -278,9 +279,11 @@ body {
 </head>
 <body>
 
+
 <div id="player">
-	<video width="960" height="540" preload="auto" id="video" autoplay="autoplay">
-		<source src="" type="video/mp4" />
+	<input type="file" accept="video/*"/>	 
+	<video width="960" height="540" id="video" autoplay="autoplay">
+		<%-- <source src="" type="video/mp4" /> --%>
 	</video>
 <div id="seek">
 <input type="range" class="time-slider" id="seek-bar" value="0" step="any" max="100" min="0" step="any" />
@@ -296,7 +299,6 @@ body {
 <button title="restart" class="re">■</button>
 <button title="CodingMode" class="cod">코딩</button>
 <button title="WatchingMode" class="wat">강의</button>
-
 
 
  <select id='speed' name="sel" onchange="javascript:selectEvent(this)">
@@ -587,8 +589,44 @@ function addTab(classnum) {
 <script type="text/javascript">
 
 //time slider click 버전 시작
-
+//and load 시작
 window.onload = function() {
+	
+	(function localFileVideoPlayer() {
+		'use strict'
+	  var URL = window.URL || window.webkitURL
+	 /*  var displayMessage = function (message, isError) {
+	    var element = document.querySelector('#message')
+	    element.innerHTML = message
+	    element.className = isError ? 'error' : 'info'
+	  } */
+	  
+	  
+	  var playSelectedFile = function (event) {
+		alert("event>> " + event);
+		alert("this>> " + this);
+		
+		var file = this.files[0]
+	    var type = file.type
+	    var videoNode = document.querySelector('#player video');
+	    var canPlay = videoNode.canPlayType(type);
+	  /*   if (canPlay === '') canPlay = 'no'
+	    var message = 'Can play type "' + type + '": ' + canPlay
+	    var isError = canPlay === 'no'
+	    displayMessage(message, isError) */
+
+	    /* if (isError) {
+	      return
+	    }
+ */		alert("file>> " + file);
+	    var fileURL = URL.createObjectURL(file)
+	    alert("fileURL>> " + fileURL);
+	    videoNode.src = fileURL
+	  }
+	  var inputNode = document.querySelector('input')
+	  inputNode.addEventListener('change', playSelectedFile, false)
+	})()
+	
 	var video = document.querySelector('#player video');
 	var seekBar = $("#seek-bar");
 	var seekBarWrapper = $("#seek");
@@ -731,7 +769,7 @@ window.onload = function() {
 // time-slier 마침
 
 //우클릭방지
-document.onmousedown=disableclick;
+/* document.onmousedown=disableclick;
 status="Right Click Disabled";
 function disableclick(event)
 {
@@ -740,7 +778,7 @@ function disableclick(event)
      alert(status);
      return false;    
    }
-}
+} */
 
 //volume
  // change volume based on incoming value 
@@ -1053,6 +1091,8 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 		
 	}, false)
+	
+
 	  
 	  
 	  //재생 버튼에 click 이벤트 리스너를 지정

@@ -111,13 +111,25 @@
 	
 	<!-- CourseDefaultDetail 강좌상세보기 -->
 	<select id="selectCourseDefaultDetail" parameterType="map" resultType="Lecture">
+		<if test="id != null">
 		SELECT s.lectureno as studying, l.lectureno as lectureno, c.courseno as courseno,
 		l.lecturename, to_char(l.regdate, 'yyyy/mm/dd') as regdate, l.uploadedfilename,
 		c.coursename as coursename, c.introdution as introdution, c.courseno as courseno, c.id as teacherid
 		FROM lecture l 
 		JOIN course c ON ( l.courseno = c.courseno and c.courseno = #{courseno} )
-		LEFT OUTER JOIN studylecture s ON (  s.lectureno = l.lectureno and s.courseno = #{courseno} and s.id = #{id})
+		LEFT OUTER JOIN studylecture s ON (  s.lectureno = l.lectureno and s.courseno = #{courseno} and s.id = #{id}
+		)
 		order by lectureno asc
+		</if>
+		<if test="id == null">
+		SELECT l.lectureno as lectureno, c.courseno as courseno,
+		l.lecturename, to_char(l.regdate, 'yyyy/mm/dd') as regdate, l.uploadedfilename,
+		c.coursename as coursename, c.introdution as introdution, c.courseno as courseno, c.id as teacherid
+		FROM lecture l 
+		JOIN course c ON ( l.courseno = c.courseno and c.courseno = #{courseno} )
+		order by lectureno asc
+		</if>
+		
 	</select>
 	
 	<select id="selectCourseDefaultDetailTotal" resultType="int" parameterType="map">
@@ -184,9 +196,9 @@
 	<!-- 분야별 검색   -->	
 		<select resultType="Course" id="selectListbyField" parameterType="map">
 	
-	select courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/mm/dd') as regdate
-	from (select rownum as rnum, courseno, coursename, id, username, INTRODUTION, regdate from course
-	 where courseno in (select courseno from coursetype where typeno IN 
+	select * from	
+	(select rownum as rnum, courseno, coursename, id, username, INTRODUTION, to_char(regdate, 'yyyy/mm/dd') as regdate
+	from (select * from course where courseno in (select courseno from coursetype where typeno IN 
 		(
 		<if test="interest0 != null">
 			#{interest0}
@@ -204,15 +216,14 @@
 			, #{interest4}
 		</if>
 		))
-		order by regdate 
+		order by courseno 
 		<if test="order == 'desc'">
 		desc
 		</if>
 		<if test="order == 'asc'">
 		asc
-		</if>		
-		)
-		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
+		</if>	
+		))where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end}
 	
 	</select>	
 	
@@ -396,6 +407,10 @@
      		values (lecture_seq.nextVal, #{codingquestion}, #{codingtemplet:VARCHAR}, #{codinganswer:VARCHAR}, regdate)
   	</insert> -->
 	
+<<<<<<< HEAD
+=======
+	
+>>>>>>> cd5f7b35f114ee819e8bac3ce04e474981ddf341
 	<!-- <select id="selectAllLectureListForTeach" resultType="Lecture" parameterType="String">
 		select * from lecture where courseno in
 		(select courseno from teachcourse where id = #{id})
