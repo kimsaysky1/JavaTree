@@ -1,7 +1,14 @@
 package org.javatree.www.Action;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -89,8 +96,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private String uploadedfilename, originalfilename;
 	private Subnote subnote;
 	
-	private static final String UploadPath="C:/coding/";
-	
+	private static final String UploadPath="E://apache-tomcat-8.0.32-windows-x64/apache-tomcat-8.0.32/wtpwebapps/JavaTree/resources/upload/";
 /*	private List<File> upload = new ArrayList<File>();
 	private List<String> uploadContentType= new ArrayList<String>();
 	private List<String> uploadFileName=new ArrayList<String>();*/
@@ -1216,7 +1222,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		 * @throws IOException 
 		 */
 		public String insertLecture() throws IOException{
-			
+			System.out.println("come in");
 			courseDAO dao = sqlSession.getMapper(courseDAO.class);
 			
 			/*insert Lecture*/
@@ -1242,25 +1248,94 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			System.out.println("check_point1 : "+check_point1);
 			System.out.println("check_point2 : "+check_point2);	   
 			
-			
-			if(check_point1.equals("wmv") || check_point1.equals("avi") ||  check_point1.equals("mp4") ||check_point2.equals("jpg") && check_point2.equals("png") ||  check_point2.equals("gif") ||  check_point2.equals("bmp") ||  check_point2.equals( "docx") ||  check_point2.equals("java") ||  check_point2.equals("txt")){ 
+						
+ //여기서부터 내꺼
+	            
+	    		/*insert Lecture*/
+	    		//String UploadPath0 = "E://apache-tomcat-8.0.32-windows-x64/apache-tomcat-8.0.32/wtpwebapps/JavaTree/resources/upload/";
+	    		System.out.println(uploadContentType+"컨텐트타입");
+	    		System.out.println(uploadFileName+"파일네임");
+	    		//System.out.println(getUpload()+"실제파일");
+	    		//System.out.println(ServletActionContext.getRequest().getRequestURL());
+	    		
+	    		/*강의video*/
+	    		System.out.println(UploadPath+uploadFileName.get(0));
+	    		File video=new File(UploadPath+uploadFileName.get(0)); /*파일네임*/
+	    		FileUtils.copyFile(upload.get(0), video); /*실제파일저장*/
+	    		System.out.println(video+"video");
+	    		
+	    		originalfilename="lecture,"+UploadPath+video+","+System.currentTimeMillis();/*실제파일이름*/
+	    		uploadedfilename=uploadFileName.get(0); /*실제파일경로*/
+	    		System.out.println("경로1: "+uploadedfilename);
+	    		 //입력받은 파일 이름을 가지고 File 객체를 생성
+	    		
+				lecture.setUploadedfilename(UploadPath+uploadedfilename);
+				lecture.setOriginalfilename(originalfilename);
+				dao.insertLecture(lecture);
+	    		
+	    		 try {
+	    			   Class.forName("oracle.jdbc.driver.OracleDriver");
+	    			   System.out.println("드라이버 검색 성공");
+	    			  }catch(ClassNotFoundException e) {
+	    			   System.err.println("error = " + e);
+	    			   System.exit(1);
+	    			  }
+	    			  Connection conn = null;
+	    			  PreparedStatement pstmt = null;
+	    			  String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	    			  String id = "hr";
+	    			  String pass = "hr";
+	    			  String query = null;
+	    			  try {
+	    			   conn = DriverManager.getConnection(url, id, pass);
+	    			  }catch(SQLException e) {
+	    			   System.err.println("sql error = " + e);
+	    			   System.exit(1); // 비정상 종료시 사용되는 함수이다.
+	    			  }
+	    			  
+	    			  /*Scanner sc = new Scanner(System.in);
+	    			  System.out.print("업로드 할 파일 = ");
+	    			  String filename = sc.next();*/
+	    			 
+	    			  //File f = new File(filename);
+	    			  if(!video.exists()) {
+	    			   System.out.println("파일이 존재 하지 않습니다.");
+	    			   System.exit(1);
+	    			  }
+	    			  
+	    			  ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	    			  FileInputStream fis = new FileInputStream(video);
+	    			  while(true) {
+	    			   int x = fis.read();
+	    			   if(x == -1) break;
+	    			   bos.write(x);
+	    			  }
+	    			  fis.close();
+	    			  bos.close(); 
+	    			  ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+	    			  
+	    			  int lecNo = dao.selectMaxLectureno();
+	    			  
+	    			  query = "insert into lecture (filedata) values (?) where lectureno = ?";
+	    			  try {
+	    			   pstmt = conn.prepareStatement(query);
+	    			   pstmt.setBinaryStream(0, bis, bos.size());
+	    			   pstmt.setInt(1, lecNo);
+	    			   pstmt.executeUpdate();
+	    			   System.out.println("업로드 성공!");
+	    			   pstmt.close();
+	    			   conn.close();
+	    			  }catch(SQLException e) {
+	    			   System.err.println("sql error = " + e);
+	    			  }
+	            
+	            //여기까지 내꺼
 				
-				/*강의video*/
-				File video=new File(UploadPath+uploadFileName.get(0)); /*파일네임*/
-				FileUtils.copyFile(upload.get(0), video); /*실제파일저장*/
-				System.out.println(video+"video");
 				/*서브노트파일*/
 				File note=new File(UploadPath+uploadFileName.get(1));
 				FileUtils.copyFile(upload.get(1), note); /*실제파일저장*/
 				System.out.println(note+"subnote");
 				
-				
-				originalfilename="lecture,"+UploadPath+video+","+System.currentTimeMillis();/*실제파일이름*/
-				uploadedfilename=uploadFileName.get(0); /*실제파일경로*/
-				System.out.println("경로1: "+uploadedfilename);
-				lecture.setUploadedfilename(UploadPath+uploadedfilename);
-				lecture.setOriginalfilename(originalfilename);
-				dao.insertLecture(lecture);
 				originalfilename="subnote,"+note+","+System.currentTimeMillis();
 				uploadedfilename=uploadFileName.get(1);
 				System.out.println("경로2: "+uploadedfilename);
@@ -1285,73 +1360,8 @@ public class CourseAction extends ActionSupport implements SessionAware {
 				map.put("studentcount", 0);
 				System.out.println(map+"티치렉쳐맵");
 				dao.insertTeachLecture(map);
-				
-				
-			
-			}else{
-				
-			}
 			
 			
-			/*파일명 + System.currentTimeMillis()
-			
-			"subnote"+파일명+System.currentTimeMillis()*/
-			
-			/*file upload
-			/*if(upload != null && (upload.exists())) {
-				lecture.setOriginalfilename(originalfilename);
-				FileService fs = new FileService();
-				
-				String savePath = "C://coding";
-				try {
-					String savedfile = fs.saveFile(upload, savePath, uploadedfilename);
-					lecture.setUploadedfilename(savedfile);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}*/
-			/*lecture.setOriginalfilename(originalfilename);
-			lecture.setUploadedfilename(uploadedfilename);*/
-			
-			/*dao.insertLecture(lecture);*/
-			/*/////////////////////////////////////////////////////////////*/
-			/*insert Subnote*/
-			/*id=(String) session.get("loginId");
-			subnote.setId(id);*/
-			/*subnote.setUploadedfilename(uploadedfilename);*/
-			
-			/*file upload*/
-			/*if(upload != null && (upload.exists())) {
-				//lecture.setOriginalfilename(originalfilename);
-				FileService fs = new FileService();
-				
-				String savePath = "C://coding";
-				try {
-					String savedfile = fs.saveFile(upload, savePath, uploadedfilename);
-					lecture.setUploadedfilename(savedfile);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}*/
-			
-/*			System.out.println(subnote+"insertLecture->subnote 객체");
-			dao.insertSubnote(subnote);*/
-			
-			
-			/*insert lectureCoding*/
-				
-			/*Map<String, Object> map = new HashMap<>();*/
-			/*dao.insertLectureCoding(codingno);*/
-				
-				
-
-			/*insert Coding-나중에 하겠다.*/
-			
-			/*coding.setCodingquestion(codingquestion);
-			coding.setCodingtemplet(codingtemplet);
-			coding.setCodinganswer(codinganswer);
-			coding.setRegdate(regdate);
-			dao.insertCoding(coding);*/
 			return SUCCESS;
 			
 		}

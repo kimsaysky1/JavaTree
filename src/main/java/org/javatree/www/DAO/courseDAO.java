@@ -78,5 +78,6 @@ public interface courseDAO {
 	public void deleteCodingfromMain(int codingno);
 	public int getCodingno(int lectureno);
 	public ArrayList<Coding> getCodinginlecture(int codingno);
+	public int selectMaxLectureno();
 	
 }

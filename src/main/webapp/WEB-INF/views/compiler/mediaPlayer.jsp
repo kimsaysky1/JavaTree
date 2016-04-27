@@ -281,8 +281,8 @@ body {
 
 
 <div id="player">
-	<input type="file" accept="video/*"/>	 
-	<video width="960" height="540" id="video" autoplay="autoplay">
+	<!-- <input type="file" accept="video/*"/>	 --> 
+	<video width="960" height="540" id="video" autoplay="autoplay" src="../resources/upload/a.mp4">
 		<%-- <source src="" type="video/mp4" /> --%>
 	</video>
 <div id="seek">

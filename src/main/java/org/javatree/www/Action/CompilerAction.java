@@ -66,7 +66,6 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 	public String runCode() throws Exception{
 		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
 		contentList = new ArrayList<>();
-		
 		if ((code1!=null)&&!(code1.trim().equals(""))) {
 			contentList.add(code1);
 		}
