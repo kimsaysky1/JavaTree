@@ -328,16 +328,7 @@ body {
 
 <!-- editor 시작 -->
 
-<s:if test="codingList != null">
-	<select class = "codingList">
-		<option>문제선택</option>
-		<s:iterator value="codingList" status="incr">
-			<option value = "<s:property value="codingno"/>">
-			<s:property value="%{#incr.index+1}"/>번 문제
-			</option>
-		</s:iterator>
-	</select>
-</s:if> 
+
 <textarea rows="20" cols=60" id="question" placeholder="질문란" readonly="readonly"></textarea>
 	<div id="wrapper">
 	 	<div class="line_number"></div>
@@ -348,21 +339,33 @@ body {
 	   		<textarea id="class1_content" class="editor"></textarea>
 	    </div>
 	</div>
-	<textarea rows="20" cols="40" placeholder="결과" id = "result" readonly="readonly"></textarea>
+	
+<textarea rows="20" cols="40" placeholder="결과" id = "result" readonly="readonly"></textarea>
 	<br/>
-	<input type = "button" value="초기화" id = "initialization" />
-	<input type = "button" value="실행" id = "run"/>
-	<input type = "button" value="Q&A" id = "qna"/>
+	<s:if test="codingList != null">
+	<select class = "codingList">
+		<option>문제선택</option>
+		<s:iterator value="codingList" status="incr">
+			<option value = "<s:property value="codingno"/>">
+			<s:property value="%{#incr.index+1}"/>번 문제
+			</option>
+		</s:iterator>
+	</select>
+	</s:if>
+	<br/> 
 	<button id = "insertClass">클래스 추가</button>
+	<br/>
+	<button id = "initialization">초기화</button>
+	<br/>
+	<button id = "run">실행</button>
+	<br/>
+	<button id = "qna">Q&A</button>
 
 <script type="text/javascript">
 
 $(function(){
 	
-	//$('#doccontent > textarea:visible').numberedtextarea();
-	
 	$('body').on('input propertychange scroll change keyup paste','#doccontent > textarea:visible', function (key) {
-			//alert($(this).prop("nodeName"));
         	var textarea = $(this);
         	var width = parseFloat(textarea.css('width'));
         	var height = parseFloat(textarea.css('height'));

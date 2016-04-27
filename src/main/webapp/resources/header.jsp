@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>   
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,104 +82,23 @@
 									<h4>Notification</h4>
 									<span class="count-value">2</span>
 								</div>
-
+								
 								<ul class="list-notification">
-
-									<!-- LIST ITEM -->
-									<li class="ac-new"><a href="#">
-											<div class="list-body">
-												<div class="author">
-													<span>Megacourse</span>
-													<div class="div-x"></div>
+										<!-- LIST ITEM -->
+										<li class="ac-new"><a href="#">
+												<div class="list-body">
+													<div class="author">
+														<span></span>
+														<div class="div-x"></div>
+													</div>
+													<p></p>
+													<div class="time">
+														<span></span>
+													</div>
 												</div>
-												<p>attend Salary for newbie course</p>
-											
-												<div class="time">
-													<span>5 minutes ago</span>
-												</div>
-											</div>
-									</a></li>
-									<!-- END / LIST ITEM -->
-
-									<!-- LIST ITEM -->
-									<li class="ac-new"><a href="#">
-											<div class="list-body">
-												<div class="author">
-													<span>Megacourse</span>
-													<div class="div-x"></div>
-												</div>
-												<p>attend Salary for newbie course</p>
-												
-												<div class="time">
-													<span>5 minutes ago</span>
-												</div>
-											</div>
-									</a></li>
-									<!-- END / LIST ITEM -->
-
-									<!-- LIST ITEM -->
-									<li><a href="#">
-											<div class="list-body">
-												<div class="author">
-													<span>Megacourse</span>
-													<div class="div-x"></div>
-												</div>
-												<p>attend Salary for newbie course</p>
-												
-												<div class="time">
-													<span>5 minutes ago</span>
-												</div>
-											</div>
-									</a></li>
-									<!-- END / LIST ITEM -->
-
-									<!-- LIST ITEM -->
-									<li><a href="#">
-											<div class="list-body">
-												<div class="author">
-													<span>Megacourse</span>
-													<div class="div-x"></div>
-												</div>
-												<p>attend Salary for newbie course</p>
-												
-												<div class="time">
-													<span>5 minutes ago</span>
-												</div>
-											</div>
-									</a></li>
-									<!-- END / LIST ITEM -->
-
-									<!-- LIST ITEM -->
-									<li><a href="#">
-											<div class="list-body">
-												<div class="author">
-													<span>Megacourse</span>
-													<div class="div-x"></div>
-												</div>
-												<p>attend Salary for newbie course</p>
-												
-												<div class="time">
-													<span>5 minutes ago</span>
-												</div>
-											</div>
-									</a></li>
-									<!-- END / LIST ITEM -->
-
-									<!-- LIST ITEM -->
-									<li><a href="#">
-											<div class="list-body">
-												<div class="author">
-													<span>Megacourse</span>
-													<div class="div-x"></div>
-												</div>
-												<p>attend Salary for newbie course</p>
-											
-												<div class="time">
-													<span>5 minutes ago</span>
-												</div>
-											</div>
-									</a></li>
-									<!-- END / LIST ITEM -->
+										</a></li>
+										<!-- END / LIST ITEM -->
+									
 								</ul>
 							</div>
 						</li>

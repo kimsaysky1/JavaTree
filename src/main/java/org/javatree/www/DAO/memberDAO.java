@@ -8,6 +8,7 @@ import java.util.Map;
 import org.javatree.www.VO.Ability;
 import org.javatree.www.VO.Interest;
 import org.javatree.www.VO.Member_jt;
+import org.javatree.www.VO.Notification;
 
 public interface memberDAO {
 	
@@ -20,6 +21,7 @@ public interface memberDAO {
 	public int updateMember(Member_jt member_jt);
 	public Member_jt searchMember(Member_jt member_jt);
 	public void insertMember(HashMap<String, Object> map);
+	public List<Notification> checkNotification(String id);
 	
 	
 	

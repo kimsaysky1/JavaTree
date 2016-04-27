@@ -1,12 +1,7 @@
 alter table coding add (id varchar2(20) NOT NULL);--20160425 박수지 추가
 
-<<<<<<< HEAD
- CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
- 
- create sequence question_seq;
-=======
+create sequence question_seq;
 CREATE sequence subnote_seq start with 1 increment by 1;--20160421추가    	
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
   
 alter table studylecture add (courseno number(6,0) NOT NULL)
 
@@ -14,26 +9,17 @@ ALTER TABLE teachcourse ADD (startdate date DEFAULT sysdate NOT NULL);
 alter table course drop column typeno;
 alter table course add (regdate date default sysdate not null);
 alter table coding add (regdate date default sysdate not null); -- 20160423 김영호 추가
+alter table notification add (questionno number(6,0)); --20160427 김영호 추가
+alter table notification add (replyno number(6,0)); --20160427 김영호 추가
 alter table coding add (codinganswer clob not null);
 alter table coding drop column lectureno;
-<<<<<<< HEAD
+
 alter table coding add (id varchar2(20) NOT NULL);
 
 CREATE sequence coding_seq start with 1 increment by 1;
-=======
-<<<<<<< HEAD
-=======
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 
 alter table coding drop column regdate;--20160424 박수지 추가
 
-CREATE TABLE lecturecoding--20160419�߰�
-<<<<<<< HEAD
-
-=======
-=======
->>>>>>> 32cd714317ab63a3cbf85a77aa0e03cf1d1e9fd3
->>>>>>> 7944db6278ccab4d238732e44bad456b7039dc49
 CREATE TABLE lecturecoding
 (
 	lectureno number(6,0) NOT NULL,
@@ -60,7 +46,10 @@ alter table lecture modity (uploadedfilename varchar2(900));
 alter table lecture modify (originalfilename varchar2(500));--20160422 ����
 
 alter table coding add (id varchar2(20) NOT NULL);--20160425 박수지 추가
-
+CREATE sequence coding_seq start with 1 increment by 1;--20160424 박수지 수정
+CREATE sequence question_seq start with 1 increment by 1;--20160425 박수지 수정
+ALTER TABLE studylecture
+   ADD UNIQUE (lectureno)--20160425 창우 수정 ~ 재수강신청 방지
 /* Drop Tables */
 drop table lecturecoding cascade constraints;
 
@@ -81,7 +70,7 @@ DROP TABLE teachcourse CASCADE CONSTRAINTS;
 DROP TABLE course CASCADE CONSTRAINTS;
 DROP TABLE error CASCADE CONSTRAINTS;
 DROP TABLE interest CASCADE CONSTRAINTS;
-DROP TABLE push CASCADE CONSTRAINTS;
+DROP TABLE notification CASCADE CONSTRAINTS;
 DROP TABLE member_jt CASCADE CONSTRAINTS;
 DROP TABLE typename CASCADE CONSTRAINTS;
 
@@ -282,7 +271,7 @@ CREATE TABLE typename
 
 
 
-CREATE TABLE push
+CREATE TABLE notification
 (
 	senderid varchar2(20) NOT NULL,
 	receiverid varchar2(20) NOT NULL,
@@ -432,13 +421,13 @@ ALTER TABLE interest
 ;
 
 
-ALTER TABLE push
+ALTER TABLE notification
 	ADD FOREIGN KEY (senderid)
 	REFERENCES member_jt (id)
 ;
 
 
-ALTER TABLE push
+ALTER TABLE notification
 	ADD FOREIGN KEY (receiverid)
 	REFERENCES member_jt (id)
 ;
@@ -591,11 +580,11 @@ COMMENT ON COLUMN member_jt.email IS 'email';
 COMMENT ON COLUMN member_jt.countquestion IS 'countquestion : ���� Ƚ��';
 COMMENT ON COLUMN member_jt.countresponse IS 'countresponse : �亯 Ƚ�� ';
 COMMENT ON COLUMN member_jt.countrecommend IS 'countrecommend : �亯 ��õ Ƚ�� ';
-COMMENT ON TABLE push IS '�� ���̺�';
-COMMENT ON COLUMN push.senderid IS 'senderid';
-COMMENT ON COLUMN push.receiverid IS 'receiverid';
-COMMENT ON COLUMN push.message IS 'message';
-COMMENT ON COLUMN push.regdate IS 'regdate';
+COMMENT ON TABLE notification IS '�� ���̺�';
+COMMENT ON COLUMN notification.senderid IS 'senderid';
+COMMENT ON COLUMN notification.receiverid IS 'receiverid';
+COMMENT ON COLUMN notification.message IS 'message';
+COMMENT ON COLUMN notification.regdate IS 'regdate';
 COMMENT ON TABLE question IS '�� ���̺� : (15) ���� ���̺�';
 COMMENT ON COLUMN question.questionno IS 'questionno';
 COMMENT ON COLUMN question.typeno IS 'typeno';

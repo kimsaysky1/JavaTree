@@ -21,6 +21,8 @@
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
+<script type="text/javascript" src="script/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="script/jquery-ui.min.js" ></script>    
 <title>JavaTree Main</title>
 </head>
 <body>
@@ -47,18 +49,18 @@
 		 <div class="qna-list-field">
 			 <fieldset>
 			 <legend>Field</legend>
-			 <input type="checkbox" name="interest" value="1" />&nbsp;<label>PUREJAVA</label>
-			 &nbsp;<input type="checkbox" name="interest" value="2" />&nbsp;<label>WEB</label>
-			 &nbsp;<input type="checkbox" name="interest" value="3" />&nbsp;<label>MOBILE</label>
-			 &nbsp;<input type="checkbox" name="interest" value="4" />&nbsp;<label>IOT</label>
-			 &nbsp;<input type="checkbox" name="interest" value="5" />&nbsp;<label>SWING</label>
-			 &nbsp;<input type="checkbox" name="interest" value="6" />&nbsp;<label>JDBC</label>
-			 &nbsp;<input type="checkbox" name="interest" value="7" />&nbsp;<label>API</label>
+			 <input type="checkbox" name="interest" value="1" onchange="javascript:selectByField(this)" />&nbsp;<label>PUREJAVA</label>
+			 &nbsp;<input type="checkbox" name="interest" value="2" onchange="javascript:selectByField(this)" />&nbsp;<label>WEB</label>
+			 &nbsp;<input type="checkbox" name="interest" value="3" onchange="javascript:selectByField(this)" />&nbsp;<label>MOBILE</label>
+			 &nbsp;<input type="checkbox" name="interest" value="4" onchange="javascript:selectByField(this)" />&nbsp;<label>IOT</label>
+			 &nbsp;<input type="checkbox" name="interest" value="5" onchange="javascript:selectByField(this)" />&nbsp;<label>SWING</label>
+			 &nbsp;<input type="checkbox" name="interest" value="6" onchange="javascript:selectByField(this)" />&nbsp;<label>JDBC</label>
+			 &nbsp;<input type="checkbox" name="interest" value="7" onchange="javascript:selectByField(this)" />&nbsp;<label>API</label>
 			 <br>
-			 <input type="checkbox" name="interest" value="8" />&nbsp;<label>SPRING</label>
-			 &nbsp;<input type="checkbox" name="interest" value="9" />&nbsp;<label>STRUTS</label>
-			 <input type="checkbox" name="interest" value="10" />&nbsp;<label>etcFramework</label>
-			 &nbsp;<input type="checkbox" name="interest" value="11" />&nbsp;<label>ETC</label>
+			 <input type="checkbox" name="interest" value="8" onchange="javascript:selectByField(this)" />&nbsp;<label>SPRING</label>
+			 &nbsp;<input type="checkbox" name="interest" value="9" onchange="javascript:selectByField(this)" />&nbsp;<label>STRUTS</label>
+			 <input type="checkbox" name="interest" value="10" onchange="javascript:selectByField(this)" />&nbsp;<label>etcFramework</label>
+			 &nbsp;<input type="checkbox" name="interest" value="11" onchange="javascript:selectByField(this)" />&nbsp;<label>ETC</label>
 			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="button" value = "SEARCH" class = "mc-btn-7 btn-style-1" id="searchByCheckBox" />
        </fieldset>
@@ -326,6 +328,13 @@
 	<!-- END / FOOTER -->
 	
 	<!-- Load jQuery -->
+	<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../resources/javatree_view/html/js/library/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
+	<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
+	<script type="text/javascript" src="../resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
+	<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
+	<script type="text/javascript" src="../resources/javatree_view/html/js/scripts.js"></script>
 	<script type="text/javascript">
 	
 	$(function(){
@@ -335,7 +344,7 @@
 		});
 		
 		$("body").on('click', "#searchByCheckBox", function(){
-			
+			alert(1);
 			var stringForTokenizer = '';
 			var test = $("[name=interest]");
 			for(var i = 0; i < test.length; i++){
@@ -395,15 +404,5 @@
 		});
 	});
 	</script>
-	
-			<!-- Load jQuery -->
-	<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="../resources/javatree_view/html/js/library/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
-	<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
-	<script type="text/javascript" src="../resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
-	<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
-	<script type="text/javascript" src="../resources/javatree_view/html/js/scripts.js"></script>
-	
 </body>
 </html>

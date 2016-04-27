@@ -7,7 +7,7 @@
 
     <constant name="struts.devMode" value="true" />
 
-    <package name="member" namespace="/member" extends="default">
+    <package name="member" namespace="/member" extends="default, json-default">
 
         <action name="joinForm">
         	<result>/WEB-INF/views/member/register.jsp</result>
@@ -23,7 +23,6 @@
 			<result>/WEB-INF/views/member/join_pop.jsp</result>
 		</action>
         
-        
         <action name="loginFrom">
         	<result>/WEB-INF/views/member/login.jsp</result>
         </action>
@@ -38,7 +37,9 @@
         	<result type="redirect">/index.action</result>
         </action>
         
-        
+        <action name="checkNotification" class="org.javatree.www.Action.MemberAction" method="checkNotification">
+        	<result type="json"></result>
+        </action>
       
 
 <!-- 비밀번호, 아이디 찾는 폼 -->

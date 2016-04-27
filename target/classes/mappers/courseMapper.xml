@@ -371,19 +371,13 @@
 	</insert>
 	
 	<!-- lecturecoding -->
-<<<<<<< HEAD
- 	<!-- <insert id="insertlecturecoding" parameterType="map">
-       <selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
-=======
 	<!-- <insert id="insertlecturecoding">
         <selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
     		select max(lectureno) from lecture 
   		</selectKey>
       	insert into coursetype (lectureno , codingno)
      	values (#{lectureno}, #{codingno})
   	</insert> -->
-<<<<<<< HEAD
 	
 	<!-- coding -->
 	  <!-- 	<insert id="insertCoding" parameterType="map">
@@ -393,7 +387,6 @@
       		insert into coding (codingno, courseno, coursename, startdate)
      		values (#{id}, #{courseno}, #{coursename},sysdate )
   	</insert> -->
-=======
   	
   	
   	<!-- Coding -->
@@ -402,8 +395,6 @@
       		insert into coding (codingno, codingquestion, codingtemplet, codinganswer, regdate)
      		values (lecture_seq.nextVal, #{codingquestion}, #{codingtemplet:VARCHAR}, #{codinganswer:VARCHAR}, regdate)
   	</insert> -->
-	
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
 	
 	<!-- <select id="selectAllLectureListForTeach" resultType="Lecture" parameterType="String">
 		select * from lecture where courseno in

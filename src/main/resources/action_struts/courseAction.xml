@@ -49,8 +49,6 @@
         	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>
         </action>
         
-         
-        
         <action name="insertLectureForStudy" class="org.javatree.www.Action.CourseAction" method="insertLectureForStudy">
         	<result>/WEB-INF/views/course/CourseDefaultDetail.jsp</result>
         	<result name="error" type="redirect">selectAllCourseList.action</result>
@@ -87,7 +85,6 @@
         	<!-- <result type="redirect">insertLectureForm</result> -->
         	<result>/WEB-INF/views/course/insertLecture.jsp</result>
         </action>
-<<<<<<< HEAD
         <!-- 문제보관함 폼(codingMain) 강의 등록 시 -->
          <action name="codingForm" >
         	<result>/WEB-INF/views/course/codingMain.jsp</result>     	
@@ -130,9 +127,10 @@
         	<result type="redirect">updateCodingfromMainView.action</result>	
         </action>
         
+        
         <action name="deleteCodingfromMain" class="org.javatree.www.Action.CourseAction" method="deleteCodingfromMain">
         	<result type="json"></result>
-=======
+        </action>
         <!-- 문제보관함 폼(codingMain) -->
         <action name="codingForm" class="org.javatree.www.Action.CourseAction" method="codingForm">
         	<result>/WEB-INF/views/course/codingMain.jsp</result>
@@ -166,7 +164,6 @@
         <!-- 강의 서브노트 수정 -->
         <action name="updateSubnote" class="org.javatree.www.Action.CourseAction" method="updateSubnote" >
         	<result type="redirect">CourseDetailForTeachForm</result>
->>>>>>> a7afe6f4d17944dcdecf9cc0bceaa0946778f254
         </action>
         
        <!--  강좌 이름, Description 수정 - courseDetailForTeach --> <!-- 강좌수정은 나중에 디버깅시 ㄱㄱ --> 
@@ -176,13 +173,11 @@
          <action name="updateCourseIntrodution" class="org.javatree.www.Action.CourseAction" method="updateCourseIntrodution" >
       		<result>/WEB-INF/views/course/CourseDetailForTeach.jsp</result>
        </action>
-       
         
         <!-- 문제보관함 처리 -->
         <!--  <action name="insertIntoQuestionBox" class="org.javatree.www.Action.CourseAction" method="insertIntoQuestionBox">
         	<result type="redirect">questionBoxForm</result>
         </action> -->
-        
         <!-- 코딩문제 등록 -->
        <!--  <action name="insertCoding" class="org.javatree.www.Action.CourseAction" method="insertCoding">
         	<result type="redirect">codingForm</result>
@@ -195,6 +190,7 @@
         <!-- <action name="updateCoding" class="org.javatree.www.Action.CourseAction" method="updateCoding">
         	<result type="redirect">codingForm</result>
         </action> -->
+        
         
         
         <!-- 강사용 강의리스트 페이지 폼 courseDetailForTeach -->

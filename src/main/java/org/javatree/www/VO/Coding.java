@@ -8,7 +8,6 @@ public class Coding {
 	private String regdate;
 	private String id;
 	
-	
 	public Coding() {
 	}
 

@@ -22,7 +22,7 @@
 	<bean id="Rereply" class="org.javatree.www.VO.Rereply"></bean>  
 	<bean id="PageNavigator" class="org.javatree.www.Util.PageNavigator"></bean>
 	<bean id="Subnote" class="org.javatree.www.VO.Subnote"></bean>
-	
+	<bean id="Notification" class="org.javatree.www.VO.Notification"></bean>
 	
 	<!-- db.properties 읽어오기 -->
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
