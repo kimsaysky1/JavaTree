@@ -101,12 +101,17 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private ArrayList<Lecture> latelyPurchasedLectureList;
 	Map<String, Object> session;
 	
+	
+	
 	@Autowired
 	SqlSession sqlSession;
 	private courseDAO dao;
 	private int start;
 	private int end;
 	private int endPageGroup;
+	
+	
+	private ArrayList<String> codingListForInsert ;	
 	
 
 	@Override
