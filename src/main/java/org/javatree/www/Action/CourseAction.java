@@ -110,7 +110,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 	private int end;
 	private int endPageGroup;
 	
-	
+	private String codingquestion;
 	private ArrayList<String> codingListForInsert ;	
 	
 
@@ -1412,12 +1412,15 @@ public class CourseAction extends ActionSupport implements SessionAware {
 			
 			//System.out.println("lectureno : "+lectureno);
 			
-			codingno = dao.getCodingno(lectureno);
+			ArrayList<Integer> codingnoList= new ArrayList<>();
+			codingnoList = dao.getCodingno(lectureno);
 			
-			//System.out.println("codingno : "+codingno);
+			//System.out.println("codingnoList : "+codingnoList);
 			
-			codingList = dao.getCodinginlecture(codingno);
-			
+			for(int i=0; i<codingnoList.size();i++){
+				codingno= codingnoList.get(i);
+				codingList = dao.getCodinginlecture(codingno);
+			}
 			//System.out.println(codingList);
 			
 			return SUCCESS;
