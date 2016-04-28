@@ -2,6 +2,10 @@ SELECT LEVEL
 FROM   dual
 CONNECT BY LEVEL <= 10
 
+alter table subnote modify(originalfilename varchar2(1000))
+alter table subnote modify(uploadedfilename varchar2(1000))
+alter table lecture modify(originalfilename varchar2(1000))
+alter table lecture modify(uploadedfilename varchar2(1000))
 
 SELECT s.lectureno as studying, l.lectureno as lectureno, c.courseno as courseno,
 		l.lecturename, to_char(l.regdate, 'yyyy/mm/dd') as regdate, l.uploadedfilename,

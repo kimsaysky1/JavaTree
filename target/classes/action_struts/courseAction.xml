@@ -89,7 +89,8 @@
         	<!-- <result type="redirect">file/multiFileUpload</result> -->
         	<!-- <param name="maximumSize">20971520</param> -->
         	<!-- <result type="redirect">insertLectureForm</result> -->
-        	<result>/WEB-INF/views/course/insertLecture.jsp</result>
+        	<!-- <result>/WEB-INF/views/course/insertLecture.jsp</result> -->
+        	<result type="redirect">selectAllCourseListForTeach.action</result>
         </action>
         <!-- 문제보관함 폼(codingMain) 강의 등록 시 -->
          <action name="codingForm" >

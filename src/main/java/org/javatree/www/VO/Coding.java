@@ -10,6 +10,10 @@ public class Coding {
 	
 	public Coding() {
 	}
+	public Coding(int codingno, String id) {
+		this.codingno = codingno;
+		this.id = id;
+	}
 
 
 	public Coding(int codingno, String codingquestion, String codingtemplet, String codinganswer, String regdate,
