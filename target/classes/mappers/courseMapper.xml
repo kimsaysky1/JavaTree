@@ -313,12 +313,12 @@
      </select> 
      
 	<!-- 내가 가르치는 강좌 리스트 - teachMain -->
-	<select id="selectAllCourseListForTeach" parameterType="String" resultType="Course">
-	<!-- 	select * from teachcourse where id=#{id}  -->
-		select * from course where courseno in 
-		(select courseno from teachcourse where id = #{id})
-		order by regdate desc
-	</select>
+	  <select id="selectAllCourseListForTeach" parameterType="String" resultType="Course">
+   	<!--    select * from teachcourse where id=#{id}  -->
+      select * from course where courseno in 
+      (select courseno from teachcourse where id = #{id})
+      order by regdate desc
+   </select>
 	
 	<!-- 해당 강좌 안에 있는 강의 리스트 - CourseDetailForTeach -->
 	
@@ -343,12 +343,12 @@
   	</insert>
   	<!-- TeachCourse -->
   	<insert id="insertTeachCourse" parameterType="map">
-  	 	<selectKey keyProperty="courseno" resultType="int" order="BEFORE">
-    		select max(courseno) from course 
-  		</selectKey>
-      		insert into teachcourse (id, courseno, coursename, startdate)
-     		values (#{id}, #{courseno}, #{coursename},sysdate)
-  	</insert>
+         <selectKey keyProperty="courseno" resultType="int" order="BEFORE">
+          select max(courseno) from course 
+        </selectKey>
+            insert into teachcourse (id, courseno, coursename, startdate)
+           values (#{id}, #{courseno}, #{coursename},sysdate)
+     </insert>
 
 	<!-- 강의 등록 - insertLecture -->
 

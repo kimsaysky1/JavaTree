@@ -7,7 +7,8 @@ alter table studylecture add (courseno number(6,0) NOT NULL)--창우 studylectur
 alter table studycourse drop column startdate;
 alter table studycourse drop column enddate;
 alter table studycourse add (teacherid varchar2(20) not null);--창우 studycourse
-
+alter table course modify (coursename varchar2(100)); -- 20160428 영호 추가
+alter table teachcourse modify (coursename varchar2(100)); -- 20160428 영호 추가
 ALTER TABLE teachcourse ADD (startdate date DEFAULT sysdate NOT NULL);
 alter table course drop column typeno;
 alter table course add (regdate date default sysdate not null);
@@ -16,9 +17,9 @@ alter table notification add (questionno number(6,0)); --20160427 김영호 추�
 alter table notification add (replyno number(6,0)); --20160427 김영호 추가
 alter table coding add (codinganswer clob not null);
 alter table coding drop column lectureno;
-
+alter table studycourse add (teacherid varchar2(20) not null);
 alter table coding add (id varchar2(20) NOT NULL);
-
+DROP TABLE coding CASCADE CONSTRAINTS;
 CREATE sequence coding_seq start with 1 increment by 1;
 
 alter table coding drop column regdate;--20160424 박수지 추가
@@ -44,8 +45,9 @@ alter table subnote modify uploadedfilename null--20160421�߰�
 --notnull����
 --ALTER TABLE ���̺�� MODIFY �÷��� NULL;
 --ALTER TABLE ���̺�� DROP CONSTRAINT �������Ǹ�
-
-alter table lecture modity (uploadedfilename varchar2(900));
+alter table subnote modify (uploadedfilename varchar2(900));
+alter table subnote modify (originalfilename varchar2(500)); -- 20160428 김영호실행
+alter table lecture modify (uploadedfilename varchar2(900));
 alter table lecture modify (originalfilename varchar2(500));--20160422 ����
 
 alter table coding add (id varchar2(20) NOT NULL);--20160425 박수지 추가
@@ -168,12 +170,14 @@ drop sequence lecture_seq;
 CREATE TABLE coding
 (
 	codingno number(6,0) NOT NULL,
-	typeno number(2,0) NOT NULL,
 	codingquestion varchar2(4000) NOT NULL,
 	codingtemplet clob,
-	lectureno number(6,0),
+	codinganswer clob,
+	id varchar2(20),
 	PRIMARY KEY (codingno)
 );
+--typeno number(2,0) NOT NULL,
+--lectureno number(6,0),
 CREATE sequence coding_seq start with 1 increment by 1;--20160424 박수지 수정
 --drop sequence coding_seq;
 
