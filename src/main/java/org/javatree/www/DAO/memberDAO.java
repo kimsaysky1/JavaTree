@@ -16,14 +16,10 @@ public interface memberDAO {
 	public void insertInterest(List<Interest> interestList);
 	public void insertAbility(List<Ability> abilityList);
 	
-	
 	public Member_jt selectMember(String id);
 	public int updateMember(Member_jt member_jt);
 	public Member_jt searchMember(Member_jt member_jt);
 	public void insertMember(HashMap<String, Object> map);
 	public List<Notification> checkNotification(String id);
-	
-	
-	
 	
 }

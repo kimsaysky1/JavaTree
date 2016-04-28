@@ -107,6 +107,15 @@
 		select count(*) from question
 	</select>
 	
+	<select id="selectAllQuestionRelatedInCoding" parameterType="map" resultMap="QuestionMap">
+		SELECT questionno, typeno, codingno, id, username, title,
+		content, to_char(regdate, 'YYYY-MM-DD') as regdate, hitcount, curious from
+		 (select rownum as rnum, T1.* from (select * from question where codingno = #{codingno}
+		  order by questionno desc) T1)
+ 		where rnum <![CDATA[>]]>= #{start} and rnum <![CDATA[<]]>= #{end} 
+	</select>
+	
+	
 	<select id="selectAllQuestion" parameterType="map" resultMap="QuestionMap">
 		SELECT questionno, typeno, codingno, id, username, title,
 		content, to_char(regdate, 'YYYY-MM-DD') as regdate, hitcount, curious from
@@ -167,6 +176,11 @@
 	<select id="selectTitle" parameterType="int" resultType="String">
 		select title from question where questionno = #{questionno}
 	</select>
+	
+	<delete id="clickNotification" parameterType="map">
+   		delete from notification where receiverid = #{id} and questionno = #{questionno}
+    </delete>
+	
 	<!-- <insert id="insert"> 
 	
 	</insert> -->

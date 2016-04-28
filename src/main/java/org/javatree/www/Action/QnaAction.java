@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class QnaAction extends ActionSupport implements SessionAware{
+public class QnaAction extends ActionSupport implements SessionAware {
 	@Autowired
 	private SqlSession sqlsession;
 
@@ -39,15 +39,25 @@ public class QnaAction extends ActionSupport implements SessionAware{
 	private List<Integer> typenoList;
 	private String stringForTokenizer;
 	private List<Reply> replyList;
-	private PageNavigator pagenavi;
+	private int codingno;
+	private String codingtemplet;
 	private String typeno;
-	private int currentPage = 1;
-	private String type;
-	private String keyword;
 	private int start;
 	private int end;
-	private Map<String, Object> session; 
-	
+	private Map<String, Object> session;
+	private boolean notification;
+	private String id;
+
+	public String insertQuestionByModal() throws Exception {
+		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
+		question.setId("1");
+		question.setUsername("1");
+		question.setCodingno(1);
+		System.out.println("question: "+question);
+		dao.insertQuestion(question);
+		return SUCCESS;
+	}
+
 	public String insertQuestion() throws Exception {
 		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
 		question.setId("1");
@@ -56,7 +66,7 @@ public class QnaAction extends ActionSupport implements SessionAware{
 		question.setCodingno(1);
 		dao.insertQuestion(question);
 		String loginId = (String) session.get("loginId");
-		if(loginId == null){
+		if (loginId == null) {
 			return ERROR;
 		}
 		makeQnaDefaultMain(loginId);
@@ -83,40 +93,39 @@ public class QnaAction extends ActionSupport implements SessionAware{
 	public void makeQnaDefaultMain(String loginId) {
 		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
 		Member_jt member = dao.selectOneMember(loginId);
-		System.out.println("member: "+member);
 		typenoList = new ArrayList<>();
-		
+
 		int questionnum = member.getCountquestion();
 		int responsenum = member.getCountresponse();
 		int recommendnum = member.getCountrecommend();
 		ArrayList<Interest> interestList = member.getInterestList();
 		ArrayList<Ability> abilityList = member.getAbilityList();
-		for(int i = 0; i < abilityList.size(); i++){
-			if(abilityList.get(i).getValue() == 3){
-				if(!(typenoList.contains(abilityList.get(i).getTypeno()))){
+		for (int i = 0; i < abilityList.size(); i++) {
+			if (abilityList.get(i).getValue() == 3) {
+				if (!(typenoList.contains(abilityList.get(i).getTypeno()))) {
 					typenoList.add(abilityList.get(i).getTypeno());
 				}
 			}
 		}
-		for(int i = 0; i < interestList.size(); i++){
-			if(interestList.get(i).getValue() == 3){
-				if(!(typenoList.contains(interestList.get(i).getTypeno()))){
+		for (int i = 0; i < interestList.size(); i++) {
+			if (interestList.get(i).getValue() == 3) {
+				if (!(typenoList.contains(interestList.get(i).getTypeno()))) {
 					typenoList.add(interestList.get(i).getTypeno());
 				}
 			}
 		}
-		if(questionnum >= responsenum){
-			for(int i = 0; i < abilityList.size(); i++){
-				if(abilityList.get(i).getValue() == 2){
-					if(!(typenoList.contains(abilityList.get(i).getTypeno()))){
+		if (questionnum >= responsenum) {
+			for (int i = 0; i < abilityList.size(); i++) {
+				if (abilityList.get(i).getValue() == 2) {
+					if (!(typenoList.contains(abilityList.get(i).getTypeno()))) {
 						typenoList.add(abilityList.get(i).getTypeno());
 					}
 				}
 			}
-		}else if(questionnum < responsenum){
-			for(int i = 0; i < interestList.size(); i++){
-				if(interestList.get(i).getValue() == 2){
-					if(!(typenoList.contains(interestList.get(i).getTypeno()))){
+		} else if (questionnum < responsenum) {
+			for (int i = 0; i < interestList.size(); i++) {
+				if (interestList.get(i).getValue() == 2) {
+					if (!(typenoList.contains(interestList.get(i).getTypeno()))) {
 						typenoList.add(interestList.get(i).getTypeno());
 					}
 				}
@@ -133,10 +142,25 @@ public class QnaAction extends ActionSupport implements SessionAware{
 		bestRecentQuestionList = dao.bestRecentQuestionList();
 	}
 
+	public String watchRelatedQuestion() throws Exception {
+		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
+		Map map = new HashMap();
+		map.put("start", 1);
+		map.put("end", 5);
+		map.put("codingno", codingno);
+		questionList = dao.selectAllQuestionRelatedInCoding(map);
+		System.out.println("questionList: " + questionList);
+		gunggumAllQuestionList = dao.gunggumAllQuestionList();
+		gunggumRecentQuestionList = dao.gunggumRecentQuestionList();
+		bestAllQuestionList = dao.bestAllQuestionList();
+		bestRecentQuestionList = dao.bestRecentQuestionList();
+		return SUCCESS;
+	}
+
 	public String qnaDefaultMain() throws Exception {
 		String loginId = (String) session.get("loginId");
-		System.out.println("loginId: "+loginId);
-		if(loginId == null){
+		System.out.println("loginId: " + loginId);
+		if (loginId == null) {
 			return ERROR;
 		}
 		makeQnaDefaultMain(loginId);
@@ -178,9 +202,18 @@ public class QnaAction extends ActionSupport implements SessionAware{
 	}
 
 	public String qnaDetail() throws Exception {
+		System.out.println("notification: "+notification);
 		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
 		question = dao.selectOneQuestion(questionno);
 		replyList = dao.selectAllReply(questionno);
+		if(notification){
+			System.out.println("들어옴");
+			Map map = new HashMap();
+			id = (String) session.get("loginId");
+			map.put("id", id);
+			map.put("questionno", questionno);
+			dao.clickNotification(map);
+		}
 		return SUCCESS;
 	}
 
@@ -192,7 +225,7 @@ public class QnaAction extends ActionSupport implements SessionAware{
 		System.out.println("rereply: " + rereply);
 		dao.insertRereply(rereply);
 		rereplyList = dao.selectAllRereply(replyno);
-		System.out.println("rereplyList: "+rereplyList);
+		System.out.println("rereplyList: " + rereplyList);
 		return SUCCESS;
 	}
 
@@ -250,38 +283,6 @@ public class QnaAction extends ActionSupport implements SessionAware{
 
 	public void setReplyno(int replyno) {
 		this.replyno = replyno;
-	}
-
-	public PageNavigator getPagenavi() {
-		return pagenavi;
-	}
-
-	public void setPagenavi(PageNavigator pagenavi) {
-		this.pagenavi = pagenavi;
-	}
-
-	public int getCurrentPage() {
-		return currentPage;
-	}
-
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getKeyword() {
-		return keyword;
-	}
-
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
 	}
 
 	public int getStart() {
@@ -364,9 +365,33 @@ public class QnaAction extends ActionSupport implements SessionAware{
 		this.rereplyList = rereplyList;
 	}
 
+	public int getCodingno() {
+		return codingno;
+	}
+
+	public void setCodingno(int codingno) {
+		this.codingno = codingno;
+	}
+
+	public String getCodingtemplet() {
+		return codingtemplet;
+	}
+
+	public void setCodingtemplet(String codingtemplet) {
+		this.codingtemplet = codingtemplet;
+	}
+	
+	public boolean getNotification() {
+		return notification;
+	}
+
+	public void setNotification(boolean notification) {
+		this.notification = notification;
+	}
+
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
 	}
-	
+
 }

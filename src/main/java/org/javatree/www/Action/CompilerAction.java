@@ -14,7 +14,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.session.SqlSession;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.javatree.www.DAO.CompilerDAO;
 import org.javatree.www.VO.Coding;
@@ -33,8 +37,8 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 	private List<Integer> lectureList;
 	private List<Coding> codingList;
 	private List<String> contentList;
-	private LinkedHashMap <String, String> classNameMap;
-	private LinkedHashMap <String, String> packageNameMap;
+	private LinkedHashMap<String, String> classNameMap;
+	private LinkedHashMap<String, String> packageNameMap;
 	private String mainClassName;
 	private String packageName = "";
 	private String startClass;
@@ -47,39 +51,42 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 	private String id;
 	private File directoryPath;
 	private String resultType;
-	
-	private Map<String, Object> session; 
-	
-	public String watchLecture() throws Exception{
+	private boolean error = false;
+
+	private Map<String, Object> session;
+
+	public String watchLecture() throws Exception {
 		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
 		lectureno = 1;
 		codingList = dao.selectCodingList(lectureno);
 		return SUCCESS;
 	}
-	
+
 	public String callSpecificCoding() throws Exception {
 		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
 		coding = dao.callSpecificCoding(codingno);
 		return SUCCESS;
 	}
-	
-	public String runCode() throws Exception{
+
+	public String runCode() throws Exception {
+		id = (String) session.get("loginId");
+		System.out.println("id: " + id);
 		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
 		contentList = new ArrayList<>();
-		
-		if ((code1!=null)&&!(code1.trim().equals(""))) {
+
+		if ((code1 != null) && !(code1.trim().equals(""))) {
 			contentList.add(code1);
 		}
-		if ((code2!=null)&&!(code2.trim().equals(""))) {
+		if ((code2 != null) && !(code2.trim().equals(""))) {
 			contentList.add(code2);
 		}
-		if ((code3!=null)&&!(code3.trim().equals(""))) {
+		if ((code3 != null) && !(code3.trim().equals(""))) {
 			contentList.add(code3);
 		}
-		if ((code4!=null)&&!(code4.trim().equals(""))) {
+		if ((code4 != null) && !(code4.trim().equals(""))) {
 			contentList.add(code4);
 		}
-		if ((code5!=null)&&!(code5.trim().equals(""))) {
+		if ((code5 != null) && !(code5.trim().equals(""))) {
 			contentList.add(code5);
 		}
 
@@ -90,39 +97,39 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 		StringBuffer buf = null;
 		String file_parent = null;
 		String file_name = null;
-		id = "kim"; // 임시 아이디
-		
+		// id = "kim"; // 임시 아이디
+
 		for (int i = 0; i < contentList.size(); i++) {
 			if (contentList.get(i).contains("page language=\"java\" contentType=\"text/html; charset=UTF-8\"")) {
-				file_parent = "C:/Program Files/Apache Software Foundation/Tomcat 8.0/webapps/test/guest/"+id;
-				file_name = "a"+i+".jsp";
-				makeJspFile(file_parent, file_name, contentList.get(i)); 
+				file_parent = "C:/Program Files/Apache Software Foundation/Tomcat 8.0/webapps/test/guest/" + id;
+				file_name = "a" + i + ".jsp";
+				makeJspFile(file_parent, file_name, contentList.get(i));
 				resultType = "jsp";
-				result = "http://203.233.196.88:8585/test/guest/"+id+"/"+file_name;
+				result = "http://203.233.196.88:8585/test/guest/" + id + "/" + file_name;
 				break;
 			} else {
 				for (int j = 0; j < contentList.size(); j++) {
-					if(contentList.get(j).trim().startsWith("package")){
+					if (contentList.get(j).trim().startsWith("package")) {
 						st = new StringTokenizer(contentList.get(j).trim(), " ");
 						boolean check = false;
-						
-						while(st.hasMoreTokens()){
+
+						while (st.hasMoreTokens()) {
 							String temp = st.nextToken();
-							if(check){
+							if (check) {
 								packageName = temp;
 								break;
 							}
-							if(temp.equals("package")){
+							if (temp.equals("package")) {
 								check = true;
 							}
 						}
 						st = new StringTokenizer(packageName, ";");
-						while(st.hasMoreTokens()){
+						while (st.hasMoreTokens()) {
 							packageName = st.nextToken();
 							break;
 						}
 					}
-					
+
 					if (contentList.get(j).contains("public static void main(String[]")) {
 						checkNum++;
 						if (contentList.get(j).contains("public class")) {
@@ -163,23 +170,24 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 							}
 						}
 					}
-				}//여기다가
+				}
 				if (checkNum == 1) {
 					for (String s : classNameMap.keySet()) {
 						file_parent = "C:/compiler/" + id;
 						file_name = s + ".java";
 						try {
-							String packagePath = packageNameMap.get(s).replace(".", "/"); 
+							String packagePath = packageNameMap.get(s).replace(".", "/");
 							makeJavaFile(file_parent, file_name, classNameMap.get(s), packagePath);
-							makeClassFile(file_parent+"/"+packagePath);
+							makeClassFile(file_parent + "/" + packagePath);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
-					
-					String[] cmd = { "java", "-cp", file_parent, packageNameMap.get(mainClassName)+"."+startClass.substring(0, file_name.lastIndexOf(".")) };
+					String[] cmd = { "java", "-cp", file_parent, packageNameMap.get(mainClassName) + "."
+							+ startClass.substring(0, file_name.lastIndexOf(".")) };
 					runProcess(cmd);
-					//deleteFile(file_parent);
+					// deleteFile(file_parent);
+					checkError(result);
 					resultType = "java";
 					break;
 				} else {
@@ -192,8 +200,20 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 
+	private void checkError(String result) {
+		System.out.println("result: " + result);
+		System.out.println("C:\\compiler\\+id: " + "C:\\compiler\\" + id);
+		if (result.contains("C:\\compiler\\" + id) && result.contains("^")) {
+			error = true;
+			System.out.println("에러 있음");
+		} else {
+			error = false;
+			System.out.println("에러 없음");
+		}
+	}
+
 	private void makeJavaFile(String file_parent, String file_name, String content, String packagePath) {
-		file_parent = file_parent+"/"+packagePath;
+		file_parent = file_parent + "/" + packagePath;
 		directoryPath = new File(file_parent + "/");
 		File file = new File(file_parent, file_name);
 		if (!directoryPath.exists()) {
@@ -221,7 +241,6 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 		runProcess("javac " + file_parent + "/*.java" + " -encoding UTF8");
 	}
 
-	
 	private void makeJspFile(String file_parent, String file_name, String content) {
 		directoryPath = new File(file_parent);
 		File file = new File(file_parent, file_name);
@@ -254,10 +273,8 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 			in = new BufferedReader(reader);
 			while ((line = in.readLine()) != null) {
 				result += (line + "\n");
-				System.out.println("result:" + result);
 			}
 		} catch (Exception e) {
-			result = e.getMessage();
 			e.printStackTrace();
 		}
 	}
@@ -426,7 +443,7 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getResultType() {
 		return resultType;
 	}
@@ -434,11 +451,18 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 	public void setResultType(String resultType) {
 		this.resultType = resultType;
 	}
-	
+
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
 	}
-	
-	
+
+	public boolean getError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
+
 }

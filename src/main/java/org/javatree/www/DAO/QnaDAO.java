@@ -23,5 +23,7 @@ public interface QnaDAO {
 	public List<Reply> bestRecentQuestionList();
 	public void insertRereply(Rereply rereply);
 	public Member_jt selectOneMember(String string);
+	public List<Question> selectAllQuestionRelatedInCoding(Map map);
+	public void clickNotification(Map map);
 	
 }

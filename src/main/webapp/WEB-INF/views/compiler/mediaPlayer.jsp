@@ -5,7 +5,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- <link rel="stylesheet" type="text/css" href="css/vol-bar.css"> -->
+<meta charset="UTF-8">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../resources/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="../resources/jquery-ui.min.js"></script>
 <style type="text/css">
 	   
 video {pointer-events: none;
@@ -271,11 +275,8 @@ body {
 		}
 		
 </style>
-
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript" src="../resources/jquery-2.2.3.min.js"></script>
-<script type="text/javascript" src="../resources/jquery-ui.min.js"></script>
+<title>시청 및 컴파일러 뷰</title>
 </head>
 <body>
 
@@ -362,10 +363,145 @@ body {
 	<button id = "run">실행</button>
 	<br/>
 	<button id = "qna">Q&A</button>
-
+	
+	
+	<!-- 지식인 연동 모달 -->
+	<input style="display:none;" type="button" id="askToUser" class="mc-btn btn-style-1" data-toggle="modal" data-target="#askSelections"/>
+           <div class="container">
+				<div class="modal fade" id="askSelections" role="dialog">
+			    	<div class="modal-dialog modal-lg">
+					      <!-- Modal content-->
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <h4 class="modal-title">지식인 연동 기능</h4>
+				        </div>
+				        <div class="modal-body">
+				        		<button id = "watchRelatedQuestion">관련질문보기</button>
+					        	<br/>
+					        	<button id = "makeQuestion">질문하기</button>
+					        	<br/>
+					        	<button class ="cancel">취소</button>
+				        </div>
+				        <div class="modal-footer">
+				        </div>
+				      </div>
+			  	   </div>
+			  </div>
+         </div>	
+         <!-- 지식인 연동 모달 끝 -->
+         
+		<!-- 질문 버튼 -->
+                    	
+                   	<div class="form-submit-1">
+						<input type="button" style="display:none;" id = "insertQuestion" value="WRITE QUESTION" class="mc-btn btn-style-1" data-toggle="modal" data-target="#writeQuestionModal"/>
+                   			<div class="container">
+								<div class="modal fade" id="writeQuestionModal" role="dialog">
+							    	<div class="modal-dialog modal-lg">
+									      <!-- Modal content-->
+								      <div class="modal-content">
+								        <div class="modal-header">
+								          <button type="button" class="close" data-dismiss="modal">&times;</button>
+								          <h4 class="modal-title">Modal Header</h4>
+								        </div>
+								        <div class="modal-body">
+								            <table style='width: 800px;'>
+											<tr>
+												<td style='width: 100px; height: 70px; text-align:center;'><b>FIELD</b></td>
+												<td><select id="questionTypeno" style="width: 100px;">
+												 <option value="1">PUREJAVA</option>
+												 <option value="2">WEB</option>
+												 <option value="3">MOBILE</option>
+												 <option value="4">IOT</option>
+												 <option value="5">SWING</option>
+												 <option value="6">JDBC</option>
+												 <option value="7">API</option>
+												 <option value="8">SPRING</option>
+												 <option value="9">STRUTS</option>
+												 <option value="10">etcFramework</option>
+												 <option value="11">ETC</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td style='height: 20px;'></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td style='width: 100px; text-align:center;'><b>QUESTION</b></td>
+												<td><textarea id="questionTitle" style="height: 100px;"></textarea></td>
+											</tr>
+											<tr>
+												<td style='height: 20px;'></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td style='width: 100px; text-align:center;'><b>content</b></td>
+												<td><textarea id="questionContent" style="height: 250px;"></textarea></td>
+											</tr>
+												<tr>
+												<td style='height: 20px;'></td>
+												<td></td>
+											</tr>
+											</table>
+								        </div>
+								        <div class="modal-footer">
+								        	<button id = "insertQuestionBtn" class="mc-btn-5">등록</button>&nbsp;&nbsp;
+											<button class="cancel">취소</button>
+								          <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+								        </div>
+								      </div>
+							  	   </div>
+							  </div>
+                   		</div>
+					</div>
+                   	
+                    	<!-- 질문 버튼 끝 -->
+<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../resources/javatree_view/html/js/library/bootstrap.min.js"></script>
+<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
+<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
+<script type="text/javascript" src="../resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
 <script type="text/javascript">
 
 $(function(){
+	
+	$('#watchRelatedQuestion').on('click', function(){
+		var codingno =  $(".codingList option:selected").val();
+		window.open('/javatree/qna/watchRelatedQuestion.action?codingno='+codingno);
+	});
+	
+	$('#makeQuestion').on('click', function(){
+		var codingtemplet = $('#doccontent textarea:visible').val();
+		$('#askSelections').modal('hide');
+		$('#insertQuestion').trigger('click');
+		$('#questionContent').val(codingtemplet);
+		//window.open('/javatree/qna/insertQuestionReady.action?codingtemplet='+codingtemplet);
+	});
+	
+	$('#insertQuestionBtn').on('click', function(){
+		/* window.open('/javatree/qna/insertQuestionReady.action?question.content='+content
+				+'&question.title='+title+'&question.typeno='+typeno); */
+				
+		var typeno = $("#questionTypeno option:selected").val();
+		var title = $("#questionTitle").val();
+		var content = $("#questionContent").val();
+		
+		$.ajax({
+			type: 'POST'
+			, url: '/javatree/qna/insertQuestionByModal.action'
+			, data: 'question.content='+content+'&question.title='+title+'&question.typeno='+typeno
+			, success : function(response){
+				$('#writeQuestionModal').modal('hide');
+			}
+			, error : function(response){
+				$('#writeQuestionModal').modal('hide');
+			}
+		})
+	});
+	
+	$('body').on('click','.cancel',function(){
+		$('#askSelections').modal('hide');
+	});
 	
 	$('body').on('input propertychange scroll change keyup paste','#doccontent > textarea:visible', function (key) {
         	var textarea = $(this);
@@ -524,10 +660,16 @@ $(function(){
 				, dataType : 'json'
 				, success : function(response){
 					var type = response.resultType;
+					var error = response.error;
+					alert(error);
 					if(type == 'jsp'){
 						window.open(response.result);						
 					}else{
-						$("#result").val(response.result);
+						if(error){
+							$("#askToUser").trigger('click');
+						}else{
+							$("#result").val(response.result);
+						}
 					}
 				}
 				, error : function(response){
@@ -582,8 +724,6 @@ function addTab(classnum) {
     $("#" + $(link).attr("rel") + "_content").show();
 }
 </script>
-
-
 
 <!-- editor 마침 -->
 <script type="text/javascript">
@@ -1247,7 +1387,6 @@ function selectChapter(selectObj)
 	 video.play();
  	
  }  
-
 </script>
 </body>
 </html>

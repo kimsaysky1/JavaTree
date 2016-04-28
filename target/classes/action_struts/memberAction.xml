@@ -40,7 +40,7 @@
         <action name="checkNotification" class="org.javatree.www.Action.MemberAction" method="checkNotification">
         	<result type="json"></result>
         </action>
-      
+
 
 <!-- 비밀번호, 아이디 찾는 폼 -->
 

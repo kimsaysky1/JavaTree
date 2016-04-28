@@ -344,7 +344,6 @@
 		});
 		
 		$("body").on('click', "#searchByCheckBox", function(){
-			alert(1);
 			var stringForTokenizer = '';
 			var test = $("[name=interest]");
 			for(var i = 0; i < test.length; i++){
@@ -371,7 +370,6 @@
 					}	
 			});
 		});
-		
 		
 		$("body").on('click', '#watchMore', function(){
 			var start = $(".blog-list-content > div:last").attr('id');

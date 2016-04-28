@@ -202,8 +202,7 @@
 								</tr>
 								<tr>
 									<td></td>
-									<input type="hidden" value="${question.questionno}"
-										name="reply.questionno" />
+									<input type="hidden" value="${question.questionno}" name="reply.questionno" />
 								</tr>
 							</table>
 						</div>

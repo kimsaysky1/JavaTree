@@ -62,7 +62,8 @@ public class MemberAction extends ActionSupport implements SessionAware {
 	private String password;
 	private String username;
 	private String email;
-
+	private int questionno;
+	
 	private List<Notification> notificationList;
 
 	private Map<String, Object> session;
@@ -184,12 +185,7 @@ public class MemberAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
-	public String clickNotification() {
-		
-		
-		return SUCCESS;
-	}
-
+	
 	public Member_jt getMember_jt() {
 		return member_jt;
 	}
