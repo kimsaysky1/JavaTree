@@ -994,7 +994,7 @@ public class CourseAction extends ActionSupport implements SessionAware {
 				end = tempList.size();			
 			}
 			
-			for (int i = start; i < end; i++) {
+			for (int i = start; i < end+1; i++) {
 				lectureList.add(tempList.get(i-1));
 			}
 			
