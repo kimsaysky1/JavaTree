@@ -42,7 +42,6 @@
  
  function updateLecture(){
 	var lectureno=$('#lectureno').val();
-	alert(lectureno);
 	window.open('/javatree/course/updateLectureForm.action?lectureno='+lectureno,'pop','resizable=no scrollbars=yes top=300 left=500 width=600 height=500'); 
 	/*  window.open('updateLecture.action?custid='+custid.value,'pop','resizable=no scrollbars=yes top=300 left=500 width=300 height=180'); */
 	 /* locatrion.href="/javatree/course/updateLecture.action?lectureno=<s:property value="lectureno"/>&courseno=<s:property value="courseno"/>"; */
@@ -50,7 +49,6 @@
  
  function  updateSubnote(){
 		var lectureno=$('#lectureno').val();
-		alert(lectureno);
 		window.open('/javatree/course/updateSubnoteForm.action?lectureno='+lectureno,'pop','resizable=no scrollbars=yes top=300 left=500 width=600 height=500'); 
 	 }
 

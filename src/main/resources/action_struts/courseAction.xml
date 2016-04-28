@@ -123,7 +123,7 @@
         </action>
         
        	 <!--액션 teachMian 에서 누른 문제보관함 폼(codingMain)에 코딩 insert하기     -->
-        <action name="insertCodingfromMain" class="org.javatree.www.Action.CourseAction" method="insertCodingfromMain">
+        <action name="insertSelectedCodingfromMain" class="org.javatree.www.Action.CourseAction" method="insertSelectedCodingfromMain">
         	<result type="redirect">insertCodingfromMainView.action</result>	
         </action>
         

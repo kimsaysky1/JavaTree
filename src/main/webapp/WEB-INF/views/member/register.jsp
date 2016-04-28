@@ -24,7 +24,7 @@
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
-<title>Mega Course - Learning and Courses HTML5 Template</title>
+<title>회원가입</title>
 
 <style type="text/css">
 #join_self_css{

@@ -23,7 +23,6 @@
 <title>updateLecture</title>
 <script>
 function updateLectureForm(){
-	alert("updateLectureForm옴>>");
 	var form = document.getElementById("updateLectureForm");
 	//opener.document.getElementById("lectureno").value = lectureno;
 	

@@ -20,16 +20,20 @@
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
-<title>courseDefaultMain</title>
+<title>강좌 메인</title>
 </head>
 <body>
 
 	<%@include file="/resources/header.jsp" %>
-<<<<<<< HEAD
 	
-=======
-
->>>>>>> cd5f7b35f114ee819e8bac3ce04e474981ddf341
+	<section class="sub-banner sub-banner-course">
+        <div class="awe-static bg-sub-banner-course"></div>
+        <div class="container">
+            <div class="sub-banner-content">
+                <h2 class="text-center">JAVATree</h2>
+            </div>
+        </div>
+    </section>
 		<!-- 가운데 영역 -->
 		<section class="blog">
 		<div id="mid-course" class="mid-course">
@@ -98,7 +102,6 @@
        	   		var ano;
        	   		for (i = 1; i < str.length-1; i++) {
        	   			var tmp= str[i].substr(1, 1);
-       	   			alert(tmp[0] +"/"+tmp[0].length);
        	 			//여기서 돌리자
 			       	  
        	 			for(j = 0; j < interests.length; j++){
@@ -392,7 +395,6 @@ function clickNextField(page) {
 	        }
 	    });
 	 
-	 alert(str);
 	
 	$.ajax({
  		 type : 'get', 
@@ -464,7 +466,6 @@ function selectByField(asd) {
 	        }
 	    });
 	 
-	 alert(str);
 	 
 	 $.ajax({
 	        type : 'get', 
@@ -581,7 +582,6 @@ function searchCourse() {
 			 alert("한 분야 이상은 선택해야 합니다.");	
 		 }else{
 			 order = selectObj.value;
-			 alert(order);
 			
 				 var str = '';	
 				 var cnt;
@@ -592,8 +592,6 @@ function searchCourse() {
 				        	str += $(this).val()+",";
 				        }
 				    });
-				 
-				 alert(str);
 				 
 				 $.ajax({
 				        type : 'get', 

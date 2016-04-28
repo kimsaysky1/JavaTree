@@ -20,35 +20,27 @@
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
-<title>Mega Course - Learning and Courses HTML5 Template</title>
+<title>Java Tree Main</title>
 </head>
 <body>
-<<<<<<< HEAD
-<%@include file="/resources/header.jsp" %>
-=======
 
 <%@include file="/resources/header.jsp" %>
-
->>>>>>> cb117f70d9e2c2c3f253a2f4dae2808503a037c5
 
 		<!-- HOME SLIDER -->
 		
-		<section class="slide" style="background-image: url(resources/javatree_view/html/images/homeslider/spring.jpg)">
+		<section class="slide" style="background-image: url(resources/javatree_view/html/images/homeslider/mainimg_2.jpg)">
 			<div class="container">
 				<div class="slide-cn" id="slide-home">
 					<!-- SLIDE ITEM -->
-
 					<div class="slide-item">
 						<div class="item-inner">
 							<div class="text">
-							
-							
-							<s:if test="%{#session.loginId != null}">
-								<h1>${session.loginId}님 환영합니다.</h1>
-							</s:if>
-								<h2>WELCOME TO JAVATREEzzzz</h2>
+							<%-- <s:if test="%{#session.loginId != null}">
+								<p class="indexh1">${session.loginId} &nbsp; 님 환영합니다.</p>
+							</s:if> --%>
+								<h2>WELCOME TO JAVATREE</h2>
 								<p>
-									JAVATree will help your Study!<br> Join us PlZ!!!!<br>
+									JAVATree will help your Study!<br> Join us PlZ!<br>
 									press Join button
 								</p>
 								<div class="group">
@@ -58,7 +50,7 @@
 							</div>
 
 							<div class="img">
-								<img src="resources/javatree_view/html/images/homeslider/spring2.jpg" alt="">
+								<img src="resources/javatree_view/html/images/homeslider/mainimg_1.jpg" alt="">
 							</div>
 						</div>
 
@@ -74,7 +66,7 @@
 				<div class="container">
 					<div class="contact">
 						<div class="email">
-							<i class="icon md-email"></i> <a href="/javatree/compiler/Compiler.action">course@megadrupal.com</a>
+							<i class="icon md-email"></i> <a href="/javatree/compiler/Compiler.action?lectureno=8">course@megadrupal.com</a>
 						</div>
 						<div class="phone">
 							<i class="fa fa-mobile"></i> <span>+84 989 999 888</span>
@@ -89,7 +81,7 @@
 		</footer>
 		<!-- END / FOOTER -->
 		
-			<!-- Load jQuery -->
+	<!-- Load jQuery -->
 	<script type="text/javascript" src="resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="resources/javatree_view/html/js/library/bootstrap.min.js"></script>
 	<script type="text/javascript" src="resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>

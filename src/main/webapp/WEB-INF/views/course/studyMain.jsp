@@ -272,8 +272,6 @@ $("body").on('click', '#watchMore', function(){
 		}
 	} */
 	
-	alert(start);
-	alert(end);
 	$.ajax({
 		type: 'GET'
 		, url: 'plusStudyMain'

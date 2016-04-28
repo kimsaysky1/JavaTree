@@ -76,8 +76,16 @@ public interface courseDAO {
 	public void insertCodingfromMain(Coding coding);
 	public Coding getCodingContent(int codingno);
 	public void deleteCodingfromMain(int codingno);
-	public int getCodingno(int lectureno);
-	public ArrayList<Coding> getCodinginlecture(int codingno);
+	public ArrayList<Integer> getCodingno(int lectureno);
+	public ArrayList<Coding> getCodinginlecture(ArrayList<Integer> codingnoList);
 	public int selectMaxLectureno();
+	public void insertcodinginbox(Map<String, Object> studycoding);
+	public void insertlecturecodingInInsertLecture(Map<String, Object> map);
+	public void deleteCodingTemp(String id);
+	public ArrayList<Coding> selectForCodingTemp(String id);
+	public String getCodefromStudy(int codingno);
+	public ArrayList<Coding> getSelectedCoding(String id);
+	public void insertCodingTemp(Map<String, Object> map);
+	public void insertLectureCoding(Map<String, Object> map);
 	
 }

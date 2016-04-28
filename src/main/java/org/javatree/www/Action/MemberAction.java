@@ -135,9 +135,11 @@ public class MemberAction extends ActionSupport implements SessionAware {
 	public String login() {
 		memberDAO dao = sqlSession.getMapper(memberDAO.class);
 		member_jt = dao.selectMember(id);
+		
 		if (member_jt != null) {
 			if (member_jt.getPassword().equals(password)) {
 				session.put("loginId", id);
+				session.put("loginName", member_jt.getUsername());
 				notificationList = dao.checkNotification(id);
 			}
 		}

@@ -86,23 +86,28 @@
         
          <!-- 강의등록 처리 -->
         <action name="insertLecture" class="org.javatree.www.Action.CourseAction" method="insertLecture">
-        	<!-- <result type="redirect">file/multiFileUpload</result> -->
-        	<!-- <param name="maximumSize">20971520</param> -->
-        	<!-- <result type="redirect">insertLectureForm</result> -->
-        	<!-- <result>/WEB-INF/views/course/insertLecture.jsp</result> -->
+        	<!--<result>/WEB-INF/views/course/insertLecture.jsp</result>-->
         	<result type="redirect">selectAllCourseListForTeach.action</result>
         </action>
+     
+<!--문제보관함-->        
+        
         <!-- 문제보관함 폼(codingMain) 강의 등록 시 -->
          <action name="codingForm" >
         	<result>/WEB-INF/views/course/codingMain.jsp</result>     	
         </action>
         
-           <!-- 문제보관함 폼(codingMain) teach메인페이지에서 클릭 시 -->
+        <!-- 문제보관함 폼(codingMain) teach메인페이지에서 클릭 시 -->
          <action name="codingFormfromMain" class="org.javatree.www.Action.CourseAction" method="codingFormfromMain">
         	<result>/WEB-INF/views/course/codingMain_fromMain.jsp</result>     	
         </action>
         
-            <!-- teachMian 에서 누른 문제보관함 폼(codingMain) 코스리스트 중 하나 선택 후 강의 리스트 뽑기  -->
+        <!-- 뷰 (인서트렉쳐안의 코딩박스 클릭시 메인뷰) -->
+        <action name="codingMainInsertLectureView" class="org.javatree.www.Action.CourseAction" method="codingMainInsertLectureView">
+        	<result>/WEB-INF/views/course/codingMain2.jsp</result>
+        </action>
+        
+        <!-- teachMian 에서 누른 문제보관함 폼(codingMain) 코스리스트 중 하나 선택 후 강의 리스트 뽑기  -->
          <action name="golecturelist" class="org.javatree.www.Action.CourseAction" method="codingFormlecturelist">
         	<result type="json"></result>	
         </action>
@@ -112,29 +117,48 @@
         	<result type="json"></result>	
         </action>
         
-        <!-- 뷰 -->
+        <!-- 뷰 (코딩박스 안의 인서트 뷰, 코딩다케) -->
         <action name="insertCodingfromMainView" class="org.javatree.www.Action.CourseAction" method="insertCodingfromMainView">
         	<result>/WEB-INF/views/course/insertCoding.jsp</result>	
         </action>
         
-       	 <!-- teachMian 에서 누른 문제보관함 폼(codingMain)에 코딩 insert하기   -->
-        <action name="insertCodingfromMain" class="org.javatree.www.Action.CourseAction" method="insertCodingfromMain">
+       	 <!--액션 teachMian 에서 누른 문제보관함 폼(codingMain)에 코딩 insert하기     -->
+        <action name="insertSelectedCodingfromMain" class="org.javatree.www.Action.CourseAction" method="insertSelectedCodingfromMain">
         	<result type="redirect">insertCodingfromMainView.action</result>	
+        </action>
+        
+        <!-- 뷰 (인서트렉쳐안의 코딩박스 클릭시 인서트뷰, 코딩다케) -->
+        <action name="insertSelectedCodingfromInsertLectureView" class="org.javatree.www.Action.CourseAction" method="insertSelectedCodingfromInsertLectureView">
+        	<result>/WEB-INF/views/course/insertCoding2.jsp</result>
+        </action>
+        
+         <!--액션 인서트렉쳐 에서 누른 문제보관함 폼(codingMain)의 첫 화면에서 코딩 insert하기   -->
+        <action name="insertSelectedCodingfromInsertLecture" class="org.javatree.www.Action.CourseAction" method="insertSelectedCodingfromInsertLecture">
+        	<result type="redirect">insertSelectedCodingfromInsertLectureView.action</result>	
         </action>
         
         <action name="showcodingcontent" class="org.javatree.www.Action.CourseAction" method="showcodingcontent">
         	<result type="json"></result>
         </action>
         
+         <!--뷰 teachMain- questionBox 내 update -->
         <action name="updateCodingfromMainView" class="org.javatree.www.Action.CourseAction" method="updateCodingfromMainView">
         	<result>/WEB-INF/views/course/updateCoding.jsp</result>	
         </action>
-        
-         <action name="updateCodingfromMain" class="org.javatree.www.Action.CourseAction" method="updateCodingfromMain">
+        <!--액션 teachMian 에서 누른 문제보관함 폼(codingMain)에 코딩 UPDATE하기   -->
+        <action name="updateCodingfromMain" class="org.javatree.www.Action.CourseAction" method="updateCodingfromMain">
         	<result type="redirect">updateCodingfromMainView.action</result>	
         </action>
+         <!--뷰 insertLecture- questionBox 내 update -->
+        <action name="updateCodingfromMainViewfromInsertLectureView" class="org.javatree.www.Action.CourseAction" method="updateCodingfromMainViewfromInsertLectureView">
+        	<result>/WEB-INF/views/course/updateCoding2.jsp</result>	
+        </action>
+        <!--액션 insertLecture 에서 누른 문제보관함 폼(codingMain)에 코딩 UPDATE하기   -->
+        <action name="updateCodingfromInsertLecture" class="org.javatree.www.Action.CourseAction" method="updateCodingfromInsertLecture">
+        	<result type="redirect">updateCodingfromMainViewfromInsertLectureView.action</result>	
+        </action>
         
-        
+        <!--삭제하기-->
         <action name="deleteCodingfromMain" class="org.javatree.www.Action.CourseAction" method="deleteCodingfromMain">
         	<result type="json"></result>
 		</action>
@@ -154,7 +178,7 @@
         	<result>/WEB-INF/views/course/CourseDetailForTeach.jsp</result>
         </action>
         
-        	<!-- 강의 비디오 수정 폼-->
+        <!-- 강의 비디오 수정 폼-->
          <action name="updateLectureForm" class="org.javatree.www.Action.CourseAction" method="updateLectureForm">
         	<result>/WEB-INF/views/course/updateLecture.jsp</result>
         </action>	
@@ -179,28 +203,9 @@
       		<result>/WEB-INF/views/course/CourseDetailForTeach.jsp</result>
        </action>
         
-        <action name="updateCourseIntrodution" class="org.javatree.www.Action.CourseAction" method="updateCourseIntrodution" >
+       <action name="updateCourseIntrodution" class="org.javatree.www.Action.CourseAction" method="updateCourseIntrodution" >
       		<result>/WEB-INF/views/course/CourseDetailForTeach.jsp</result>
        </action>
-        
-        <!-- 문제보관함 처리 -->
-        <!--  <action name="insertIntoQuestionBox" class="org.javatree.www.Action.CourseAction" method="insertIntoQuestionBox">
-        	<result type="redirect">questionBoxForm</result>
-        </action> -->
-        <!-- 코딩문제 등록 -->
-       <!--  <action name="insertCoding" class="org.javatree.www.Action.CourseAction" method="insertCoding">
-        	<result type="redirect">codingForm</result>
-        </action> -->
-        <!-- 코딩문제 수정 -->
-        <!-- <action name="updateCoding" class="org.javatree.www.Action.CourseAction" method="updateCoding">
-        	<result type="redirect">codingForm</result>
-        </action> -->
-        <!-- 코딩문제 삭제 -->
-        <!-- <action name="updateCoding" class="org.javatree.www.Action.CourseAction" method="updateCoding">
-        	<result type="redirect">codingForm</result>
-        </action> -->
-        
-        
         
         <!-- 강사용 강의리스트 페이지 폼 courseDetailForTeach -->
         <action name="CourseDetailForTeachForm" class="org.javatree.www.Action.CourseAction" method="CourseDetailForTeachForm">

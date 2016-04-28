@@ -23,7 +23,6 @@
 <title>updateLecture</title>
 <script>
 function updateSubnoteForm(){
-	alert("updateSubnoteForm옴>>");
 	var form = document.getElementById("updateSubnoteForm");
 	//opener.document.getElementById("lectureno").value = lectureno;
 	

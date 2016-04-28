@@ -114,13 +114,11 @@
 								<td class="submit-date"><s:property value="regdate" /></td>
 								
 								<s:if test="studying != null">
-									<td class="submit-date"><a href="watchLecture.action?lectureno="<s:property value="lectureno" />>Watch</a></td>
+									<td class="submit-date"><a href='../compiler/Compiler.action?lectureno=<s:property value="lectureno"/>'>Watch</a></td>
 								</s:if>
 								<s:else>
-									<td class="submit-date"><a href='insertLectureForStudy.action?lectureno=<s:property value="lectureno" />&courseno=<s:property value="courseno" />
-									&coursename=<s:property value="coursename" />&teacherid=<s:property value="teacherid" />'>Apply</a></td>
+									<td class="submit-date"><a href='insertLectureForStudy.action?lectureno=<s:property value="lectureno"/>&courseno=<s:property value="courseno" />&coursename=<s:property value="coursename" />&teacherid=<s:property value="teacherid" />'>Apply</a></td>
 								</s:else>
-								
 							</tr>
 						</s:iterator>
 							
@@ -152,7 +150,7 @@
 			<s:else>
              <li><a href = "plusCourseDefaultDetail.action?currentPage=<s:property value="#session.currentPage - 1"/>&courseno=<s:property value="courseno"/>">&lt prev</a></li>
              <li><a href = "#"> <s:property value="#session.currentPage"/>/<s:property value="#session.endPageGroup"/>  </a></li>
-             <li><a href = "plusCourseDefaultDetail.action?currentPage=<s:property value="#session.currentPage + 1"/>&courseno=<s:property value="courseno"/>">next &gt</a></li>
+             <li><a href = 'plusCourseDefaultDetail.action?currentPage=<s:property value="#session.currentPage + 1"/>&courseno=<s:property value="courseno"/>'>next &gt</a></li>
             </s:else>
 						
 				<!-- 		<li class="pager-current">1</li>

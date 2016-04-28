@@ -78,7 +78,6 @@
 		<if test="searchText != null">
 		and coursename like #{searchText}
 		</if>
-		
 	</select>
 	
 	<select id="selectDefaultTotal" resultType="int" parameterType="map">
@@ -129,7 +128,6 @@
 		JOIN course c ON ( l.courseno = c.courseno and c.courseno = #{courseno} )
 		order by lectureno asc
 		</if>
-		
 	</select>
 	
 	<select id="selectCourseDefaultDetailTotal" resultType="int" parameterType="map">
@@ -353,64 +351,69 @@
      </insert>
 
 	<!-- 강의 등록 - insertLecture -->
-
-
 	
-	<!-- insert subnote -->
-<!-- 	 <insert id="insertSubnote" parameterType="Subnote">
-		<selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
-    		select max(lectureno) from lecture 
-  		</selectKey>
+	<!--insertLecture-->
+ 	<insert id="insertLecture" parameterType="Lecture">
+      		insert into lecture (courseno, lectureno, lecturename, regdate , originalfilename, uploadedfilename)
+      		values (#{courseno}, lecture_seq.nextVal, #{lecturename}, sysdate, #{originalfilename} , #{uploadedfilename}) 
+   	</insert>
+   
+   	<!-- teachLecture -->
+   	<insert id="insertTeachLecture" parameterType="map">
+      		<selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
+        		 select max(lectureno) from lecture 
+        	</selectKey>
+        	insert into teachlecture (id, courseno, lectureno, point, studentcount)
+		values (#{id}, #{courseno} ,#{lectureno}, #{point}, (select count(*) from studylecture where lectureno=#{lectureno}))
+   	</insert>
+     	
+   
+   	<!-- insert subnote -->
+	<insert id="insertSubnote" parameterType="Subnote">
+      		<selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
+          		select max(lectureno) from lecture 
+        	</selectKey>
+   
+		 insert into subnote (id, subnoteno
+      	<if test="originalfilename != null"> , originalfilename, uploadedfilename </if>
+      	, lectureno) values (#{id}, subnote_seq.nextVal  
+      	<if test="originalfilename != null"> , #{originalfilename} , #{uploadedfilename} </if>
+      	,#{lectureno}) 
+   	</insert>
+   
+	 <!--insert lecturecoding -->
+     	<insert id="insertlecturecodingInInsertLecture" parameterType="map">
+        	<selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
+          	select max(lectureno) from lecture 
+        	</selectKey>
+         	insert into lecturecoding (lectureno , codingno)
+        	values (#{lectureno}, #{codingno})
+     	</insert> 
+   
+	 <!-- coding -->
+         <insert id="insertCoding" parameterType="map">
+         	<selectKey keyProperty="courseno" resultType="int" order="BEFORE">
+          		select max(courseno) from course 
+        	</selectKey>
+            	insert into coding (codingno, courseno, coursename, startdate)
+           	values (#{id}, #{courseno}, #{coursename},sysdate )
+     	</insert> 
 	
-		insert into subnote (id, subnoteno
-		<if test="originalfilename != null"> , originalfilename, uploadedfilename </if>
-		, lectureno) values (#{id}, subnote_seq.nextVal  
-		<if test="originalfilename != null"> , #{originalfilename} , #{uploadedfilename} </if>
-		,#{lectureno}) 
-	</insert> -->
 	
-	<!-- lecturecoding -->
-	<!-- <insert id="insertlecturecoding">
-        <selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
-    		select max(lectureno) from lecture 
-  		</selectKey>
-      	insert into coursetype (lectureno , codingno)
-     	values (#{lectureno}, #{codingno})
-  	</insert> -->
 	
-	<!-- coding -->
-	  <!-- 	<insert id="insertCoding" parameterType="map">
-  	 	<selectKey keyProperty="courseno" resultType="int" order="BEFORE">
-    		select max(courseno) from course 
-  		</selectKey>
-      		insert into coding (codingno, courseno, coursename, startdate)
-     		values (#{id}, #{courseno}, #{coursename},sysdate )
-  	</insert> -->
-  	
-  	
-  	<!-- Coding -->
-<!--   	<insert id="insertCoding" parameterMap="CodingMap">
-  	 	
-      		insert into coding (codingno, codingquestion, codingtemplet, codinganswer, regdate)
-     		values (lecture_seq.nextVal, #{codingquestion}, #{codingtemplet:VARCHAR}, #{codinganswer:VARCHAR}, regdate)
-  	</insert> -->
-	
-	<!-- <select id="selectAllLectureListForTeach" resultType="Lecture" parameterType="String">
-		select * from lecture where courseno in
-		(select courseno from teachcourse where id = #{id})
-	</select> -->
+	<!--티치메인페이지-->
 	<select id="selectAllLectureListForTeach" resultType="Lecture" parameterType="int">
 		select * from lecture where courseno =#{courseno}
 	</select>
 	
-	
+	<!--강좌하나선택-->
 	<select id="selectCourse" resultType="Course" parameterType="int">
 		select * from Course where courseno = #{courseno}
 	</select>
 	
 	
 	<!-- 강의삭제 -->
-<!-- 	<select id="selectdelete" resultType="String">
+	<!-- 	<select id="selectdelete" resultType="String">
 		select CONSTRAINT_NAME, TABLE_NAME, R_CONSTRAINT_NAME
 		from user_constraints
 		where CONSTRAINT_NAME = 'SYS_C0036932' 
@@ -421,7 +424,7 @@
 	<delete id="deleteStudyLecture" parameterType="int">
 		delete from studylecture where lectureno =#{lectureno}
 	</delete>
-    <delete id="deleteSubnote" parameterType="int">
+    	<delete id="deleteSubnote" parameterType="int">
 		delete from subnote where lectureno =#{lectureno}
 	</delete>
 	<delete id="deleteTeachLecture" parameterType="int">
@@ -520,73 +523,36 @@
 		select codingno from lecturecoding where lectureno = #{lectureno} 
 	</select>
 	
-	<select id="getCodinginlecture" parameterType="int" resultMap="CodingMap">
+	<!-- <select id="getCodinginlecture" parameterType="int" resultMap="CodingMap">
 		select * from Coding where codingno = #{codingno}
+	</select> -->
+	
+	<select id="getCodinginlecture" parameterType="list" resultMap="CodingMap">
+		select * from Coding where codingno in
+		<foreach collection="list" item="no" open="(" separator="," close=")">
+			#{no}
+     	</foreach>
+	</select> 
+	
+	<!-- 영호 insert -->
+	<insert id="insertLectureCoding" parameterType="map">
+		insert into lecturecoding values(#{lectureno}, #{codingno})
+	</insert>
+	
+	<!-- insertSelectedCodingfromInsertLecture- 코딩탬프테이블에먼저저장 -->
+	<insert id="insertCodingTemp" parameterType="map">
+		insert into codingtemp values (#{id}, #{codingno})
+	</insert>
+	<!-- 코딩탬프 삭제 -->
+	<delete id="deleteCodingTemp" parameterType="String">
+		delete from codingtemp where id=#{id}
+	</delete>
+	<!-- 코딩탬프 찾기 -->
+	<select id="selectForCodingTemp" parameterType="String" resultType="Coding">
+		<!-- select codingno from codingtemp where id=#{id} -->
+		select * from codingtemp where id=#{id}
 	</select>
-	
-	
-	<!-- coding -->
-	  	<!-- <insert id="insertCoding" parameterType="map">
-  	 	
-      		insert into coding (codingno, courseno, coursename, startdate)
-     		values (#{id}, #{courseno}, #{coursename},sysdate )
-  	</insert>
-	
-		lecturecoding
- 	<insert id="insertlecturecoding" parameterType="map">
-       <selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
-    		select max(lectureno) from lecture 
-  		</selectKey>
-      	insert into coursetype (lectureno , codingno)
-     	values (#{lectureno}, #{codingno})
-  	</insert>
- -->
  
- 	<insert id="insertLecture" parameterType="Lecture">
-      insert into lecture (courseno, lectureno, lecturename, regdate , originalfilename, uploadedfilename)
-      values (#{courseno}, lecture_seq.nextVal, #{lecturename}, sysdate, #{originalfilename} , #{uploadedfilename}) 
-   </insert>
-   
-   <!-- teachLecture -->
-   <insert id="insertTeachLecture" parameterType="map">
-      <selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
-          select max(lectureno) from lecture 
-        </selectKey>
-        insert into teachlecture (id, courseno, lectureno, point, studentcount)
-      values (#{id}, #{courseno} ,#{lectureno}, #{point}, (select count(*) from studylecture where lectureno=#{lectureno}))
-   </insert>
-     	
-   
-   <!-- insert subnote -->
-    <insert id="insertSubnote" parameterType="Subnote">
-      <selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
-          select max(lectureno) from lecture 
-        </selectKey>
-   
-      insert into subnote (id, subnoteno
-      <if test="originalfilename != null"> , originalfilename, uploadedfilename </if>
-      , lectureno) values (#{id}, subnote_seq.nextVal  
-      <if test="originalfilename != null"> , #{originalfilename} , #{uploadedfilename} </if>
-      ,#{lectureno}) 
-   </insert>
-   
-   <!--insert lecturecoding -->
-     <insert id="insertlecturecodingInInsertLecture" parameterType="map">
-        <selectKey keyProperty="lectureno" resultType="int" order="BEFORE">
-          select max(lectureno) from lecture 
-        </selectKey>
-         insert into lecturecoding (lectureno , codingno)
-        values (#{lectureno}, #{codingno})
-     </insert> 
-   
-   <!-- coding -->
-         <insert id="insertCoding" parameterType="map">
-         <selectKey keyProperty="courseno" resultType="int" order="BEFORE">
-          select max(courseno) from course 
-        </selectKey>
-            insert into coding (codingno, courseno, coursename, startdate)
-           values (#{id}, #{courseno}, #{coursename},sysdate )
-     </insert> 
 </mapper>
 
 

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SESbank</title>
+<title>아이디/비밀번호 찾기</title>
 <link rel="stylesheet" type="text/css" href="../css/style.css" />
 <script type="text/javascript">
 

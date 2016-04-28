@@ -78,7 +78,6 @@
 		<if test="searchText != null">
 		and coursename like #{searchText}
 		</if>
-		
 	</select>
 	
 	<select id="selectDefaultTotal" resultType="int" parameterType="map">
@@ -129,7 +128,6 @@
 		JOIN course c ON ( l.courseno = c.courseno and c.courseno = #{courseno} )
 		order by lectureno asc
 		</if>
-		
 	</select>
 	
 	<select id="selectCourseDefaultDetailTotal" resultType="int" parameterType="map">
@@ -525,10 +523,16 @@
 		select codingno from lecturecoding where lectureno = #{lectureno} 
 	</select>
 	
-	<select id="getCodinginlecture" parameterType="int" resultMap="CodingMap">
+	<!-- <select id="getCodinginlecture" parameterType="int" resultMap="CodingMap">
 		select * from Coding where codingno = #{codingno}
-	</select>
+	</select> -->
 	
+	<select id="getCodinginlecture" parameterType="list" resultMap="CodingMap">
+		select * from Coding where codingno in
+		<foreach collection="list" item="no" open="(" separator="," close=")">
+			#{no}
+     	</foreach>
+	</select> 
 	
 	<!-- 영호 insert -->
 	<insert id="insertLectureCoding" parameterType="map">

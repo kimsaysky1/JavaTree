@@ -47,7 +47,7 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 	private String code3;
 	private String code4;
 	private String code5;
-	private String result = "";
+	private String result;
 	private String id;
 	private File directoryPath;
 	private String resultType;
@@ -55,11 +55,13 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 
 	private Map<String, Object> session;
 
+	private String uploadedfilename;
+
 	public String watchLecture() throws Exception {
 		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
-		lectureno = 1;
-		codingList = dao.selectCodingList(lectureno);
-		return SUCCESS;
+	      uploadedfilename = dao.selectPath(lectureno);
+	      codingList = dao.selectCodingList(lectureno);
+	      return SUCCESS;
 	}
 
 	public String callSpecificCoding() throws Exception {
@@ -69,6 +71,9 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 	}
 
 	public String runCode() throws Exception {
+		error = false;
+		result = "";
+		
 		id = (String) session.get("loginId");
 		System.out.println("id: " + id);
 		CompilerDAO dao = sqlsession.getMapper(CompilerDAO.class);
@@ -97,7 +102,6 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 		StringBuffer buf = null;
 		String file_parent = null;
 		String file_name = null;
-		// id = "kim"; // 임시 아이디
 
 		for (int i = 0; i < contentList.size(); i++) {
 			if (contentList.get(i).contains("page language=\"java\" contentType=\"text/html; charset=UTF-8\"")) {
@@ -186,7 +190,7 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 					String[] cmd = { "java", "-cp", file_parent, packageNameMap.get(mainClassName) + "."
 							+ startClass.substring(0, file_name.lastIndexOf(".")) };
 					runProcess(cmd);
-					// deleteFile(file_parent);
+					//deleteFile(file_parent);
 					checkError(result);
 					resultType = "java";
 					break;
@@ -202,7 +206,6 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 
 	private void checkError(String result) {
 		System.out.println("result: " + result);
-		System.out.println("C:\\compiler\\+id: " + "C:\\compiler\\" + id);
 		if (result.contains("C:\\compiler\\" + id) && result.contains("^")) {
 			error = true;
 			System.out.println("에러 있음");
@@ -465,4 +468,13 @@ public class CompilerAction extends ActionSupport implements SessionAware {
 		this.error = error;
 	}
 
+	public String getUploadedfilename() {
+		return uploadedfilename;
+	}
+
+	public void setUploadedfilename(String uploadedfilename) {
+		this.uploadedfilename = uploadedfilename;
+	}
+	
+	
 }

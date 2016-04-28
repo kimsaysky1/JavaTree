@@ -20,8 +20,12 @@
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
-<title>insertLecture</title>
+<title>강의 등록</title>
 <script>
+
+
+	
+
 function insertLectureForm(){
 	alert("강의등록폼옴>>");
 	var form = document.getElementById("insertLectureForm");
@@ -167,7 +171,7 @@ function stgoback(){
 	 })
 	 }); */
 	
-
+	 
 </script>
 
 </head>
@@ -544,18 +548,21 @@ function stgoback(){
                         <!-- END / OPEN DATE -->
                         
                            <!-- OPEN DATE -->
-<!--                         <div class="open-date create-item">
+                        <div class="open-date create-item">
                             <div class="row">
                                 <div class="create-course-1">
                                     <h4>Upload Question</h4>
                                 </div>
                                 <div class="create-course-2">
-                                   <a href="/javatree/course/codingForm.action"><input type="button" value="Qesstion BOX" class="submit mc-btn-4 btn-style-1"></a>
-                                	<a href="javascript:questionBox();"><input type="button" value="Qesstion BOX" class="submit mc-btn-4 btn-style-1"></a>
+                                <input type="hidden" id = "courseno" value = "<s:property value="courseno"/>">
+                                <input type="hidden" id = "lectureno" value = "<s:property value="lectureno"/>">
+                                <input type="button" value="Qesstion BOX" class="submit mc-btn-4 btn-style-1" id="popup_test">
+                                   <!-- <a href="javascript:popup();"><input type="button" value="Qesstion BOX" class="submit mc-btn-4 btn-style-1"></a> -->
+                                	<!-- <a href="javascript:questionBox();"><input type="button" value="Qesstion BOX" class="submit mc-btn-4 btn-style-1"></a> -->
                                 </div>
                             </div>
                             
-                        </div> -->
+                        </div>
                         <!-- END / OPEN DATE -->
                         
                        
@@ -610,5 +617,23 @@ function stgoback(){
 		src="../resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
 	<script type="text/javascript"
 		src="../resources/javatree_view/html/js/scripts.js"></script>
+		
+	
+	<script type="text/javascript">
+	$('#popup_test').on('click', function(){
+		alert("팝업");
+		var courseno=document.getElementById("courseno");
+		var lectureno=document.getElementById("lectureno");
+		/* "/javatree/course/codingMain.action?lectureno=<s:property value="lectureno"/>&courseno=<s:property value="courseno"/> */
+		/*  window.open('codingMain.action?courseno'+courseno.value,'pop','resizable=no scrollbars=yes top=50 left=200 width=1200 height=870');   */
+		 window.open('codingMain.action','pop','resizable=no scrollbars=yes top=50 left=200 width=1200 height=870');  
+	});
+	</script>
+
+
+		
 </body>
+
+
+
 </html>

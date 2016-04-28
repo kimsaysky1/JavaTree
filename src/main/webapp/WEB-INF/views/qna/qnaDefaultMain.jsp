@@ -23,7 +23,7 @@
     <![endif]-->
 <script type="text/javascript" src="script/jquery-2.2.3.min.js"></script>
 <script type="text/javascript" src="script/jquery-ui.min.js" ></script>    
-<title>JavaTree Main</title>
+<title>JavaTree(Q&A) Main</title>
 </head>
 <body>
 		<%@include file="/resources/header.jsp" %>

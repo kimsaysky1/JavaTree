@@ -15,8 +15,8 @@
 
 				<!-- LOGO -->
 				<div class="logo">
-					<a href="index.action"><img
-						src="../resources/javatree_view/html/images/logo.png" alt=""></a>
+					<a href="index.action">   
+					<img src="resources/javatree_view/html/images/logo.png" alt="" width="215px;"></a>
 				</div>
 				<!-- END / LOGO -->
 
@@ -75,7 +75,8 @@
 						<!-- NOTIFICATION -->
 						<li class="list-item notification">
 							<div class="notification-info item-click">
-								<i class="icon md-bell"></i> <span class="itemnew"></span>
+								<i class="icon md-bell"></i>
+								<span class="itemnew"></span> <!-- 벨체크 -->
 							</div>
 							<div class="toggle-notification toggle-list">
 								<div class="list-profile-title">

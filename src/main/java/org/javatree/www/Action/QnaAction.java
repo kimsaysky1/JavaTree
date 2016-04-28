@@ -50,7 +50,8 @@ public class QnaAction extends ActionSupport implements SessionAware {
 
 	public String insertQuestionByModal() throws Exception {
 		QnaDAO dao = sqlsession.getMapper(QnaDAO.class);
-		question.setId("1");
+		String loginId = (String) session.get("loginId");
+		question.setId(loginId);
 		question.setUsername("1");
 		question.setCodingno(1);
 		System.out.println("question: "+question);
@@ -159,7 +160,6 @@ public class QnaAction extends ActionSupport implements SessionAware {
 
 	public String qnaDefaultMain() throws Exception {
 		String loginId = (String) session.get("loginId");
-		System.out.println("loginId: " + loginId);
 		if (loginId == null) {
 			return ERROR;
 		}
@@ -207,7 +207,6 @@ public class QnaAction extends ActionSupport implements SessionAware {
 		question = dao.selectOneQuestion(questionno);
 		replyList = dao.selectAllReply(questionno);
 		if(notification){
-			System.out.println("들어옴");
 			Map map = new HashMap();
 			id = (String) session.get("loginId");
 			map.put("id", id);

@@ -8,6 +8,7 @@ alter table studycourse drop column startdate;
 alter table studycourse drop column enddate;
 alter table studycourse add (teacherid varchar2(20) not null);--창우 studycourse
 alter table course modify (coursename varchar2(100)); -- 20160428 영호 추가
+alter table studycourse modify (coursename varchar2(100));-- 20160428 영호 추가
 alter table teachcourse modify (coursename varchar2(100)); -- 20160428 영호 추가
 ALTER TABLE teachcourse ADD (startdate date DEFAULT sysdate NOT NULL);
 alter table course drop column typeno;

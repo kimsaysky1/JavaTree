@@ -20,7 +20,7 @@
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
-<title>Mega Course - Learning and Courses HTML5 Template</title>
+<title>문제보관함</title>
 
 
 <body id="page-top">
@@ -108,136 +108,135 @@
 						<table style='width: 900px;'>
 							<tr>
 								<td style='width: 400px;'><b>ALL QUESTION</b><br /> 
-									<select multiple="multiple" id='lstBox1' style='width: 400px; height: 600px;' >
-										 <s:iterator value="codingList" status="st">   
-											<option value="<s:property value="codingquestion"/>"><s:property value="codingquestion"/></option>
-										 </s:iterator>
-									</select>
-								</td>
-								<td style='width: 50px; text-align: center; vertical-align: middle;'>
-									<input type='button' id='btnRight' value='  >  ' /> <br />
-									<input type='button' id='btnLeft' value='  <  ' />
-								</td>
-								<td style='width: 400px;'><b>SELECTED QUESTION </b><br /> 
-									<select class="courselistbox" id ="courselistbox" style='width: 400px; height:30px;'>
-												<option>강좌 목록</option>
-									  <s:iterator value="courseList" status="st">   
-	                   					     <option value="<s:property value="courseno"/>"><s:property value="coursename"/></option>                
-	                   				  </s:iterator>
-	                   				  <!-- <s:property value="lectureno"/> -->
-									</select>
-									<br><br>
-								 <select class="lecturlistbox" id ="lecturelistbox" style='width: 400px; height:30px;'>
-	                   					    <s:iterator  value="lectureList" status="st">   
-	                   					     <option value="<s:property value="lectureno"/>"><s:property value="lecturename"/></option>                
-	                   				  </s:iterator>                
-								</select>  
-									<br><br>
-									<select multiple="multiple" id='lstBox2' style='width: 400px; height: 502px;'>
-										<s:iterator value="codingList" status="st"> 
-											<option value="<s:property value="codingquestion"/>"><s:property value="codingquestion"/></option>
-										</s:iterator>
-									</select></td>
-							</tr>
-						</table>
-					</div>
-				</div>
-			</div>
-		</section>
+                           <select multiple="multiple" id='lstBox1' style='width: 400px; height: 600px;' >
+                               <s:iterator value="codingList" status="st">   
+                                 <option value="<s:property value="codingno"/>"><s:property value="codingquestion"/></option>
+                               </s:iterator>
+                           </select>
+                        </td>
+                        <td style='width: 50px; text-align: center; vertical-align: middle;'>
+                           <input type='button' id='btnRight' value='  >  ' /> <br />
+                           <input type='button' id='btnLeft' value='  <  ' />
+                        </td>
+                        <td style='width: 400px;'><b>SELECTED QUESTION </b><br /> 
+                           <select class="courselistbox" id ="courselistbox" style='width: 400px; height:30px;'>
+                                    <option>강좌 목록</option>
+<s:iterator value="courseList" status="st">   
+                                          <option value="<s:property value="courseno"/>"><s:property value="courseno"/>.<s:property value="coursename"/></option>                
+</s:iterator>
+                                    <!-- <s:property value="lectureno"/> -->
+                           </select>
+                           <br><br>
+                            <select class="lecturlistbox" id ="lecturelistbox" style='width: 400px; height:30px;'>
+                            <option>강의 목록</option>
+<s:iterator  value="lectureList" status="st">   
+                                             <option value="<s:property value="lectureno"/>"><s:property value="lecturename"/></option>                
+</s:iterator>                
+                           </select>  
+                           <br><br>
+                           <select multiple="multiple" id='lstBox2' style='width: 400px; height: 480px;'>
+                           
+ <s:iterator value="codingList" status="st"> 
+                                 <%-- <option value="<s:property value="codingquestion"/>"><s:property value="codingquestion"/></option> --%>
+</s:iterator>
+                           </select>
+                           <input type="button" id="btninsert" value="저장" style="float: right; margin-right: 28px;">
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </section>
 
 
 
-	</div>
-	<!-- END / PAGE WRAP -->
+   </div>
+   <!-- END / PAGE WRAP -->
 
-	<!-- Load jQuery -->
-	<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="../resources/javatree_view/html/js/library/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
-	<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
-	<script type="text/javascript" src="../resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
-	<script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
-	<script type="text/javascript" src="../resources/javatree_view/html/js/scripts.js"></script>
-	
-	<script type="text/javascript">
+
+   <!-- Load jQuery -->
+   <script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery-1.11.0.min.js"></script>
+   <script type="text/javascript" src="../resources/javatree_view/html/js/library/bootstrap.min.js"></script>
+   <script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.owl.carousel.js"></script>
+   <script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.appear.min.js"></script>
+   <script type="text/javascript" src="../resources/javatree_view/html/js/library/perfect-scrollbar.min.js"></script>
+   <script type="text/javascript" src="../resources/javatree_view/html/js/library/jquery.easing.min.js"></script>
+   <script type="text/javascript" src="../resources/javatree_view/html/js/scripts.js"></script>
+   
+   <script type="text/javascript">
 $(document).ready(function() {
-	
-/* 	function courselistget(){
-		alert("코스리스트겟들어옴");
-
-		 var selectcourse =  $('#courselistbox option:selected').val();
-		 alert(selectcourse);
-		 
-	} */
-	
-	$("#courselistbox").change(function(){
-		var courseno=$(this).val()		
-		
-		$.ajax({
-			url : 'golecturelist.action',
-			data : {'courseno' : courseno},
-			success : function(response){
-				alert("성공");
-				$(response.lectureList).each(function(index, item) {
-					$('#lecturelistbox').append( '<option value='+item.lectureno+' class="lecturelistbox1">'+item.lecturename+'</option>');
-				});		
-			},
-			error:function(){
-				alert('에러');
-			}
-		});
-		
-	});
-	
-	
-	$("#lecturelistbox").change(function(){
-		var lectureno = $(this).val()
-		
-		$.ajax({
-			url:'gocodinglist.action',
-			data: {'lectureno' : lectureno},
-			success: function(response){
-				alert(response.codingList);
-				$(response.codingList).each(function(index, item) {
-					$('#lstBox2').append( '<option value='+item.codingno+' class="lstBox2_1">'+item.codingquestion+'</option>');
-				});		
-				
-			},
-			error:function(){
-				alert('에러');
-			}
-		});
-		
-		
-	});
-	
-	
-	$('#lstBox1').change(function(){
-		
-		$.ajax({
-			url : 'deleteCodingfromMain.action',
-			data : {'codingno' : codingno},
-			success : function(response){
-			}
-		});
-		
-	});
+   
+/*    function courselistget(){
+      alert("코스리스트겟들어옴");
+      $('#lstBox2 option').remove();
+       var selectcourse =  $('#courselistbox option:selected').val();
+       alert(selectcourse);
+       
+   } */
+   
+   $("#courselistbox").change(function(){
+      var courseno=$(this).val()      
+      
+      $.ajax({
+         url : 'golecturelist.action',
+         data : {'courseno' : courseno},
+         success : function(response){
+            $(response.lectureList).each(function(index, item) {
+               $('#lecturelistbox').append( '<option value='+item.lectureno+' class="lecturelistbox1">'+item.lecturename+'</option>');
+            });      
+         },
+         error:function(){
+         }
+      });
+      
+   });
+   
+   
+   $("#lecturelistbox").change(function(){
+      var lectureno = $(this).val();
+      $.ajax({
+         url:'gocodinglist.action',
+         data: {'lectureno' : lectureno},
+         success: function(response){
+            $(response.codingList).each(function(index, item) {
+               $('#lstBox2').append( '<option value='+item.codingno+' class="lstBox2_1">'+item.codingquestion+'</option>');
+            });      
+            
+            
+         },
+         error:function(){
+         }
+      });
+      
+      
+   });
+   
+   
+   $('#lstBox1').change(function(){
+      
+      $.ajax({
+         url : 'deleteCodingfromMain.action',
+         data : {'codingno' : codingno},
+         success : function(response){
+         }
+      });
+      
+   });
 
     $('#btnRight').click(function(e) {
         var selectedOpts = $('#lstBox1 option:selected');
         if (selectedOpts.length == 0) {
-            alert("Nothing to move.");
             e.preventDefault();
         }
-
-        $('#lstBox2').append($(selectedOpts).clone());
+        $('<option value="'+selectedOpts.val()+'">'+selectedOpts.html()+'</option>').appendTo('#lstBox2');
+        //$('#lstBox2').append($(selectedOpts).clone());
         e.preventDefault();
     });
 
     $('#btnLeft').click(function(e) {
         var selectedOpts = $('#lstBox2 option:selected');
         if (selectedOpts.length == 0) {
-            alert("Nothing to move.");
             e.preventDefault();
         }
 
@@ -247,9 +246,38 @@ $(document).ready(function() {
     });
     
  
+    $('#btninsert').on( "click", function(){
+
+       var codingListForInsert = [];
+       $('#lstBox2 option').each(function(index) {
+          codingListForInsert.push( $(this).val()) ;
+         });
+       
+       var lectureno = $("#lecturelistbox option:selected").val();
+       
+       //var data = "codingListForInsert"+codingListForInsert; 
+       //alert(data);
+      //var data = escape(encodeURIComponent("codingListForInsert"+codingListForInsert));
+      
+         $.ajax({
+             url : 'insertSelectedCodingfromMain.action',
+             data : 'codingListForInsert='+codingListForInsert+'&lectureno='+lectureno,
+             success : function(response){
+               
+                $('#lstBox2 option').remove();
+             }
+          }); 
+    });
+    
+   
+   
+   
+
+    
+    
 });
 </script>
-	
+   
 
 </body>
 </html>

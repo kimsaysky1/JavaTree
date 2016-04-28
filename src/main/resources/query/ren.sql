@@ -1,7 +1,7 @@
 SELECT LEVEL 
 FROM   dual
 CONNECT BY LEVEL <= 10
-
+alter table lecture add (filedata BLOB)
 alter table subnote modify(originalfilename varchar2(1000))
 alter table subnote modify(uploadedfilename varchar2(1000))
 alter table lecture modify(originalfilename varchar2(1000))

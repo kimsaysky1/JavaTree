@@ -19,7 +19,7 @@
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
-    <title>Mega Course - Learning and Courses HTML5 Template</title>
+    <title>로그인</title>
     
 <script type="text/javascript">
 
@@ -27,7 +27,6 @@ function loginForm(){
 	var form = document.getElementById("loginForm");
 	var id= document.getElementById("id");
 	var password= document.getElementById("password");
-	alert();
 	form.submit();
 }
 

@@ -29,7 +29,7 @@
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
-<title>Mega Course - Learning and Courses HTML5 Template</title>
+<title>코딩문제 등록</title>
 </head>
 <body id="page-top">
 
@@ -175,13 +175,10 @@
 		
 		$('#submit_btn').click(function(){
 			
-		alert("1");
 		var q_title = document.getElementById("q_title").value;
 		var codebox = document.getElementById("codebox").value;
 		var answerbox = document.getElementById("answerbox").value;
 		
-		alert("2");
-		alert(answerbox);
 		
 		if(q_title == ""){
 			alert("질문을 입력해주세요");

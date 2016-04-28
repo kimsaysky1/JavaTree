@@ -20,7 +20,7 @@
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
-<title>insertCourse</title>
+<title>강좌 등록</title>
 <script type="text/javascript">
 
  function insertCourForm(){
