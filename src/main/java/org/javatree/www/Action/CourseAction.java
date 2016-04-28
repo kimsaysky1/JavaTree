@@ -2075,6 +2075,25 @@ public class CourseAction extends ActionSupport implements SessionAware {
 		public void setMycode(String mycode) {
 			this.mycode = mycode;
 		}
+		public ArrayList<String> getCodingListForInsert() {
+			return codingListForInsert;
+		}
 
+		public void setCodingListForInsert(ArrayList<String> codingListForInsert) {
+			this.codingListForInsert = codingListForInsert;
+		}
+
+
+
+		public String getCodingquestion() {
+			return codingquestion;
+		}
+
+
+
+		public void setCodingquestion(String codingquestion) {
+			this.codingquestion = codingquestion;
+		}
+	
 		
 }
